@@ -1,3 +1,5 @@
+import { Server } from "socket.io";
+
 function App() {
     return (
         <>
