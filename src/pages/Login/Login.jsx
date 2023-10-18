@@ -1,7 +1,13 @@
+import "./Login.css";
+import logo from "../../assets/icons/logo.svg";
+
 function Login() {
     return (
         <>
-            <h1>Login</h1>
+            <div>
+                <img src={logo} alt="Logo de Splitmeet" />
+                <h1>Splimeet</h1>
+            </div>
         </>
     );
 }
