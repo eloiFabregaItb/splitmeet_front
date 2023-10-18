@@ -21,7 +21,7 @@ function App() {
 
     return (
         <>
-            <h1>Splimeet</h1>
+            <h1>Splimeet Principal</h1>
             <button
                 onClick={() => {
                     ioSocket.emit("chatMsg", "hola");
