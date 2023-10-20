@@ -48,7 +48,11 @@ function Login() {
     return (
         <>
             <div className='contenedor'>
-                <main className='login'>
+                <main
+                    className={`login ${
+                        showEmailError || showDataError ? "login--error" : ""
+                    }`}
+                >
                     <img
                         className='login_logo'
                         src={logo}

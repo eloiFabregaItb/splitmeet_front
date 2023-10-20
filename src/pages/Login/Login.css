@@ -22,6 +22,10 @@
     border-radius: 10px;
 }
 
+.login--error {
+    min-height: 650px;
+}
+
 @media (max-width: 575px) {
     .login {
         width: 95vw;
