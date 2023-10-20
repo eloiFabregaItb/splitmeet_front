@@ -1,6 +1,8 @@
-export const checkLogin = async (endpoint, options) => {
-    let data;
-    options.method = "POST";
+import axios from "../api/axios";
+
+export const checkLogin = async (email, password) => {
+    let response;
+    /*     options.method = "POST";
     options.headers = {
         accept: "application/json",
     };
@@ -8,10 +10,32 @@ export const checkLogin = async (endpoint, options) => {
     options.signal = controller.signal;
     options.body = JSON.stringify(options.body);
 
-    setTimeout(() => controller.abort(), 1000);
+    setTimeout(() => controller.abort(), 1000); */
 
     try {
+        response = await axios.post("/auth/login", {
+            usr_mail: email,
+            usr_pass: password,
+        });
+
+        if (response.data) {
+            console.log(response.data);
+            return response.data;
+        }
+
+        /* 
         let response = await fetch(endpoint, options);
-        if (!response.success) throw Error("Network request failed");
-    } catch (e) {}
+        if (!response.success) {
+            throw {
+                success: false,
+                error_code: response.error_code,
+                msg: response.msg,
+            };
+        } else {
+            data = response.data;
+        } */
+    } catch (e) {
+        response.error = e;
+        console.log(e);
+    }
 };

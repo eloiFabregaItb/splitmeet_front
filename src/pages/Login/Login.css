@@ -32,7 +32,7 @@
     }
 }
 
-@media (orientation: landscape) and (max-height: 620px) {
+@media (orientation: landscape) and (max-height: 660px) {
     .contenedor {
         height: 100%;
     }
