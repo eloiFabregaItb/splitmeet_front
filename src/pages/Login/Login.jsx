@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { SHA256 } from "crypto-js";
 import { checkLogin } from "../../services/checkLogin";
+import { api_url } from "../../utils/constants";
 
 function Login() {
     const [email, setEmail] = useState("");
@@ -44,7 +45,7 @@ function Login() {
         //console.log(SHA256(password).toString());
         //If the email has the proper structure, then the email and password is sent to the server.
         if (!checkEmailError()) {
-            checkLogin(email, password);
+            checkLogin(email, SHA256(password).toString());
         }
     };
 
@@ -119,8 +120,8 @@ function Login() {
                     </p>
 
                     <div className="login_buttons">
-                        <a
-                            href="#"
+                        {/*                         <a
+                            href="/"
                             className="login_form_btn login_form_btn--google"
                         >
                             <img
@@ -129,18 +130,18 @@ function Login() {
                                 alt="Logo de Google"
                             />
                             Continue with Google
-                        </a>
-
+                        </a> */}
                         <a
-                            href="#"
-                            className="login_form_btn login_form_btn--facebook"
+                            href={`${api_url}/auth/google`}
+                            to="/auth/google"
+                            className="subrayado login_form_btn login_form_btn--google"
                         >
                             <img
                                 className="login_buttons_logo"
-                                src={facebook}
+                                src={google}
                                 alt="Logo de Facebook"
                             />
-                            Continue with Facebook
+                            Continue with Google
                         </a>
                     </div>
                 </main>
