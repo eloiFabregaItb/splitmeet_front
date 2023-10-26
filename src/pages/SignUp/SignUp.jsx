@@ -1,5 +1,6 @@
 import { signUp } from "../../services/signUp";
 import "../Login/Login.css";
+import "./SignUp.css";
 import logo from "../../assets/icons/logo.svg";
 import user from "../../assets/icons/user.svg";
 import correo from "../../assets/icons/correo.svg";
@@ -7,17 +8,33 @@ import candado from "../../assets/icons/password.svg";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { SHA256 } from "crypto-js";
-import { checkLogin } from "../../services/checkLogin";
-import { api_url } from "../../utils/constants";
+import { useNavigate } from "react-router-dom";
 
 function SignUp() {
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password1, setPassword1] = useState("");
     const [password2, setPassword2] = useState("");
+    const [showInputError, setShowInputError] = useState(false);
     const [showEmailError, setShowEmailError] = useState(false);
     const [showPassEqualError, setShowPassEqualError] = useState(false);
     const [showDataError, setShowDataError] = useState(false);
+
+    const navigate = useNavigate();
+
+    const checkIfInputsAreFilled = () => {
+        if (
+            username.trim() !== "" &&
+            email.trim() !== "" &&
+            password1.trim() !== "" &&
+            password2.trim() !== ""
+        ) {
+            setShowInputError(false);
+            return true;
+        }
+        setShowInputError(true);
+        return false;
+    };
 
     /*
     Function that checks if the email inputed has an email structure.
@@ -48,9 +65,9 @@ function SignUp() {
         e.preventDefault();
         //If the email has the proper structure, passwords are equal and not void, then the username, email and password is sent to the server.
         if (
+            checkIfInputsAreFilled() &&
             !checkEmailError(email) &&
-            !checkPassEqualError(password1, password2) &&
-            password1.trim() !== ""
+            !checkPassEqualError(password1, password2)
         ) {
             const resLogin = await signUp(
                 username,
@@ -70,9 +87,12 @@ function SignUp() {
         <>
             <div className="contenedor">
                 <main
-                    className={`login ${
-                        showEmailError || showPassEqualError || showDataError
-                            ? "login--error"
+                    className={`login login--signup${
+                        showInputError ||
+                        showEmailError ||
+                        showPassEqualError ||
+                        showDataError
+                            ? " signup--error"
                             : ""
                     }`}
                 >
@@ -152,17 +172,21 @@ function SignUp() {
                             />
                         </div>
 
-                        {showEmailError ? (
+                        {showInputError ? (
+                            <span className="error">
+                                Rellena todos los campos
+                            </span>
+                        ) : showEmailError ? (
                             <span className="error">
                                 Email con formato incorrecto
                             </span>
-                        ) : (
-                            ""
-                        )}
-
-                        {showPassEqualError ? (
+                        ) : showPassEqualError ? (
                             <span className="error">
                                 Las contraseñas no son iguales
+                            </span>
+                        ) : showDataError ? (
+                            <span className="error">
+                                El email introducido ya está registrado
                             </span>
                         ) : (
                             ""
