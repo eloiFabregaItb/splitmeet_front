@@ -77,7 +77,7 @@ function SignUp() {
             if (resLogin.success) {
                 setShowDataError(false);
                 localStorage.setItem("jwt", resLogin.jwt);
-                return navigate("/home");
+                return navigate("/login");
             }
             setShowDataError(true);
         }
