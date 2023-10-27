@@ -1,7 +1,13 @@
 .login--signup {
-    padding-bottom: 10px;
+  padding-bottom: 10px;
 }
 
 .signup--error {
-    min-height: 400px;
+  min-height: 400px;
+}
+
+.success {
+  color: var(--green);
+  width: 70%;
+  text-align: center;
 }

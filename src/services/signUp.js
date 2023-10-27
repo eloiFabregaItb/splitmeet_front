@@ -1,8 +1,8 @@
 import axios from "../api/axios";
 
 export const signUp = async (name, email, password) => {
-    let response;
-    /*     options.method = "POST";
+  let response;
+  /*     options.method = "POST";
     options.headers = {
         accept: "application/json",
     };
@@ -12,19 +12,19 @@ export const signUp = async (name, email, password) => {
 
     setTimeout(() => controller.abort(), 1000); */
 
-    try {
-        response = await axios.post("/auth/signup", {
-            usr_name: name,
-            usr_mail: email,
-            usr_pass: password,
-        });
+  try {
+    response = await axios.post("/auth/signup", {
+      usr_name: name,
+      usr_mail: email,
+      usr_pass: password,
+    });
 
-        if (response.data) {
-            console.log(response.data);
-            return response.data;
-        }
+    if (response.data) {
+      console.log(response.data);
+      return response.data;
+    }
 
-        /* 
+    /* 
         let response = await fetch(endpoint, options);
         if (!response.success) {
             throw {
@@ -35,8 +35,8 @@ export const signUp = async (name, email, password) => {
         } else {
             data = response.data;
         } */
-    } catch (e) {
-        response.error = e;
-        console.log(e);
-    }
+  } catch (e) {
+    response.error = e;
+    console.log(e);
+  }
 };
