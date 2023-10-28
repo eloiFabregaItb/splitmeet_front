@@ -1,6 +1,23 @@
 import "./Loader.css";
 function Loader() {
-  return <span className="loader"></span>;
+  return (
+    <>
+      <div className="lds-default">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </>
+  );
 }
 
 export default Loader;

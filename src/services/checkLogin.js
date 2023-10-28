@@ -13,7 +13,7 @@ export const checkLogin = async (email, password) => {
       return response.data;
     }
   } catch (e) {
-    response.error = e;
     console.log(e);
+    return e;
   }
 };

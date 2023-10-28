@@ -5,18 +5,34 @@ import { checkLoginJwt } from "../../services/checkLoginJwt";
 import Loader from "../../globalComponents/Loader/Loader";
 
 function Home() {
+  const initialData = {
+    name: "Oriol",
+  };
+
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState(true);
-  const [userData, setUserData] = useState({});
+  const [userData, setUserData] = useState(initialData);
 
   useEffect(() => {
+    const checkLogin = async () => {
+      const res = await checkLoginJwt(localStorage.getItem("jwt"));
+      return res;
+    };
+
     if (!localStorage.getItem("jwt")) {
-      //navigate("/login");
+      navigate("/login");
       return;
     }
-    const res = checkLoginJwt(localStorage.getItem("jwt"));
+    const res = checkLogin();
     console.log(res);
+    if (res.success) {
+      setLoading(false);
+      setUserData(res);
+      return;
+    } else {
+      //navigate("/login");
+    }
   }, []);
 
   return (
@@ -25,8 +41,8 @@ function Home() {
         <>
           <header>
             <div>
-              <img src="" alt={`Icono del usuario ${userData.usr_name}`} />
-              <p></p>
+              <img src="" alt={`Icono del usuario ${userData.name}`} />
+              <p>{userData.name}</p>
             </div>
           </header>
           <main>
