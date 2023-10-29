@@ -5,57 +5,57 @@ import { checkLoginJwt } from "../../services/checkLoginJwt";
 import Loader from "../../globalComponents/Loader/Loader";
 
 function Home() {
-  const initialData = {
-    name: "Oriol",
-  };
-
-  const navigate = useNavigate();
-
-  const [loading, setLoading] = useState(true);
-  const [userData, setUserData] = useState(initialData);
-
-  useEffect(() => {
-    const checkLogin = async () => {
-      const res = await checkLoginJwt(localStorage.getItem("jwt"));
-      return res;
+    const initialData = {
+        name: "Oriol",
     };
 
-    if (!localStorage.getItem("jwt")) {
-      navigate("/login");
-      return;
-    }
-    const res = checkLogin();
-    console.log(res);
-    if (res.success) {
-      setLoading(false);
-      setUserData(res);
-      return;
-    } else {
-      //navigate("/login");
-    }
-  }, []);
+    const navigate = useNavigate();
 
-  return (
-    <>
-      {!loading ? (
+    const [loading, setLoading] = useState(true);
+    const [userData, setUserData] = useState(initialData);
+
+    useEffect(() => {
+        const checkLogin = async () => {
+            const res = await checkLoginJwt(localStorage.getItem("jwt"));
+            if (res.success) {
+                setLoading(false);
+                setUserData(res);
+                return;
+            }
+            navigate("/login");
+        };
+
+        if (!localStorage.getItem("jwt")) {
+            navigate("/login");
+            return;
+        }
+        checkLogin();
+    }, []);
+
+    return (
         <>
-          <header>
-            <div>
-              <img src="" alt={`Icono del usuario ${userData.name}`} />
-              <p>{userData.name}</p>
-            </div>
-          </header>
-          <main>
-            <section></section>
-            <section></section>
-            <section></section>
-          </main>
+            {!loading ? (
+                <>
+                    <header>
+                        <div>
+                            <img
+                                src=''
+                                alt={`Icono del usuario ${userData.name}`}
+                            />
+                            <p>{userData.name}</p>
+                        </div>
+                    </header>
+                    <main>
+                        <section></section>
+                        <section></section>
+                        <section></section>
+                    </main>
+                </>
+            ) : (
+                <Loader />
+            )}
         </>
-      ) : (
-        <Loader />
-      )}
-    </>
-  );
+    );
 }
 
 export default Home;
