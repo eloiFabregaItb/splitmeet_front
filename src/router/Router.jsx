@@ -7,33 +7,33 @@ import Dashboard from "../pages/Dashboard/Dashboard";
 import Error404 from "../pages/Error404/Error404";
 
 const routes = createBrowserRouter([
-    {
-        path: "/",
-        element: <App />,
-    },
-    {
-        path: "/login",
-        element: <Login />,
-    },
-    {
-        path: "/signup",
-        element: <SignUp />,
-    },
-    {
-        path: "/home",
-        element: <Home />,
-    },
-    {
-        path: "/dashboard",
-        element: <Dashboard />,
-    },
-    {
-        path: "/error",
-        element: <Error404 />,
-    },
+  {
+    path: "/",
+    element: <App />,
+  },
+  {
+    path: "/login",
+    element: <Login />,
+  },
+  {
+    path: "/signup",
+    element: <SignUp />,
+  },
+  {
+    path: "/home",
+    element: <Home />,
+  },
+  {
+    path: "/dashboard",
+    element: <Dashboard />,
+  },
+  {
+    path: "/error",
+    element: <Error404 />,
+  },
 ]);
 
 function Router() {
-    return <RouterProvider router={routes} />;
+  return <RouterProvider router={routes} />;
 }
 export default Router;

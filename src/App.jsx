@@ -3,34 +3,34 @@ import { io, Manager } from "socket.io-client";
 const url = "http://172.30.4.55:3000";
 
 function App() {
-    const [ioSocket, setIoSocket] = useState(null);
+  const [ioSocket, setIoSocket] = useState(null);
 
-    useEffect(() => {
-        const socket = io(url);
-        setIoSocket(socket);
-        socket.on("chatMsg", (msg) => {
-            console.log(msg);
-        });
+  useEffect(() => {
+    const socket = io(url);
+    setIoSocket(socket);
+    socket.on("chatMsg", (msg) => {
+      console.log(msg);
+    });
 
-        return () => {
-            if (socket) {
-                socket.disconnect();
-            }
-        };
-    }, []);
+    return () => {
+      if (socket) {
+        socket.disconnect();
+      }
+    };
+  }, []);
 
-    return (
-        <>
-            <h1>Splimeet Principal</h1>
-            <button
-                onClick={() => {
-                    ioSocket.emit("chatMsg", "hola");
-                }}
-            >
-                Hola
-            </button>
-        </>
-    );
+  return (
+    <>
+      <h1>Splimeet Principal</h1>
+      <button
+        onClick={() => {
+          ioSocket.emit("chatMsg", "hola");
+        }}
+      >
+        Hola
+      </button>
+    </>
+  );
 }
 
 export default App;
