@@ -1,20 +1,24 @@
 @font-face {
-  font-family: Montserrat;
-  src: url(./assets/fonts/Montserrat-VariableFont_wght.ttf);
+    font-family: Montserrat;
+    src: url(./assets/fonts/Montserrat-VariableFont_wght.ttf);
 }
 
 :root {
-  --background: #d7d7d7;
-  --sky_blue: #e1f5fe;
-  --ocean_blue: #01579b;
-  --green: #34a853;
-  --light_grey: #9a9a9a;
-  --red: #e11212;
+    --background: #d7d7d7;
+    --sky_blue: #e1f5fe;
+    --ocean_blue: #01579b;
+    --green: #34a853;
+    --light_grey: #9a9a9a;
+    --red: #e11212;
 }
 
 * {
-  font-family: Montserrat;
-  border: 0;
-  margin: 0;
-  padding: 0;
+    font-family: Montserrat;
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+
+.background {
+    background-color: var(--background);
 }

@@ -1,0 +1,35 @@
+.header {
+    width: 100vw;
+    height: 100px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--sky_blue);
+}
+
+.header_userInfo {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+    margin-left: 20px;
+}
+
+.header_userInfo_img {
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    padding: 5px;
+    background-color: black;
+}
+
+.header_userInfo_username {
+    font-size: 1.2rem;
+}
+
+.header_splitmeet {
+    font-weight: 400;
+    font-size: 2.4rem;
+    margin-right: 40px;
+}

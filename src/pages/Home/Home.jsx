@@ -3,6 +3,8 @@ import "./Home.css";
 import { useNavigate } from "react-router-dom";
 import { checkLoginJwt } from "../../services/checkLoginJwt";
 import Loader from "../../globalComponents/Loader/Loader";
+import Header from "../../globalComponents/Header/Header";
+import user from "../../assets/icons/user.svg";
 
 function Home() {
     const initialData = {
@@ -36,23 +38,17 @@ function Home() {
         <>
             {!loading ? (
                 <>
-                    <header>
-                        <div>
-                            <img
-                                src=''
-                                alt={`Icono del usuario ${userData.name}`}
-                            />
-                            <p>{userData.name}</p>
-                        </div>
-                    </header>
-                    <main>
+                    <Header img={user} username={userData.name} />
+                    <main className='background'>
                         <section></section>
                         <section></section>
                         <section></section>
                     </main>
                 </>
             ) : (
-                <Loader />
+                <main className='loader-container'>
+                    <Loader />
+                </main>
             )}
         </>
     );
