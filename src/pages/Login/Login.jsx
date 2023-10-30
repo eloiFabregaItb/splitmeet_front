@@ -48,6 +48,7 @@ function Login() {
         return navigate("/home");
       }
       setShowDataError(true);
+      localStorage.clear();
     }
   };
 
