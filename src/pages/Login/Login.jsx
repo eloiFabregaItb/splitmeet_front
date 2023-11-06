@@ -3,18 +3,23 @@ import logo from "../../assets/icons/logo.svg";
 import user from "../../assets/icons/user.svg";
 import google from "../../assets/icons/google.svg";
 import candado from "../../assets/icons/password.svg";
+
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+
 import { SHA256 } from "crypto-js";
 import { checkLogin } from "../../services/checkLogin";
 import { api_url } from "../../utils/constants";
 import Button from "../../globalComponents/Button";
+import { useLoginDataContext } from "../../contexts/LoginDataContext";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showEmailError, setShowEmailError] = useState(false);
   const [showDataError, setShowDataError] = useState(false);
+
+  const { loginContext } = useLoginDataContext();
 
   const navigate = useNavigate();
 
@@ -44,7 +49,8 @@ function Login() {
       const resLogin = await checkLogin(email, SHA256(password).toString());
       if (resLogin.success) {
         setShowDataError(false);
-        localStorage.setItem("jwt", resLogin.jwt);
+        // localStorage.setItem("jwt", resLogin.jwt);
+        loginContext(resLogin);
         return navigate("/home");
       }
       setShowDataError(true);
