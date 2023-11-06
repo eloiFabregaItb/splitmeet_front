@@ -15,7 +15,6 @@
 
 .event_info_userPics {
   display: flex;
-  gap: -20px;
   width: 10px;
   border-radius: 10px;
 }
