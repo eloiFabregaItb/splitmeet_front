@@ -5,6 +5,7 @@ import SignUp from "../pages/SignUp/SignUp";
 import Home from "../pages/Home/Home";
 import Dashboard from "../pages/Dashboard/Dashboard";
 import Error404 from "../pages/Error404/Error404";
+import NewGroup from "../pages/NewGroup/NewGroup";
 
 const routes = createBrowserRouter([
   {
@@ -30,6 +31,10 @@ const routes = createBrowserRouter([
   {
     path: "/error",
     element: <Error404 />,
+  },
+  {
+    path: "/new",
+    element: <NewGroup />,
   },
 ]);
 

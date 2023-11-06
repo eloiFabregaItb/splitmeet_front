@@ -1,0 +1,197 @@
+
+.container {
+    height: 100vh;
+    width: 100vw;
+    background-color: var(--background);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background-color: var(--sky_blue);
+      width: 621px;
+      height: 621px;
+      flex-shrink: 0;
+      min-height: 600px;
+      min-width: 360px;
+      padding-bottom: 50px;
+      -webkit-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.69);
+      -moz-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.69);
+      box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.69);
+      border-radius: 10px;
+  }
+  
+  @media (max-width: 575px) {
+      .box {
+          width: 95vw;
+      }
+  }
+  
+  @media (orientation: landscape) and (max-height: 660px) {
+      .container {
+          height: 100%;
+      }
+  
+      .box {
+          margin: 2rem 0;
+      }
+  }
+  
+  
+  .new_group_title {
+      margin-top: 7%;
+      font-weight: 400;
+      font-size: 50px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal; 
+  }
+  
+  .group_form {
+      width: 100%;
+      margin-top: 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.6rem;
+  }
+  
+  .new_group_form_inputContainer {
+      position: relative;
+      height: 2.5rem;
+      width: 60%;
+      min-width: 250px;
+      background-color: white;
+      display: flex;
+      color: var(--light_grey);
+      border-radius: 10px;
+      -webkit-box-shadow: 1px 2px 6px 0px rgba(105, 105, 105, 0.79);
+      -moz-box-shadow: 1px 2px 6px 0px rgba(105, 105, 105, 0.79);
+      box-shadow: 1px 2px 6px 0px rgba(105, 105, 105, 0.79);
+  }
+  
+  .test{
+      position: relative;
+  }
+  label {
+      position: absolute;
+      top: 0;
+      left: 0;
+      transform: translateY(-10%);
+      font-size: 14px; /* Ajusta el tamaño de fuente según tus preferencias */
+      color: #333;    /* Ajusta el color de texto según tus preferencias */
+    }
+  
+  .login_form_logo {
+      width: 20px;
+      border-right: 1px solid var(--light_grey);
+      padding: 0.5rem;
+  }
+  
+  .login_form_input {
+      padding-left: 0.5rem;
+      border-radius:10px;
+      height: 100%;
+      width: 100%;
+  }
+  
+  .login_form_input:focus {
+      outline: none;
+  }
+  
+  .login_form_btn {
+      width: 30%;
+      min-width: 150px;
+      border-radius: 10px;
+      height: 2.8rem;
+      font-size: 1rem;
+      font-weight: 400;
+  }
+  
+  .login_form_btn--login {
+      color: white;
+      background-color: var(--ocean_blue);
+  }
+  
+  .login_form_btn--login:hover {
+      cursor: pointer;
+      background-color: #00477e;
+  }
+  
+  .error {
+      color: var(--red);
+      width: 70%;
+      text-align: center;
+  }
+  
+  .login_mensajeRegistro {
+      margin-top: 1.2rem;
+      margin-bottom: 2rem;
+      color: black;
+      width: 70%;
+      text-align: center;
+  }
+  
+  .subrayado {
+      color: black;
+      text-decoration: underline;
+      padding-left: 0.3rem;
+  }
+  
+  .login_buttons {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.9rem;
+      width: 100%;
+  }
+  
+  .login_buttons_logo {
+      width: 35px;
+      margin-left: 1rem;
+      margin-right: 1rem;
+  }
+  
+  .login_form_btn--google {
+      text-decoration: none;
+      color: #000;
+      cursor: pointer;
+      display: flex;
+      height: 3rem;
+      align-items: center;
+      background-color: white;
+      width: 50%;
+      min-width: 280px;
+      font-size: 1rem;
+      -webkit-box-shadow: 1px 2px 6px 0px rgba(105, 105, 105, 0.79);
+      -moz-box-shadow: 1px 2px 6px 0px rgba(105, 105, 105, 0.79);
+      box-shadow: 1px 2px 6px 0px rgba(105, 105, 105, 0.79);
+  }
+  
+  .login_form_btn--google:hover {
+      background-color: #f7f7f7;
+  }
+  
+  .login_form_btn--facebook {
+      text-decoration: none;
+      cursor: pointer;
+      display: flex;
+      height: 3rem;
+      align-items: center;
+      background-color: #1877f2;
+      color: #fff;
+      width: 50%;
+      min-width: 280px;
+      font-size: 1rem;
+      -webkit-box-shadow: 1px 2px 6px 0px rgba(105, 105, 105, 0.79);
+      -moz-box-shadow: 1px 2px 6px 0px rgba(105, 105, 105, 0.79);
+      box-shadow: 1px 2px 6px 0px rgba(105, 105, 105, 0.79);
+  }
+  
+  .login_form_btn--facebook:hover {
+      background-color: #166ddf;
+  }
