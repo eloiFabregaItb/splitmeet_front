@@ -5,6 +5,8 @@ import { checkLoginJwt } from "../../services/checkLoginJwt";
 import { getEvents } from "../../services/getEvents";
 import Loader from "../../globalComponents/Loader/Loader";
 import Header from "../../globalComponents/Header/Header";
+import Button from "../../globalComponents/Button";
+import Event from "./components/Event/Event";
 import user from "../../assets/icons/user.svg";
 
 function Home() {
@@ -49,15 +51,22 @@ function Home() {
           <main className="background home-container">
             <section>
               <h2>Eventos</h2>
-              <div></div>
+              <div className="home-container_events">
+                <div className="home-container_section">
+                  {events.map((event) => (
+                    <Event eventInfo={event} key={event.id} />
+                  ))}
+                </div>
+                <Button text="NEW GROUP" />
+              </div>
             </section>
             <section>
               <h2>Saldo</h2>
-              <div></div>
+              <div className="home-container_section"></div>
             </section>
             <section>
               <h2>Últimas transacciones</h2>
-              <div></div>
+              <div className="home-container_section"></div>
             </section>
           </main>
         </>

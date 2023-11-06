@@ -1,3 +1,5 @@
+import "./Event.css";
+
 function Event({ eventInfo }) {
   return (
     <article className="event">

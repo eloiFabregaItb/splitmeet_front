@@ -5,3 +5,18 @@
   align-items: center;
   flex-wrap: wrap;
 }
+
+.home-container_events {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.home-container_section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+  overflow: scroll;
+}
