@@ -1,29 +1,21 @@
 import { useState, useEffect } from "react";
 import "./Home.css";
-import { useNavigate } from "react-router-dom";
-import { checkLoginJwt } from "../../services/checkLoginJwt";
 import { getEvents } from "../../services/getEvents";
 import Loader from "../../globalComponents/Loader/Loader";
 import Header from "../../globalComponents/Header/Header";
 import user from "../../assets/icons/user.svg";
+import { useLoginDataContext } from "../../contexts/LoginDataContext";
 
 function Home() {
-  const initialData = {
-    name: "Oriol",
-  };
-
-  const navigate = useNavigate();
+  const { name, isLoggedIn, jwt } = useLoginDataContext();
 
   const [loading, setLoading] = useState(true);
-  const [userData, setUserData] = useState(initialData);
   const [events, setEvents] = useState([]);
 
   useEffect(() => {
     const checkLogin = async () => {
-      const resUserInfo = await checkLoginJwt(localStorage.getItem("jwt"));
-      if (resUserInfo.success) {
-        setUserData(resUserInfo);
-        const resEventsInfo = await getEvents(localStorage.getItem("jwt"));
+      if (isLoggedIn) {
+        const resEventsInfo = await getEvents(jwt);
         if (resEventsInfo.success) {
           setEvents(resEventsInfo.events);
           setLoading(false);
@@ -31,13 +23,8 @@ function Home() {
         }
         return;
       }
-      navigate("/login");
     };
 
-    if (!localStorage.getItem("jwt")) {
-      navigate("/login");
-      return;
-    }
     checkLogin();
   }, []);
 
@@ -45,7 +32,7 @@ function Home() {
     <>
       {!loading ? (
         <>
-          <Header img={user} username={userData.name} />
+          <Header img={user} username={name} />
           <main className="background home-container">
             <section>
               <h2>Eventos</h2>

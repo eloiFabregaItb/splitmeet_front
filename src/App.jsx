@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
-import { io, Manager } from "socket.io-client";
-const url = "http://172.30.4.55:3000";
+import { useEffect } from "react";
+// import { io, Manager } from "socket.io-client";
+// const url = "http://172.30.4.55:3000";
 import { Link, Route, Routes, useNavigate } from "react-router-dom";
+import { checkLoginJwt } from "./services/checkLoginJwt.js";
 
 import {
   ProtectedRoute,
@@ -16,8 +17,23 @@ import Dashboard from "./pages/Dashboard/Dashboard";
 import Error404 from "./pages/Error404/Error404";
 
 function App() {
-  const { logoutContext, isLoggedIn } = useLoginDataContext();
+  const { logoutContext, loginContext, isLoggedIn } = useLoginDataContext();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const checkLogin = async () => {
+      const jwt = localStorage.getItem("jwt");
+      if (!isLoggedIn && jwt) {
+        const resUserInfo = await checkLoginJwt(jwt);
+        if (resUserInfo.success) {
+          loginContext(resUserInfo);
+          navigate("/home");
+        }
+      }
+    };
+
+    checkLogin();
+  }, []);
 
   // const [ioSocket, setIoSocket] = useState(null);
   // useEffect(() => {
@@ -62,6 +78,9 @@ function App() {
                   <a href="#" onClick={handleLogout}>
                     Logout
                   </a>
+                </li>
+                <li>
+                  <Link to="/home">Dashboard</Link>
                 </li>
               </ul>
             )}
