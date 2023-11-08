@@ -20,16 +20,7 @@ function Header() {
 
   useEffect(() => {
     const handleClickOutside = (event) => {
-      console.log(
-        "OPEN NAVBAR",
-        navbarRef.current && !navbarRef.current.contains(event.target)
-      );
-
-      if (
-        navbarRef.current &&
-        !navbarRef.current.contains(event.target) &&
-        isNavbarOpen
-      ) {
+      if (navbarRef.current && !navbarRef.current.contains(event.target)) {
         setIsNavbarOpen(false);
       }
     };
