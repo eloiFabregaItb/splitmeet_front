@@ -3,11 +3,13 @@ import "./Home.css";
 import { getEvents } from "../../services/getEvents";
 import Loader from "../../globalComponents/Loader/Loader";
 import Header from "../../globalComponents/Header/Header";
-import user from "../../assets/icons/user.svg";
+import Button from "../../globalComponents/Button";
+import Event from "./components/Event/Event";
+//import user from "../../assets/icons/user.svg";
 import { useLoginDataContext } from "../../contexts/LoginDataContext";
 
 function Home() {
-  const { name, isLoggedIn, jwt } = useLoginDataContext();
+  const { nombre, fotoPerfil, isLoggedIn, jwt } = useLoginDataContext();
 
   const [loading, setLoading] = useState(true);
   const [events, setEvents] = useState([]);
@@ -32,19 +34,26 @@ function Home() {
     <>
       {!loading ? (
         <>
-          <Header img={user} username={name} />
+          <Header img={fotoPerfil} username={nombre} />
           <main className="background home-container">
-            <section>
+            <section className="home-container_section">
               <h2>Eventos</h2>
-              <div></div>
+              <div className="home-container_events">
+                <div className="home-container_info">
+                  {events.map((event) => (
+                    <Event eventInfo={event} key={event.id} />
+                  ))}
+                </div>
+                <Button text="NEW GROUP" />
+              </div>
             </section>
-            <section>
+            <section className="home-container_section">
               <h2>Saldo</h2>
-              <div></div>
+              <div className="home-container_info"></div>
             </section>
-            <section>
+            <section className="home-container_section">
               <h2>Últimas transacciones</h2>
-              <div></div>
+              <div className="home-container_info"></div>
             </section>
           </main>
         </>
