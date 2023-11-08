@@ -1,14 +1,14 @@
-import user from "../../assets/icons/user.svg";
+//import user from "../../assets/icons/user.svg";
 import logo from "../../assets/icons/logo.svg";
 import "./Header.css";
 
-function Header({ userImg, username }) {
+function Header({ img, username }) {
   return (
     <header className="header">
       <div className="header_userInfo">
         <img
           className="header_userInfo_img"
-          src={user}
+          src={`http://localhost:3000/public/usrProfilePic/${img}`}
           alt={`Icono del usuario ${username}`}
         />
         <p className="header_userInfo_username">{username}</p>
