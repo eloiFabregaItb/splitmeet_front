@@ -1,0 +1,57 @@
+.Navbar{
+  position: fixed !important;
+
+  top: 0;
+  bottom: 0;
+  left: 0;
+
+  background-color: #333;
+  height: 100%;
+  width: 300px;
+
+  animation: .3s ease-out 0s 1 fadeFromLeft;
+  z-index: 2;
+}
+
+.Navbar ul{
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: center;
+  justify-content: center;
+
+  list-style: none;
+}
+
+.Navbar li a{
+  color: white;
+  text-decoration: none;
+  font-size: 30px;
+  cursor: pointer;
+  width: 100%;
+  display: block;
+  padding: .5rem;
+}
+
+.Navbar li{
+  width: 100%;
+}
+.Navbar li:hover{
+  background-color: #888;
+  color:#333;
+}
+
+
+.Navbar__fullUnder{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+@keyframes fadeFromLeft {
+  from {left: -300px;}
+  to {left: 0px;}
+
+}

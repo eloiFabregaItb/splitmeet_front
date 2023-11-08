@@ -4,6 +4,8 @@ import { useEffect } from "react";
 import { Link, Route, Routes, useNavigate } from "react-router-dom";
 import { checkLoginJwt } from "./services/checkLoginJwt.js";
 
+import "./App.css";
+
 import {
   ProtectedRoute,
   useLoginDataContext,
@@ -15,9 +17,10 @@ import SignUp from "./pages/SignUp/SignUp";
 import Home from "./pages/Home/Home";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import Error404 from "./pages/Error404/Error404";
+import Header from "./globalComponents/Header/Header.jsx";
 
 function App() {
-  const { logoutContext, loginContext, isLoggedIn } = useLoginDataContext();
+  const { loginContext, isLoggedIn } = useLoginDataContext();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -50,12 +53,6 @@ function App() {
   //   };
   // }, []);
 
-  function handleLogout(e) {
-    e.preventDefault();
-    logoutContext();
-    navigate("/");
-  }
-
   return (
     <>
       <div className="App">
@@ -66,39 +63,7 @@ function App() {
         >
           Hola
         </button> */}
-
-        <header>
-          <nav>
-            {isLoggedIn && (
-              <ul>
-                <li>
-                  <Link to="/">Home</Link>
-                </li>
-                <li>
-                  <a href="#" onClick={handleLogout}>
-                    Logout
-                  </a>
-                </li>
-                <li>
-                  <Link to="/home">Dashboard</Link>
-                </li>
-              </ul>
-            )}
-            {!isLoggedIn && (
-              <ul>
-                <li>
-                  <Link to="/">Home</Link>
-                </li>
-                <li>
-                  <Link to="/login">Login</Link>
-                </li>
-                <li>
-                  <Link to="/signup">Sign-Up</Link>
-                </li>
-              </ul>
-            )}
-          </nav>
-        </header>
+        <Header />
 
         <Routes>
           <Route path="/" element={<h1>Main page</h1>} />
