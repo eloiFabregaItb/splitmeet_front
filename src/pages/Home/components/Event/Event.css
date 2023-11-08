@@ -1,9 +1,9 @@
 .event {
+  width: 100%;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  margin: 10px;
 }
 
 .event_info {
@@ -17,8 +17,17 @@
   display: flex;
   width: 10px;
   border-radius: 10px;
+  margin-left: 15px;
+}
+
+.event_info_userPic {
+  width: 30px;
+  padding: 2px;
+  background-color: var(--background);
+  border-radius: 50%;
+  margin-left: -15px;
 }
 
 .event_img {
-  width: 15%;
+  width: 150px;
 }

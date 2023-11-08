@@ -36,10 +36,10 @@ function Home() {
         <>
           <Header img={fotoPerfil} username={nombre} />
           <main className="background home-container">
-            <section>
+            <section className="home-container_section">
               <h2>Eventos</h2>
               <div className="home-container_events">
-                <div className="home-container_section">
+                <div className="home-container_info">
                   {events.map((event) => (
                     <Event eventInfo={event} key={event.id} />
                   ))}
@@ -47,13 +47,13 @@ function Home() {
                 <Button text="NEW GROUP" />
               </div>
             </section>
-            <section>
+            <section className="home-container_section">
               <h2>Saldo</h2>
-              <div className="home-container_section"></div>
+              <div className="home-container_info"></div>
             </section>
-            <section>
+            <section className="home-container_section">
               <h2>Últimas transacciones</h2>
-              <div className="home-container_section"></div>
+              <div className="home-container_info"></div>
             </section>
           </main>
         </>
