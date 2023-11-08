@@ -34,7 +34,7 @@ function Home() {
     <>
       {!loading ? (
         <>
-          <Header img={fotoPerfil} username={nombre} />
+          {/* <Header img={fotoPerfil} username={nombre} /> */}
           <main className="background home-container">
             <section className="home-container_section">
               <h2 className="home-container_title">Eventos</h2>
