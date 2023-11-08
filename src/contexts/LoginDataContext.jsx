@@ -17,6 +17,7 @@ export const LoginDataProvider = ({ children }) => {
   const [email, setEmail] = useState("");
   const [emailValidated, setEmailValidated] = useState(false);
   const [jwt, _setJwt] = useState(""); //todo use local storage
+  const [saldo, setSaldo] = useState(1500.51);
   const setJwt = (x) => {
     _setJwt(x);
     localStorage.setItem("jwt", x);
@@ -64,6 +65,7 @@ export const LoginDataProvider = ({ children }) => {
         tipoUsuario,
         emailValidated,
         jwt,
+        saldo,
       }}
     >
       {children}
