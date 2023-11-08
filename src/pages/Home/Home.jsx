@@ -5,11 +5,11 @@ import Loader from "../../globalComponents/Loader/Loader";
 import Header from "../../globalComponents/Header/Header";
 import Button from "../../globalComponents/Button";
 import Event from "./components/Event/Event";
-import user from "../../assets/icons/user.svg";
+//import user from "../../assets/icons/user.svg";
 import { useLoginDataContext } from "../../contexts/LoginDataContext";
 
 function Home() {
-  const { name, isLoggedIn, jwt } = useLoginDataContext();
+  const { nombre, fotoPerfil, isLoggedIn, jwt } = useLoginDataContext();
 
   const [loading, setLoading] = useState(true);
   const [events, setEvents] = useState([]);
@@ -34,7 +34,7 @@ function Home() {
     <>
       {!loading ? (
         <>
-          <Header img={user} username={name} />
+          <Header img={fotoPerfil} username={nombre} />
           <main className="background home-container">
             <section>
               <h2>Eventos</h2>

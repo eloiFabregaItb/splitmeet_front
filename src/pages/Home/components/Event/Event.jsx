@@ -6,10 +6,11 @@ function Event({ eventInfo }) {
       <div className="event_info">
         <p>{eventInfo.name}</p>
         <div className="event_info_userPics">
-          {eventInfo.users.map((user) => (
+          {eventInfo.users.map((user, index) => (
             <img
               src={`http://localhost:3000/public/usrProfilePic/${user.img}`}
               alt={`Imagen del usuario ${user.name}`}
+              key={index}
             />
           ))}
         </div>
