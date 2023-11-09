@@ -17,6 +17,7 @@ import SignUp from "./pages/SignUp/SignUp";
 import Home from "./pages/Home/Home";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import Error404 from "./pages/Error404/Error404";
+import NewEvent from "./pages/NewEvent/NewEvent.jsx";
 import Header from "./globalComponents/Header/Header.jsx";
 
 function App() {
@@ -78,6 +79,7 @@ function App() {
             }
           />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/new" element={<NewEvent />} />
           <Route path="/error" element={<Error404 />} />
         </Routes>
       </div>
