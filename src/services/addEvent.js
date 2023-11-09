@@ -1,12 +1,12 @@
 import axios from "../api/axios";
 
-export const addEvent = async (eventName, eventImage, eventMembers, token) => {
+export const addEvent = async (event_name, eventImage, eventMembers, jwt) => {
   let response;
 
   try {
     response = await axios.post("/event/create", {
-      evt_name: eventName,
-      token: token
+      evt_name: event_name,
+      token: jwt,
     });
     if (response.data) {
       console.log(response.data);
