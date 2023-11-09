@@ -48,8 +48,10 @@ function NewEvent() {
 
           <form noValidate onSubmit={onSubmit} className='event_form'>
             <div className='form-container'>
+
+              <div className="add_name">
               <label className='newevent__text' htmlFor='name'>
-                event Name
+                Event Name
               </label>
               <div className='newevent__form_inputContainer'>
                 <input
@@ -62,10 +64,12 @@ function NewEvent() {
                   onChange={(e) => setName(e.target.value)}
                 />
               </div>
+              </div>
+
 
               <div className='add_image'>
                 <label className='newevent__text' htmlFor='event_image'>
-                  event Image
+                  Event Image
                 </label>
 
                 <input
@@ -87,7 +91,7 @@ function NewEvent() {
               </div>
               <div className='newevent__members'>
                 <label className='newevent__text' htmlFor='event_members'>
-                  event members
+                  Event members
                 </label>
 
                 <div className='newevent__form_textarea'>

@@ -92,15 +92,14 @@ function SignUp() {
     <>
       <div className="contenedor">
         <main
-          className={`login login--signup${
-            showInputError ||
+          className={`login login--signup${showInputError ||
             showEmailError ||
             showPassEqualError ||
             showDataError ||
             showSuccess
-              ? " signup--error"
-              : ""
-          }`}
+            ? " signup--error"
+            : ""
+            }`}
         >
           <img className="login_logo" src={logo} alt="Logo de Splitmeet" />
           <h1 className="login_titulo">SplitMeet</h1>
@@ -149,7 +148,7 @@ function SignUp() {
               <input
                 className="login_form_input"
                 type="password"
-                placeholder="Contraseña"
+                placeholder="Password"
                 name="password1"
                 id="password1"
                 value={password1}
@@ -166,7 +165,7 @@ function SignUp() {
               <input
                 className="login_form_input"
                 type="password"
-                placeholder="Repita su contraseña"
+                placeholder="Repeat password"
                 name="password2"
                 id="password2"
                 value={password2}
@@ -175,20 +174,19 @@ function SignUp() {
             </div>
 
             {showInputError ? (
-              <span className="error">Rellena todos los campos</span>
+              <span className="error">Fill in all fields</span>
             ) : showEmailError ? (
-              <span className="error">Email con formato incorrecto</span>
+              <span className="error">Incorrect email format</span>
             ) : showPassEqualError ? (
-              <span className="error">Las contraseñas no son iguales</span>
+              <span className="error">Passwords do not match</span>
             ) : showDataError ? (
-              <span className="error">
-                El email introducido ya está registrado
-              </span>
+              <span className="error">The entered email is already registered</span>
             ) : showSuccess ? (
-              <span className="success">Usuario registrado con éxito</span>
+              <span className="success">User registered successfully</span>
             ) : (
               ""
             )}
+
 
             <Button
               classname="login_form_btn login_form_btn--login"
@@ -197,11 +195,12 @@ function SignUp() {
           </form>
 
           <p className="login_mensajeRegistro">
-            ¿Ya tienes una cuenta?
+            Already have an account?
             <Link to="/login" className="subrayado">
-              Inicia sesión
+              Log in
             </Link>
           </p>
+
         </main>
       </div>
     </>
