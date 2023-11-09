@@ -1,4 +1,5 @@
 import "./Event.css";
+import { api_url } from "../../../../utils/constants";
 
 function Event({ eventInfo }) {
   return (
@@ -9,7 +10,7 @@ function Event({ eventInfo }) {
           {eventInfo.users.map((user, index) => (
             <img
               className="event_info_userPic"
-              src={`http://localhost:3000/public/usrProfilePic/${user.img}`}
+              src={`${api_url}/public/usrProfilePic/${user.img}`}
               alt={`Imagen del usuario ${user.name}`}
               key={index}
             />
@@ -18,7 +19,7 @@ function Event({ eventInfo }) {
       </div>
       <img
         className="event_img"
-        src={`http://localhost:3000/public/evtPic/${eventInfo.imgUrl}`}
+        src={`${api_url}/public/evtPic/${eventInfo.imgUrl}`}
         alt={`Imagen del evento ${eventInfo.name}`}
       />
     </article>
