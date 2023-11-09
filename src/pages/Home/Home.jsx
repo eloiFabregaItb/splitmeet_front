@@ -66,7 +66,7 @@ function Home() {
           </main>
         </>
       ) : (
-        <main className="loader-container">
+        <main className='loader-container'>
           <Loader />
         </main>
       )}
