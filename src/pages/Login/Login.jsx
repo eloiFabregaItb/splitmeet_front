@@ -96,7 +96,7 @@ function Login() {
               <input
                 className="login_form_input"
                 type="password"
-                placeholder="Contraseña"
+                placeholder="Password"
                 name="password"
                 id="password"
                 value={password}
@@ -105,10 +105,10 @@ function Login() {
             </div>
 
             {showEmailError ? (
-              <span className="error">Email con formato incorrecto</span>
+              <span className="error">Incorrectly formatted email</span>
             ) : showDataError ? (
               <span className="error">
-                El correo y/o la contraseña son incorrectos
+                The email and/or password are incorrect
               </span>
             ) : (
               ""
@@ -120,9 +120,9 @@ function Login() {
           </form>
 
           <p className="login_mensajeRegistro">
-            ¿No tienes una cuenta?
+            You do not have an account?
             <Link to="/signup" className="subrayado">
-              Regístrate
+            Sign up
             </Link>
           </p>
 
@@ -132,7 +132,7 @@ function Login() {
                             className="login_form_btn login_form_btn--google"
                         >
                             <img
-                                className="login_buttons_logo"
+                                className="lWogin_buttons_logo"
                                 src={google}
                                 alt="Logo de Google"
                             />
