@@ -41,7 +41,6 @@ function NewEvent() {
   };
   return (
     <>
-      <Header img={user} username={userData.name} />
       <div className='container'>
         <main className='box'>
           <p>{showDataError}</p>
