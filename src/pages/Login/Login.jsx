@@ -2,7 +2,8 @@ import "./Login.css";
 import logo from "../../assets/icons/logo.svg";
 import user from "../../assets/icons/user.svg";
 import google from "../../assets/icons/google.svg";
-import candado from "../../assets/icons/password.svg";
+import candadoAbierto from "../../assets/icons/candadoAbierto.svg";
+import candadoCerrado from "../../assets/icons/candadoCerrado.svg";
 
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
@@ -18,6 +19,7 @@ function Login() {
   const [password, setPassword] = useState("");
   const [showEmailError, setShowEmailError] = useState(false);
   const [showDataError, setShowDataError] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const { loginContext } = useLoginDataContext();
 
@@ -89,13 +91,14 @@ function Login() {
 
             <div className="login_form_inputContainer">
               <img
-                src={candado}
+                src={showPassword ? candadoAbierto : candadoCerrado}
                 alt="Logo de un candado/password"
                 className="login_form_logo"
+                onClick={() => setShowPassword(!showPassword)}
               />
               <input
                 className="login_form_input"
-                type="password"
+                type={showPassword ? "text" : "password"}
                 placeholder="Password"
                 name="password"
                 id="password"
@@ -122,7 +125,7 @@ function Login() {
           <p className="login_mensajeRegistro">
             You do not have an account?
             <Link to="/signup" className="subrayado">
-            Sign up
+              Sign up
             </Link>
           </p>
 

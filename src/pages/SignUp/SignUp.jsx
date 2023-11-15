@@ -4,7 +4,7 @@ import "./SignUp.css";
 import logo from "../../assets/icons/logo.svg";
 import user from "../../assets/icons/user.svg";
 import correo from "../../assets/icons/correo.svg";
-import candado from "../../assets/icons/password.svg";
+import candado from "../../assets/icons/candadoAbierto.svg";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { SHA256 } from "crypto-js";
@@ -92,14 +92,15 @@ function SignUp() {
     <>
       <div className="contenedor">
         <main
-          className={`login login--signup${showInputError ||
+          className={`login login--signup${
+            showInputError ||
             showEmailError ||
             showPassEqualError ||
             showDataError ||
             showSuccess
-            ? " signup--error"
-            : ""
-            }`}
+              ? " signup--error"
+              : ""
+          }`}
         >
           <img className="login_logo" src={logo} alt="Logo de Splitmeet" />
           <h1 className="login_titulo">SplitMeet</h1>
@@ -180,13 +181,14 @@ function SignUp() {
             ) : showPassEqualError ? (
               <span className="error">Passwords do not match</span>
             ) : showDataError ? (
-              <span className="error">The entered email is already registered</span>
+              <span className="error">
+                The entered email is already registered
+              </span>
             ) : showSuccess ? (
               <span className="success">User registered successfully</span>
             ) : (
               ""
             )}
-
 
             <Button
               classname="login_form_btn login_form_btn--login"
@@ -200,7 +202,6 @@ function SignUp() {
               Log in
             </Link>
           </p>
-
         </main>
       </div>
     </>
