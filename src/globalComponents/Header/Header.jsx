@@ -67,7 +67,8 @@ function Header() {
             <p className="header_userInfo_username">{nombre}</p>
             <img
               className="header_userInfo_img"
-              src={`${api_url}/public/usrProfilePic/${fotoPerfil}`}
+              /* src={`${api_url}/public/usrProfilePic/${fotoPerfil}`} */
+              src={`https://robohash.org/${nombre}`}
               alt={`Icono del usuario ${nombre}`}
             />
           </div>

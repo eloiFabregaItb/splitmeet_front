@@ -10,7 +10,8 @@ function Event({ eventInfo }) {
           {eventInfo.users.map((user, index) => (
             <img
               className="event_info_userPic"
-              src={`${api_url}/public/usrProfilePic/${user.img}`}
+              /* src={`${api_url}/public/usrProfilePic/${user.img}`} */
+              src={`https://robohash.org/${user.name}`}
               alt={`Imagen del usuario ${user.name}`}
               key={index}
             />
