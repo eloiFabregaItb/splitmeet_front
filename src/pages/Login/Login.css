@@ -76,7 +76,7 @@
 }
 
 .login_form_logo {
-  width: 20px;
+  width: 2ch;
   border-right: 1px solid var(--light_grey);
   padding: 0.5rem;
 }
