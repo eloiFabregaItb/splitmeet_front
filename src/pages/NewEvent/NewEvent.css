@@ -55,13 +55,14 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 1.6rem;
 }
 
 .newevent__form_inputContainer {
   position: relative;
   height: 2.5rem;
-  width: 60%;
+  width: 100%;
   min-width: 250px;
   background-color: white;
   display: flex;
@@ -124,9 +125,10 @@
 .form-container {
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
+  justify-content: center;
+  align-items: center;
   gap: 25px;
+  width: 50%;
 }
 
 .newevent__text {
@@ -137,7 +139,34 @@
   line-height: 18px;
 }
 
-.newevent__form_textarea > textarea {
+.add_name {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.add_name > input {
+  width: 100%;
+}
+
+.add_image {
+  align-self: flex-start;
+}
+
+.newevent__buttonFile {
+  margin-bottom: 10px;
+  margin-top: 5px;
+}
+
+.newevent__members {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: 100%;
+}
+
+.newevent__form_textarea {
   resize: none;
   outline: none;
   border-radius: 10px;
