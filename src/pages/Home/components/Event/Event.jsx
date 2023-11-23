@@ -1,11 +1,14 @@
 import "./Event.css";
+import { Link } from "react-router-dom";
 import { api_url } from "../../../../utils/constants";
 
 function Event({ eventInfo }) {
   return (
     <article className="event">
       <div className="event_info">
-        <p>{eventInfo.name}</p>
+        <Link className="router-link" to={`/event/${eventInfo.url}`}>
+          <p className="event_info_name">{eventInfo.name}</p>
+        </Link>
         <div className="event_info_userPics">
           {eventInfo.users.map((user, index) => (
             <img

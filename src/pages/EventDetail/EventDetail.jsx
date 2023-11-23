@@ -1,22 +1,25 @@
 import { useState, useEffect } from "react";
-import "./Home.css";
-import { getEvents } from "../../services/getEvents";
+import "./EventDetail.css";
+import { getEventInfo } from "../../services/getEventInfo";
 import Loader from "../../globalComponents/Loader/Loader";
+import Expense from "./components/Expense";
 import Button from "../../globalComponents/Button";
-import Event from "./components/Event/Event";
 import { useLoginDataContext } from "../../contexts/LoginDataContext";
 import { Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
-function Home() {
+function EventDetail() {
+  const params = useParams();
+
   const { nombre, saldo, fotoPerfil, isLoggedIn, jwt } = useLoginDataContext();
 
   const [loading, setLoading] = useState(true);
-  const [events, setEvents] = useState([]);
+  const [expenses, setExpenses] = useState([]);
 
   useEffect(() => {
     const checkLogin = async () => {
       if (isLoggedIn) {
-        const resEventsInfo = await getEvents(jwt);
+        const resEventsInfo = await getEventInfo(jwt, params.url);
         if (resEventsInfo.success) {
           setEvents(resEventsInfo.events);
           setLoading(false);
@@ -36,15 +39,15 @@ function Home() {
           {/* <Header img={fotoPerfil} username={nombre} /> */}
           <main className="background home-container">
             <section className="home-container_section">
-              <h2 className="home-container_title">Events</h2>
+              <h2 className="home-container_title">Expenses</h2>
               <div className="home-container_events">
                 <div className="home-container_info">
-                  {events.map((event) => (
-                    <Event eventInfo={event} key={event.id} />
+                  {expenses.map((expense) => (
+                    <Expense eventInfo={expense} key={expense.id} />
                   ))}
                 </div>
-                <Link to="/new">
-                  <Button text="NEW EVENT" />
+                <Link to=":expense">
+                  <Button text="NEW EXPENSE" />
                 </Link>
               </div>
             </section>
@@ -73,4 +76,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default EventDetail;
