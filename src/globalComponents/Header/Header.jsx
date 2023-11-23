@@ -82,7 +82,7 @@ function Header() {
               onClick={() => setIsNavbarOpen(false)}
               className="buttonActionIco"
             >
-              <img src={ico_x} alt="" />
+              <img src={ico_x} alt="Icono de una cruz" />
             </button>
             <nav>
               {isLoggedIn ? (

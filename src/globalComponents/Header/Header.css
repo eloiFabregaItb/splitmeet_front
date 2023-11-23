@@ -21,7 +21,6 @@
 .header_userInfo_img {
   border-radius: 50%;
   width: 60px;
-  height: 60px;
   padding: 5px;
   background-color: black;
 }
@@ -44,4 +43,13 @@
 
 .logo {
   width: 40px;
+}
+
+@media (max-width: 600px) {
+  .header_logo {
+    display: none;
+  }
+  .header_userInfo_img {
+    width: 45px;
+  }
 }

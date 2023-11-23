@@ -1,4 +1,4 @@
-.Navbar{
+.Navbar {
   position: fixed !important;
 
   top: 0;
@@ -9,11 +9,15 @@
   height: 100%;
   width: 300px;
 
-  animation: .3s ease-out 0s 1 fadeFromLeft;
+  animation: 0.3s ease-out 0s 1 fadeFromLeft;
   z-index: 2;
 }
 
-.Navbar ul{
+.Navbar nav {
+  margin-top: 15px;
+}
+
+.Navbar ul {
   display: flex;
   flex-direction: column;
   gap: 2rem;
@@ -23,26 +27,25 @@
   list-style: none;
 }
 
-.Navbar li a{
+.Navbar li a {
   color: white;
   text-decoration: none;
-  font-size: 30px;
+  font-size: 25px;
   cursor: pointer;
   width: 100%;
   display: block;
-  padding: .5rem;
+  padding: 0.5rem;
 }
 
-.Navbar li{
+.Navbar li {
   width: 100%;
 }
-.Navbar li:hover{
+.Navbar li:hover {
   background-color: #888;
-  color:#333;
+  color: #333;
 }
 
-
-.Navbar__fullUnder{
+.Navbar__fullUnder {
   position: absolute;
   top: 0;
   left: 0;
@@ -51,7 +54,10 @@
 }
 
 @keyframes fadeFromLeft {
-  from {left: -300px;}
-  to {left: 0px;}
-
+  from {
+    left: -300px;
+  }
+  to {
+    left: 0px;
+  }
 }
