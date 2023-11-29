@@ -54,7 +54,7 @@ function Header() {
     <>
       <header className="header">
         <button onClick={handleOpenNavbar} className="buttonActionIco">
-          <img src={ico_burger} alt="" />
+          <img src={ico_burger} alt="Icono del menú" />
         </button>
 
         <div className="header_logo">

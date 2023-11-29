@@ -13,7 +13,7 @@ function EventDetail() {
 
   const { nombre, saldo, fotoPerfil, isLoggedIn, jwt } = useLoginDataContext();
 
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [expenses, setExpenses] = useState([]);
 
   useEffect(() => {
@@ -29,7 +29,7 @@ function EventDetail() {
       }
     };
 
-    checkLogin();
+    //checkLogin();
   }, []);
 
   return (
@@ -43,7 +43,7 @@ function EventDetail() {
               <div className="home-container_events">
                 <div className="home-container_info">
                   {expenses.map((expense) => (
-                    <Expense eventInfo={expense} key={expense.id} />
+                    <Expense expenseInfo={expense} key={expense.id} />
                   ))}
                 </div>
                 <Link to=":expense">
@@ -53,16 +53,19 @@ function EventDetail() {
             </section>
 
             <section className="home-container_section">
-              <h2 className="home-container_title">Balance</h2>
-              <div className="home-container_events home-container_saldo">
-                <p className={`balance ${saldo >= 0 ? "green" : "red"}`}>
-                  {saldo}€
-                </p>
-              </div>
+              <article></article>
+              <article>
+                <h2 className="home-container_title">Balance</h2>
+                <div className="home-container_events home-container_saldo">
+                  <p className={`balance ${saldo >= 0 ? "green" : "red"}`}>
+                    {saldo}€
+                  </p>
+                </div>
+              </article>
             </section>
 
             <section className="home-container_section">
-              <h2 className="home-container_title">Last transactions</h2>
+              <h2 className="home-container_title">Chat</h2>
               <div className="home-container_events"></div>
             </section>
           </main>
