@@ -1,5 +1,8 @@
 import { useState, useEffect } from "react";
 import "./EventDetail.css";
+import users from "../../assets/icons/users.svg";
+import calendar from "../../assets/icons/calendar.svg";
+import settings from "../../assets/icons/settings.svg";
 import { getEventInfo } from "../../services/getEventInfo";
 import Loader from "../../globalComponents/Loader/Loader";
 import Header from "../../globalComponents/Header/Header";
@@ -40,9 +43,27 @@ function EventDetail() {
           <Header nameEvent={eventInfo.name}></Header>
           <main className="background home-container">
             <aside className="home-container_aside">
-              <img src="" alt="i" />
-              <img src="" alt="i" />
-              <img src="" alt="i" />
+              <Link to={"users"}>
+                <img
+                  className="home-container_aside_icon"
+                  src={users}
+                  alt="Users icon"
+                />
+              </Link>
+              <Link to={"calendar"}>
+                <img
+                  className="home-container_aside_icon"
+                  src={calendar}
+                  alt="Calendar icon"
+                />
+              </Link>
+              <Link to={"settings"}>
+                <img
+                  className="home-container_aside_icon"
+                  src={settings}
+                  alt="Settings icon"
+                />
+              </Link>
             </aside>
             <section className="home-container_section home-container_section--detail">
               <h2 className="home-container_title">Expenses</h2>
