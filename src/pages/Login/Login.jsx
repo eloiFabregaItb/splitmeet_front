@@ -11,6 +11,7 @@ import { useState } from "react";
 import { SHA256 } from "crypto-js";
 import { checkLogin } from "../../services/checkLogin";
 import { api_url } from "../../utils/constants";
+import Header from "../../globalComponents/Header/Header";
 import Button from "../../globalComponents/Button";
 import { useLoginDataContext } from "../../contexts/LoginDataContext";
 
@@ -62,6 +63,7 @@ function Login() {
 
   return (
     <>
+      <Header></Header>
       <div className="contenedor">
         <main
           className={`login ${

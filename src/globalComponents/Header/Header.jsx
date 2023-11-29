@@ -10,7 +10,7 @@ import "./Header.css";
 import "./Navbar.css";
 import { useEffect, useRef, useState } from "react";
 
-function Header() {
+function Header({ nameEvent }) {
   const { logoutContext, nombre, fotoPerfil, isLoggedIn } =
     useLoginDataContext();
   const navigate = useNavigate();
@@ -58,7 +58,9 @@ function Header() {
         </button>
 
         <div className="header_logo">
-          <h1 className="header_splitmeet">Splitmeet</h1>
+          <h1 className="header_splitmeet">
+            {nameEvent ? nameEvent : "SplitMeet"}
+          </h1>
           <img className="logo" src={logo} alt="Logo de SplitMeet" />
         </div>
 

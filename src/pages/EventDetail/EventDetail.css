@@ -1,0 +1,9 @@
+.home-container_section--detail {
+  width: 20%;
+}
+
+.home-container_aside {
+  width: 10%;
+  background-color: var(--sky_blue);
+  min-height: 80vh;
+}

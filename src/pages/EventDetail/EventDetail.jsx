@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import "./EventDetail.css";
 import { getEventInfo } from "../../services/getEventInfo";
 import Loader from "../../globalComponents/Loader/Loader";
+import Header from "../../globalComponents/Header/Header";
 import Expense from "./components/Expense";
 import Button from "../../globalComponents/Button";
 import { useLoginDataContext } from "../../contexts/LoginDataContext";
@@ -14,14 +15,14 @@ function EventDetail() {
   const { nombre, saldo, fotoPerfil, isLoggedIn, jwt } = useLoginDataContext();
 
   const [loading, setLoading] = useState(false);
-  const [expenses, setExpenses] = useState([]);
+  const [eventInfo, setEventInfo] = useState({});
 
   useEffect(() => {
     const checkLogin = async () => {
       if (isLoggedIn) {
         const resEventsInfo = await getEventInfo(jwt, params.url);
         if (resEventsInfo.success) {
-          setEvents(resEventsInfo.events);
+          setEventInfo(resEventsInfo);
           setLoading(false);
           return;
         }
@@ -36,23 +37,28 @@ function EventDetail() {
     <>
       {!loading ? (
         <>
-          {/* <Header img={fotoPerfil} username={nombre} /> */}
+          <Header nameEvent={eventInfo.name}></Header>
           <main className="background home-container">
-            <section className="home-container_section">
+            <aside className="home-container_aside">
+              <img src="" alt="i" />
+              <img src="" alt="i" />
+              <img src="" alt="i" />
+            </aside>
+            <section className="home-container_section home-container_section--detail">
               <h2 className="home-container_title">Expenses</h2>
               <div className="home-container_events">
-                <div className="home-container_info">
-                  {expenses.map((expense) => (
+                {/*                 <div className="home-container_info">
+                  {eventInfo.expenses.map((expense) => (
                     <Expense expenseInfo={expense} key={expense.id} />
                   ))}
-                </div>
-                <Link to=":expense">
+                </div> */}
+                <Link to="expense">
                   <Button text="NEW EXPENSE" />
                 </Link>
               </div>
             </section>
 
-            <section className="home-container_section">
+            <section className="home-container_section home-container_section--detail">
               <article></article>
               <article>
                 <h2 className="home-container_title">Balance</h2>
@@ -64,7 +70,7 @@ function EventDetail() {
               </article>
             </section>
 
-            <section className="home-container_section">
+            <section className="home-container_section home-container_section--detail">
               <h2 className="home-container_title">Chat</h2>
               <div className="home-container_events"></div>
             </section>

@@ -65,10 +65,18 @@ function App() {
         >
           Hola
         </button> */}
-        <Header />
+        {/* <Header /> */}
 
         <Routes>
-          <Route path="/" element={<h1>Main page</h1>} />
+          <Route
+            path="/"
+            element={
+              <>
+                <Header></Header>
+                <h1>Main page</h1>
+              </>
+            }
+          />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
           <Route

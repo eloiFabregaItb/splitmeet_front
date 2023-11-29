@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { SHA256 } from "crypto-js";
 import { useNavigate } from "react-router-dom";
+import Header from "../../globalComponents/Header/Header";
 import Button from "../../globalComponents/Button";
 
 function SignUp() {
@@ -93,6 +94,7 @@ function SignUp() {
 
   return (
     <>
+      <Header></Header>
       <div className="contenedor">
         <main
           className={`login login--signup${
