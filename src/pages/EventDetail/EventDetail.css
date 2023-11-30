@@ -3,7 +3,7 @@
 }
 
 .home-container_aside {
-  width: 6%;
+  width: 100px;
   background-color: var(--sky_blue);
   min-height: 60vh;
   position: fixed;

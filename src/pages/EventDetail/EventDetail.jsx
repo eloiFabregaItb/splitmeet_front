@@ -21,7 +21,7 @@ function EventDetail() {
   const [eventInfo, setEventInfo] = useState({});
 
   useEffect(() => {
-    const checkLogin = async () => {
+    const fetchInfo = async () => {
       if (isLoggedIn) {
         const resEventsInfo = await getEventInfo(jwt, params.url);
         if (resEventsInfo.success) {
@@ -33,7 +33,7 @@ function EventDetail() {
       }
     };
 
-    //checkLogin();
+    fetchInfo();
   }, []);
 
   return (

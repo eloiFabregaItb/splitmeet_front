@@ -20,6 +20,7 @@
 
 .event_info_userPics {
   display: flex;
+  align-items: center;
   width: 10px;
   margin-left: 1rem;
   margin-top: 4px;

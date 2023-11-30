@@ -10,7 +10,7 @@ function Event({ eventInfo }) {
           <p className="event_info_name">{eventInfo.name}</p>
         </Link>
         <div className="event_info_userPics">
-          {eventInfo.users.map((user, index) => (
+          {eventInfo.users.slice(0, 4).map((user, index) => (
             <img
               className="event_info_userPic"
               /* src={`${api_url}/public/usrProfilePic/${user.img}`} */
@@ -19,6 +19,9 @@ function Event({ eventInfo }) {
               key={index}
             />
           ))}
+          {eventInfo.users.length > 4 && (
+            <span>{`+${eventInfo.users.length - 4}`}</span>
+          )}
         </div>
       </div>
       <img
