@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { api_url } from "../../utils/constants";
 import "./EventDetail.css";
 import users from "../../assets/icons/users.svg";
 import calendar from "../../assets/icons/calendar.svg";
@@ -17,7 +18,7 @@ function EventDetail() {
 
   const { nombre, saldo, fotoPerfil, isLoggedIn, jwt } = useLoginDataContext();
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [eventInfo, setEventInfo] = useState({});
 
   useEffect(() => {
@@ -27,6 +28,7 @@ function EventDetail() {
         if (resEventsInfo.success) {
           setEventInfo(resEventsInfo);
           setLoading(false);
+          console.log(resEventsInfo);
           return;
         }
         return;
@@ -40,7 +42,7 @@ function EventDetail() {
     <>
       {!loading ? (
         <>
-          <Header nameEvent={eventInfo.name}></Header>
+          <Header nameEvent={eventInfo.event.name}></Header>
           <main className="background home-container">
             <aside className="home-container_aside">
               <Link to={"users"}>
@@ -68,11 +70,11 @@ function EventDetail() {
             <section className="home-container_section home-container_section--detail">
               <h2 className="home-container_title">Expenses</h2>
               <div className="home-container_events">
-                {/*                 <div className="home-container_info">
+                <div className="home-container_info">
                   {eventInfo.expenses.map((expense) => (
                     <Expense expenseInfo={expense} key={expense.id} />
                   ))}
-                </div> */}
+                </div>
                 <Link to="expense">
                   <Button text="NEW EXPENSE" />
                 </Link>
@@ -80,7 +82,11 @@ function EventDetail() {
             </section>
 
             <section className="home-container_section home-container_section--detail">
-              <article></article>
+              <img
+                className="home-container_section--detail_event-img"
+                src={`${api_url}/public/evtPic/${eventInfo.event.imgUrl}`}
+                alt={`Imagen del evento ${eventInfo.event.imgUrl}`}
+              />
               <article>
                 <h2 className="home-container_title">Balance</h2>
                 <div className="home-container_events home-container_saldo">

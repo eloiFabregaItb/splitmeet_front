@@ -2,6 +2,10 @@
   width: 20%;
 }
 
+.home-container_section--detail_event-img {
+  margin-top: 20px;
+}
+
 .home-container_aside {
   width: 100px;
   background-color: var(--sky_blue);

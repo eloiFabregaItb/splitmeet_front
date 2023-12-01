@@ -61,7 +61,9 @@ function Header({ nameEvent }) {
           <h1 className="header_splitmeet">
             {nameEvent ? nameEvent : "SplitMeet"}
           </h1>
-          <img className="logo" src={logo} alt="Logo de SplitMeet" />
+          {!nameEvent && (
+            <img className="logo" src={logo} alt="Logo de SplitMeet" />
+          )}
         </div>
 
         {isLoggedIn && (

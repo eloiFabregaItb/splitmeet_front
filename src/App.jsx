@@ -20,6 +20,7 @@ import Error404 from "./pages/Error404/Error404";
 import NewEvent from "./pages/NewEvent/NewEvent.jsx";
 import Header from "./globalComponents/Header/Header.jsx";
 import EventDetail from "./pages/EventDetail/EventDetail.jsx";
+import Verification from "./pages/Verification/Verification.jsx";
 
 function App() {
   const { loginContext, isLoggedIn } = useLoginDataContext();
@@ -92,6 +93,7 @@ function App() {
           <Route path="/new" element={<NewEvent />} />
           <Route path="/error" element={<Error404 />} />
           <Route path="/event/:url" element={<EventDetail />} />
+          <Route path="/verification" element={<Verification />} />
         </Routes>
       </div>
     </>
