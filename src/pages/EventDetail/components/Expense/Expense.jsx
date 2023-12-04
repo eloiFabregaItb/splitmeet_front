@@ -8,8 +8,8 @@ function Expense({ setShowExpenses, setCurrentExpense, expenseInfo }) {
   };
 
   return (
-    <article className='expense'>
-      <div className='expense_img-concept'>
+    <article className="expense">
+      <div className="expense_img-concept">
         <img
           /* src={`${api_url}/public/usrProfilePic/${expenseInfo.usr_id_lender}`} */
           src={`https://robohash.org/${expenseInfo.usr_id_lender}`}
@@ -20,11 +20,11 @@ function Expense({ setShowExpenses, setCurrentExpense, expenseInfo }) {
       <p
         className={`expense_amount ${
           expenseInfo.status === "RECEIVED"
-            ? "expense_amount--green"
-            : "expense_amount--red"
+            ? "expense_amount--red"
+            : "expense_amount--green"
         }`}
       >
-        {expenseInfo.total + "€"}
+        {`You ${expenseInfo.status.toLowerCase()} ${expenseInfo.total}€`}
       </p>
     </article>
   );
