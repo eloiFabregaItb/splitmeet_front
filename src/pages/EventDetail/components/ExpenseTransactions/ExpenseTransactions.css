@@ -1,0 +1,64 @@
+.expense-transactions {
+  height: 80%;
+  width: 100%;
+  background-color: var(--sky_blue);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 1rem;
+  padding-bottom: 1rem;
+}
+
+.expense-transactions_info {
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 50px;
+  margin: 20px 0;
+}
+
+.expense-transactions_info > img {
+  margin-bottom: -50px;
+  width: 30px;
+  align-self: flex-start;
+  cursor: pointer;
+}
+
+.expense-transactions_info_header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.expense-transactions_info_header > p {
+  font-size: 1.25rem;
+}
+
+.expense-transactions_info_header_title > h3 {
+  font-size: 1.5rem;
+}
+
+.expense-transactions_info_header_title {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.expense-transactions_info_header_title > img {
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+}
+
+.expense-transactions_info_transactions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow-y: auto;
+}
+
+.expense-transactions_info_transactions_transaction {
+  font-size: 1.1rem;
+}
