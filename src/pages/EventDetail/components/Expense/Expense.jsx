@@ -21,10 +21,14 @@ function Expense({ setShowExpenses, setCurrentExpense, expenseInfo }) {
         className={`expense_amount ${
           expenseInfo.status === "RECEIVED"
             ? "expense_amount--red"
-            : "expense_amount--green"
+            : expenseInfo.status === "PAID"
+            ? "expense_amount--green"
+            : ""
         }`}
       >
-        {`You ${expenseInfo.status.toLowerCase()} ${expenseInfo.total}€`}
+        {expenseInfo.status === "NONE"
+          ? "You don't participate"
+          : `You ${expenseInfo.status.toLowerCase()} ${expenseInfo.total}€`}
       </p>
     </article>
   );
