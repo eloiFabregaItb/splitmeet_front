@@ -1,0 +1,26 @@
+.home-container_section--detail {
+  width: 20%;
+}
+
+.home-container_section--detail_event-img {
+  margin: 32px 0;
+  border-radius: 1rem;
+}
+
+.home-container_aside {
+  width: 100px;
+  background-color: var(--sky_blue);
+  min-height: 60vh;
+  position: fixed;
+  top: 25vh;
+  left: 0;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.home-container_aside_icon {
+  width: 40px;
+}

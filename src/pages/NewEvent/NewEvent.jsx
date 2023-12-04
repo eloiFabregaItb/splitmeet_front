@@ -41,6 +41,7 @@ function NewEvent() {
   };
   return (
     <>
+      <Header></Header>
       <div className="container">
         <main className="box">
           <p>{showDataError}</p>

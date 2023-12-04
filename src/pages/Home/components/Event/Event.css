@@ -13,8 +13,14 @@
   justify-content: center;
 }
 
+.event_info_name {
+  cursor: pointer;
+  color: var(--ocean_blue);
+}
+
 .event_info_userPics {
   display: flex;
+  align-items: center;
   width: 10px;
   margin-left: 1rem;
   margin-top: 4px;

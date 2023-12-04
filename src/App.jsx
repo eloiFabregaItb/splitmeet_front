@@ -19,6 +19,8 @@ import Dashboard from "./pages/Dashboard/Dashboard";
 import Error404 from "./pages/Error404/Error404";
 import NewEvent from "./pages/NewEvent/NewEvent.jsx";
 import Header from "./globalComponents/Header/Header.jsx";
+import EventDetail from "./pages/EventDetail/EventDetail.jsx";
+import Verification from "./pages/Verification/Verification.jsx";
 
 function App() {
   const { loginContext, isLoggedIn } = useLoginDataContext();
@@ -56,7 +58,7 @@ function App() {
 
   return (
     <>
-      <div className="App">
+      <div className='App'>
         {/* <button
           onClick={() => {
             ioSocket.emit("chatMsg", "hola");
@@ -64,23 +66,33 @@ function App() {
         >
           Hola
         </button> */}
-        <Header />
+        {/* <Header /> */}
 
         <Routes>
-          <Route path="/" element={<h1>Main page</h1>} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<SignUp />} />
           <Route
-            path="/home"
+            path='/'
+            element={
+              <>
+                <Header></Header>
+                <h1>Main page</h1>
+              </>
+            }
+          />
+          <Route path='/login' element={<Login />} />
+          <Route path='/signup' element={<SignUp />} />
+          <Route
+            path='/home'
             element={
               <ProtectedRoute>
                 <Home />
               </ProtectedRoute>
             }
           />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/new" element={<NewEvent />} />
-          <Route path="/error" element={<Error404 />} />
+          <Route path='/dashboard' element={<Dashboard />} />
+          <Route path='/new' element={<NewEvent />} />
+          <Route path='/error' element={<Error404 />} />
+          <Route path='/event/:url' element={<EventDetail />} />
+          <Route path='/verification/:jwt' element={<Verification />} />
         </Routes>
       </div>
     </>

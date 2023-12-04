@@ -1,0 +1,37 @@
+.expense {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.expense_img-concept {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.expense_img-concept > p {
+  cursor: pointer;
+  font-size: 1.1rem;
+}
+
+.expense_img-concept > img {
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+}
+
+.expense_amount {
+  font-size: 2rem;
+  font-weight: 500;
+}
+
+.expense_amount--green {
+  color: var(--green);
+}
+
+.expense_amount--red {
+  color: var(--red);
+}

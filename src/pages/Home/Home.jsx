@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 import "./Home.css";
 import { getEvents } from "../../services/getEvents";
 import Loader from "../../globalComponents/Loader/Loader";
-import Header from "../../globalComponents/Header/Header";
 import Button from "../../globalComponents/Button";
+import Header from "../../globalComponents/Header/Header";
 import Event from "./components/Event/Event";
 import { useLoginDataContext } from "../../contexts/LoginDataContext";
 import { Link } from "react-router-dom";
@@ -34,7 +34,7 @@ function Home() {
     <>
       {!loading ? (
         <>
-          {/* <Header img={fotoPerfil} username={nombre} /> */}
+          <Header></Header>
           <main className="background home-container">
             <section className="home-container_section">
               <h2 className="home-container_title">Events</h2>
