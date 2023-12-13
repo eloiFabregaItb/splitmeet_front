@@ -5,6 +5,7 @@ import users from "../../assets/icons/users.svg";
 import calendar from "../../assets/icons/calendar.svg";
 import settings from "../../assets/icons/settings.svg";
 import exit from "../../assets/icons/exit.svg";
+import home from "../../assets/icons/home.svg";
 import { getEventInfo } from "../../services/getEventInfo";
 import { exitFromEvent } from "../../services/exitFromEvent";
 import Loader from "../../globalComponents/Loader/Loader";
@@ -20,13 +21,22 @@ function EventDetail() {
   const params = useParams();
   const navigate = useNavigate();
 
-  const { nombre, saldo, fotoPerfil, isLoggedIn, jwt, logoutContext } =
-    useLoginDataContext();
+  const {
+    nombre,
+    saldo,
+    fotoPerfil,
+    isLoggedIn,
+    jwt,
+    logoutContext,
+    setEventInfo,
+    eventInfo,
+  } = useLoginDataContext();
 
   const [loading, setLoading] = useState(true);
-  const [eventInfo, setEventInfo] = useState({});
+  //const [eventInfo, setEventInfo] = useState({});
   const [showExpenses, setShowExpenses] = useState(true);
   const [currentExpense, setCurrentExpense] = useState({});
+  const [showUsers, setShowUsers] = useState(false);
 
   //TODO -> Ordenar las expenses por fecha
   //TODO -> Crear desplegable para filtrar las expenses según usuarios
@@ -55,6 +65,16 @@ function EventDetail() {
     return;
   };
 
+  const clickHome = () => {
+    setShowExpenses(true);
+    setShowUsers(false);
+  };
+
+  const clickUsers = () => {
+    setShowExpenses(false);
+    setShowUsers(true);
+  };
+
   return (
     <>
       {!loading ? (
@@ -62,13 +82,18 @@ function EventDetail() {
           <Header nameEvent={eventInfo.event.name}></Header>
           <main className="background home-container">
             <aside className="home-container_aside">
-              <Link to={"users"}>
-                <img
-                  className="home-container_aside_icon"
-                  src={users}
-                  alt="Users icon"
-                />
-              </Link>
+              <img
+                className="home-container_aside_icon"
+                src={home}
+                alt="Users icon"
+                onClick={clickHome}
+              />
+              <img
+                className="home-container_aside_icon"
+                src={users}
+                alt="Users icon"
+                onClick={clickUsers}
+              />
               <Link to={"calendar"}>
                 <img
                   className="home-container_aside_icon"
@@ -92,7 +117,11 @@ function EventDetail() {
             </aside>
             <section className="home-container_section home-container_section--detail">
               <h2 className="home-container_title">
-                {showExpenses ? "Expenses" : "Transactions"}
+                {showUsers
+                  ? "Users"
+                  : showExpenses
+                  ? "Expenses"
+                  : "Transactions"}
               </h2>
               {showExpenses ? (
                 <div className="home-container_events">

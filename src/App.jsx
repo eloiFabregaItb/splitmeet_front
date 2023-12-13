@@ -21,6 +21,7 @@ import NewEvent from "./pages/NewEvent/NewEvent.jsx";
 import Header from "./globalComponents/Header/Header.jsx";
 import EventDetail from "./pages/EventDetail/EventDetail.jsx";
 import Verification from "./pages/Verification/Verification.jsx";
+import Users from "./pages/EventDetail/views/Users.jsx";
 
 function App() {
   const { loginContext, isLoggedIn } = useLoginDataContext();
@@ -58,7 +59,7 @@ function App() {
 
   return (
     <>
-      <div className='App'>
+      <div className="App">
         {/* <button
           onClick={() => {
             ioSocket.emit("chatMsg", "hola");
@@ -70,7 +71,7 @@ function App() {
 
         <Routes>
           <Route
-            path='/'
+            path="/"
             element={
               <>
                 <Header></Header>
@@ -78,21 +79,22 @@ function App() {
               </>
             }
           />
-          <Route path='/login' element={<Login />} />
-          <Route path='/signup' element={<SignUp />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<SignUp />} />
           <Route
-            path='/home'
+            path="/home"
             element={
               <ProtectedRoute>
                 <Home />
               </ProtectedRoute>
             }
           />
-          <Route path='/dashboard' element={<Dashboard />} />
-          <Route path='/new' element={<NewEvent />} />
-          <Route path='/error' element={<Error404 />} />
-          <Route path='/event/:url' element={<EventDetail />} />
-          <Route path='/verification/:jwt' element={<Verification />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/new" element={<NewEvent />} />
+          <Route path="/error" element={<Error404 />} />
+          <Route path="/event/:url" element={<EventDetail />} />
+          {/* <Route path="/event/:url/users" element={<Users />} /> */}
+          <Route path="/verification/:jwt" element={<Verification />} />
         </Routes>
       </div>
     </>

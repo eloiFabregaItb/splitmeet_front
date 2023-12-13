@@ -28,7 +28,9 @@ function Expense({ setShowExpenses, setCurrentExpense, expenseInfo }) {
       >
         {expenseInfo.status === "NONE"
           ? "You don't participate"
-          : `You ${expenseInfo.status.toLowerCase()} ${expenseInfo.total}€`}
+          : `You ${expenseInfo.status === "PAID" ? "lent" : "owe"} ${
+              expenseInfo.total
+            }€`}
       </p>
     </article>
   );
