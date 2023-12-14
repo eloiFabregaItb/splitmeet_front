@@ -1,7 +1,7 @@
 import Header from "../../../globalComponents/Header/Header";
 import { useLoginDataContext } from "../../../contexts/LoginDataContext";
 
-function Users() {
+function Calendar() {
   const { eventInfo } = useLoginDataContext();
   return (
     <>
@@ -10,4 +10,4 @@ function Users() {
   );
 }
 
-export default Users;
+export default Calendar;

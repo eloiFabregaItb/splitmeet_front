@@ -1,7 +1,4 @@
-import "./ExpenseTransactions.css";
-import back from "../../../../assets/icons/back.svg";
-
-function ExpenseTransactions({ clickHome, expense }) {
+function Users() {
   return (
     <div className="expense-transactions">
       <div className="expense-transactions_info">
@@ -32,4 +29,4 @@ function ExpenseTransactions({ clickHome, expense }) {
   );
 }
 
-export default ExpenseTransactions;
+export default Users;

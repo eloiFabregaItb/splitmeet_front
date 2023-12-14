@@ -123,7 +123,9 @@ function EventDetail() {
                   ? "Expenses"
                   : "Transactions"}
               </h2>
-              {showExpenses ? (
+              {showUsers ? (
+                ""
+              ) : showExpenses ? (
                 <div className="home-container_events">
                   <div className="home-container_info">
                     {eventInfo.expenses.map((expense) => (
@@ -141,7 +143,7 @@ function EventDetail() {
                 </div>
               ) : (
                 <ExpenseTransactions
-                  setShowExpenses={setShowExpenses}
+                  clickHome={clickHome}
                   expense={currentExpense}
                 />
               )}

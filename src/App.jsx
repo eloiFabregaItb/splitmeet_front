@@ -21,7 +21,7 @@ import NewEvent from "./pages/NewEvent/NewEvent.jsx";
 import Header from "./globalComponents/Header/Header.jsx";
 import EventDetail from "./pages/EventDetail/EventDetail.jsx";
 import Verification from "./pages/Verification/Verification.jsx";
-import Users from "./pages/EventDetail/views/Users.jsx";
+import Users from "./pages/EventDetail/views/Calendar.jsx";
 
 function App() {
   const { loginContext, isLoggedIn } = useLoginDataContext();
