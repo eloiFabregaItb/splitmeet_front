@@ -7,6 +7,7 @@ import { useRef, useState } from "react";
 import Button from "../../globalComponents/Button";
 import { useLoginDataContext } from "../../contexts/LoginDataContext";
 import { addEvent } from "../../services/addEvent";
+import { uploadEventImg } from "../../services/uploadEventImg";
 import { useNavigate } from "react-router-dom";
 
 function NewEvent() {
@@ -17,7 +18,8 @@ function NewEvent() {
   const [userData] = useState(initialData);
   const { jwt } = useLoginDataContext();
   const [event_name, setName] = useState("");
-  const [event_image, setImage] = useState("");
+  const [event_image, setImage] = useState(null);
+  const [event_image64, setImage64] = useState(null);
   const [event_members, setMembers] = useState("");
   const { loginContext } = useLoginDataContext();
   const [showDataError, setShowDataError] = useState(false);
@@ -27,14 +29,28 @@ function NewEvent() {
     inputFileRef.current.click();
   }
 
+  const handleInputImg = (event) => {
+    const img = event.target.files[0];
+    if (!img) return;
+    setImage(img);
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const base64 = e.target.result;
+      setImage64(base64);
+    };
+    reader.readAsDataURL(img);
+  };
+
   const onSubmit = async (e) => {
     e.preventDefault();
 
     const resAdd = await addEvent(event_name, event_image, event_members, jwt);
     if (resAdd.success) {
       setShowDataError(false);
+      const resImg = await uploadEventImg(resAdd.evt_url, event_image, jwt);
+      console.log(resImg);
       //loginContext(resAdd);
-      return navigate("/home");
+      //return navigate("/home");
     }
     setShowDataError(true);
     localStorage.clear();
@@ -77,8 +93,7 @@ function NewEvent() {
                   className="newevent__inputFile"
                   name="event_image"
                   id="event_image"
-                  value={event_image}
-                  onChange={(e) => setImage(e.target.value)}
+                  onChange={handleInputImg}
                 />
                 <button
                   type="button"
@@ -88,6 +103,7 @@ function NewEvent() {
                   Upload Image
                 </button>
               </div>
+              {event_image64 && <img src={event_image64} alt="" />}
               <div className="newevent__members">
                 <label className="newevent__text" htmlFor="event_members">
                   Event members
