@@ -1,0 +1,16 @@
+.user {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 20px;
+}
+
+.user:hover {
+  cursor: default;
+}
+
+.user > img {
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+}

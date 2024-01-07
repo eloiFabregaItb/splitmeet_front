@@ -21,6 +21,8 @@ import NewEvent from "./pages/NewEvent/NewEvent.jsx";
 import Header from "./globalComponents/Header/Header.jsx";
 import EventDetail from "./pages/EventDetail/EventDetail.jsx";
 import Verification from "./pages/Verification/Verification.jsx";
+import Users from "./pages/EventDetail/views/Calendar.jsx";
+import Invitation from "./pages/Invitation/Invitation.jsx";
 
 function App() {
   const { loginContext, isLoggedIn } = useLoginDataContext();
@@ -92,6 +94,8 @@ function App() {
           <Route path='/new' element={<NewEvent />} />
           <Route path='/error' element={<Error404 />} />
           <Route path='/event/:url' element={<EventDetail />} />
+          <Route path='/invitation/:event_url' element={<Invitation />} />
+          {/* <Route path="/event/:url/users" element={<Users />} /> */}
           <Route path='/verification/:jwt' element={<Verification />} />
         </Routes>
       </div>

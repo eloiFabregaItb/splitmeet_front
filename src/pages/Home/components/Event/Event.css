@@ -1,9 +1,19 @@
+.router-link {
+  width: 100%;
+}
+
 .event {
   width: 100%;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+}
+
+.event:hover {
+  cursor: pointer;
+  background-color: #caedff;
+  border-radius: 10px;
 }
 
 .event_info {

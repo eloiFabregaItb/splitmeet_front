@@ -18,6 +18,7 @@ export const LoginDataProvider = ({ children }) => {
   const [emailValidated, setEmailValidated] = useState(false);
   const [jwt, _setJwt] = useState(""); //todo use local storage
   const [saldo, setSaldo] = useState(1500.51);
+  const [eventInfo, setEventInfo] = useState({});
   const setJwt = (x) => {
     _setJwt(x);
     localStorage.setItem("jwt", x);
@@ -39,6 +40,7 @@ export const LoginDataProvider = ({ children }) => {
     setEmail("");
     setEmailValidated(false);
     setJwt("");
+    setEventInfo({});
   }
 
   function setUserFromObject(userData) {
@@ -66,6 +68,8 @@ export const LoginDataProvider = ({ children }) => {
         emailValidated,
         jwt,
         saldo,
+        eventInfo,
+        setEventInfo,
       }}
     >
       {children}

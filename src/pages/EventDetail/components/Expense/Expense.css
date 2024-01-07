@@ -6,6 +6,12 @@
   justify-content: space-between;
 }
 
+.expense:hover {
+  cursor: pointer;
+  background-color: #caedff;
+  border-radius: 10px;
+}
+
 .expense_img-concept {
   display: flex;
   gap: 20px;
