@@ -8,14 +8,14 @@ function Expense({ setShowExpenses, setCurrentExpense, expenseInfo }) {
   };
 
   return (
-    <article className="expense">
-      <div className="expense_img-concept">
+    <article className='expense' onClick={handleClick}>
+      <div className='expense_img-concept'>
         <img
           /* src={`${api_url}/public/usrProfilePic/${expenseInfo.usr_id_lender}`} */
           src={`https://robohash.org/${expenseInfo.usr_id_lender}`}
           alt={`Icono del usuario ${expenseInfo.usr_id_lender}`}
         />
-        <p onClick={handleClick}>{expenseInfo.exp_concept}</p>
+        <p>{expenseInfo.exp_concept}</p>
       </div>
       <p
         className={`expense_amount ${

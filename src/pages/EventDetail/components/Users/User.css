@@ -3,6 +3,10 @@
   align-items: center;
 }
 
+.user:hover {
+  cursor: default;
+}
+
 .user > img {
   width: 55px;
   height: 55px;
