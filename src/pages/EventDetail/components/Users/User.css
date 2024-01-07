@@ -1,0 +1,10 @@
+.user {
+  display: flex;
+  align-items: center;
+}
+
+.user > img {
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+}

@@ -16,6 +16,7 @@ import { useLoginDataContext } from "../../contexts/LoginDataContext";
 import { Link, useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import ExpenseTransactions from "./components/ExpenseTransactions/ExpenseTransactions";
+import User from "./components/Users/User";
 
 function EventDetail() {
   const params = useParams();
@@ -80,43 +81,43 @@ function EventDetail() {
       {!loading ? (
         <>
           <Header nameEvent={eventInfo.event.name}></Header>
-          <main className="background home-container">
-            <aside className="home-container_aside">
+          <main className='background home-container'>
+            <aside className='home-container_aside'>
               <img
-                className="home-container_aside_icon"
+                className='home-container_aside_icon'
                 src={home}
-                alt="Users icon"
+                alt='Users icon'
                 onClick={clickHome}
               />
               <img
-                className="home-container_aside_icon"
+                className='home-container_aside_icon'
                 src={users}
-                alt="Users icon"
+                alt='Users icon'
                 onClick={clickUsers}
               />
               <Link to={"calendar"}>
                 <img
-                  className="home-container_aside_icon"
+                  className='home-container_aside_icon'
                   src={calendar}
-                  alt="Calendar icon"
+                  alt='Calendar icon'
                 />
               </Link>
               <Link to={"settings"}>
                 <img
-                  className="home-container_aside_icon"
+                  className='home-container_aside_icon'
                   src={settings}
-                  alt="Settings icon"
+                  alt='Settings icon'
                 />
               </Link>
               <img
                 onClick={exitEvent}
-                className="home-container_aside_icon"
+                className='home-container_aside_icon'
                 src={exit}
-                alt="Exit icon"
+                alt='Exit icon'
               />
             </aside>
-            <section className="home-container_section home-container_section--detail">
-              <h2 className="home-container_title">
+            <section className='home-container_section home-container_section--detail'>
+              <h2 className='home-container_title'>
                 {showUsers
                   ? "Users"
                   : showExpenses
@@ -124,10 +125,22 @@ function EventDetail() {
                   : "Transactions"}
               </h2>
               {showUsers ? (
-                ""
+                <div className='home-container_events'>
+                  <div className='home-container_info'>
+                    {eventInfo.users.map(
+                      (userInfo) =>
+                        userInfo.active === 1 && (
+                          <User userInfo={userInfo} key={userInfo.usr_id} />
+                        )
+                    )}
+                  </div>
+                  <Link to={`/invitation/${eventInfo.event.url}`}>
+                    <Button text='INVITE USERS' />
+                  </Link>
+                </div>
               ) : showExpenses ? (
-                <div className="home-container_events">
-                  <div className="home-container_info">
+                <div className='home-container_events'>
+                  <div className='home-container_info'>
                     {eventInfo.expenses.map((expense) => (
                       <Expense
                         setShowExpenses={setShowExpenses}
@@ -137,8 +150,8 @@ function EventDetail() {
                       />
                     ))}
                   </div>
-                  <Link to="expense">
-                    <Button text="NEW EXPENSE" />
+                  <Link to='expense'>
+                    <Button text='NEW EXPENSE' />
                   </Link>
                 </div>
               ) : (
@@ -149,15 +162,15 @@ function EventDetail() {
               )}
             </section>
 
-            <section className="home-container_section home-container_section--detail">
+            <section className='home-container_section home-container_section--detail'>
               <img
-                className="home-container_section--detail_event-img"
+                className='home-container_section--detail_event-img'
                 src={`${api_url}/public/evtPic/${eventInfo.event.imgUrl}`}
                 alt={`Imagen del evento ${eventInfo.event.imgUrl}`}
               />
               <article>
-                <h2 className="home-container_title">Balance</h2>
-                <div className="home-container_events home-container_saldo">
+                <h2 className='home-container_title'>Balance</h2>
+                <div className='home-container_events home-container_saldo'>
                   <p className={`balance ${saldo >= 0 ? "green" : "red"}`}>
                     {saldo}€
                   </p>
@@ -165,14 +178,14 @@ function EventDetail() {
               </article>
             </section>
 
-            <section className="home-container_section home-container_section--detail">
-              <h2 className="home-container_title">Chat</h2>
-              <div className="home-container_events"></div>
+            <section className='home-container_section home-container_section--detail'>
+              <h2 className='home-container_title'>Chat</h2>
+              <div className='home-container_events'></div>
             </section>
           </main>
         </>
       ) : (
-        <main className="loader-container">
+        <main className='loader-container'>
           <Loader />
         </main>
       )}
