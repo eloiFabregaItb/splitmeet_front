@@ -1,0 +1,39 @@
+.newevent__form_inputContainer--invitation {
+  display: flex;
+}
+
+.newevent__form_input--invitation {
+  width: 85%;
+}
+
+.invitation__button {
+  width: 15%;
+  border-radius: 10px;
+  color: white;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.invitation__plusButton {
+  background-color: var(--ocean_blue);
+}
+
+.invitation__crossButton {
+  background-color: var(--red);
+}
+
+.event_form--invitation {
+  justify-content: unset;
+  height: 100%;
+}
+
+.form-container--invitation {
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.form-container__container-invitation {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
