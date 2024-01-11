@@ -5,11 +5,12 @@ import google from "../../assets/icons/google.svg";
 import candadoAbierto from "../../assets/icons/candadoAbierto.svg";
 import candadoCerrado from "../../assets/icons/candadoCerrado.svg";
 
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useState } from "react";
 
 import { SHA256 } from "crypto-js";
 import { checkLogin } from "../../services/checkLogin";
+import { joinEvent } from "../../services/joinEvent";
 import { api_url } from "../../utils/constants";
 import Header from "../../globalComponents/Header/Header";
 import Button from "../../globalComponents/Button";
@@ -25,6 +26,7 @@ function Login() {
   const { loginContext } = useLoginDataContext();
 
   const navigate = useNavigate();
+  const params = useSearchParams();
 
   /*
     Function that checks if the email inputed has an email structure.
@@ -54,6 +56,15 @@ function Login() {
         setShowDataError(false);
         // localStorage.setItem("jwt", resLogin.jwt);
         loginContext(resLogin);
+        if (location.pathname === "/login/invitation") {
+          const resJoinEvent = joinEvent(
+            resLogin.jwt,
+            params[0].get("evt_url")
+          );
+          if (resJoinEvent.success) {
+            return navigate(`/event/${params[0].get("evt_url")}`);
+          }
+        }
         return navigate("/home");
       }
       setShowDataError(true);

@@ -1,8 +1,16 @@
 import { useEffect } from "react";
 // import { io, Manager } from "socket.io-client";
 // const url = "http://172.30.4.55:3000";
-import { Link, Route, Routes, useNavigate } from "react-router-dom";
+import {
+  Link,
+  Route,
+  Routes,
+  useNavigate,
+  useSearchParams,
+  useLocation,
+} from "react-router-dom";
 import { checkLoginJwt } from "./services/checkLoginJwt.js";
+import { joinEvent } from "./services/joinEvent.js";
 
 import "./App.css";
 
@@ -27,6 +35,8 @@ import Invitation from "./pages/Invitation/Invitation.jsx";
 function App() {
   const { loginContext, isLoggedIn } = useLoginDataContext();
   const navigate = useNavigate();
+  const location = useLocation();
+  const params = useSearchParams();
 
   useEffect(() => {
     const checkLogin = async () => {
@@ -35,6 +45,12 @@ function App() {
         const resUserInfo = await checkLoginJwt(jwt);
         if (resUserInfo.success) {
           loginContext(resUserInfo);
+          if (location.pathname === "/login/invitation") {
+            const resJoinEvent = joinEvent(jwt, params[0].get("evt_url"));
+            if (resJoinEvent.success) {
+              return navigate(`/event/${params[0].get("evt_url")}`);
+            }
+          }
           navigate("/home");
         }
       }
@@ -94,6 +110,7 @@ function App() {
           <Route path='/new' element={<NewEvent />} />
           <Route path='/error' element={<Error404 />} />
           <Route path='/event/:url' element={<EventDetail />} />
+          <Route path='/login/invitation' element={<Login />} />
           <Route path='/invitation/:event_url' element={<Invitation />} />
           {/* <Route path="/event/:url/users" element={<Users />} /> */}
           <Route path='/verification/:jwt' element={<Verification />} />
