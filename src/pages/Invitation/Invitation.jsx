@@ -1,70 +1,79 @@
-import "./Invitation.css";
-import Header from "../../globalComponents/Header/Header";
-import user from "../../assets/icons/user.svg";
+import './Invitation.css'
+import Header from '../../globalComponents/Header/Header'
+import user from '../../assets/icons/user.svg'
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from 'react'
 
-import Button from "../../globalComponents/Button";
-import { useLoginDataContext } from "../../contexts/LoginDataContext";
-import { sendEventInvitations } from "../../services/sendEventInvitations";
-import { useNavigate } from "react-router-dom";
-import UserInvitation from "./UserInvitation/UserInvitation";
+import Button from '../../globalComponents/Button'
+import { useLoginDataContext } from '../../contexts/LoginDataContext'
+import { sendEventInvitations } from '../../services/sendEventInvitations'
+import { useNavigate } from 'react-router-dom'
+import UserInvitation from './UserInvitation/UserInvitation'
 
 /*ERROR: Al hacer f5 no lee el context y se queda en blanco (no encuentra "eventInfo")
 Debería devolverte al Home, tal y como lo hace el componente EventDetail.jsx
 */
 function Invitation() {
-  const { jwt, eventInfo } = useLoginDataContext();
-  const [userMail, setUserMail] = useState("");
-  const [inputDisabled, setInputDisabled] = useState(true);
-  const [userInvitations, setUserInvitations] = useState([]);
-  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
-  const [showErrorMessage, setShowErrorMessage] = useState(false);
-  const navigate = useNavigate();
+  const { jwt, eventInfo } = useLoginDataContext()
+  const [userMail, setUserMail] = useState('')
+  const [inputDisabled, setInputDisabled] = useState(true)
+  const [userInvitations, setUserInvitations] = useState([])
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false)
+  const [showErrorMessage, setShowErrorMessage] = useState(false)
+  const navigate = useNavigate()
+
+  const plusButton = useRef(null)
 
   const addInvitation = () => {
-    setUserInvitations([...userInvitations, userMail]);
-    setUserMail("");
-  };
+    setUserInvitations([...userInvitations, userMail])
+    setUserMail('')
+  }
 
   const removeInvitation = (email) => {
     const newUserInvitations = userInvitations.filter(
       (invitation) => invitation !== email
-    );
-    setUserInvitations(newUserInvitations);
-  };
+    )
+    setUserInvitations(newUserInvitations)
+  }
 
   const validUserMail = (email) => {
-    if (userInvitations.includes(email)) return false;
+    if (userInvitations.includes(email)) return false
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) return false;
-    return true;
-  };
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!emailRegex.test(email)) return false
+    return true
+  }
 
   //Cuando cambia el email, se comprueba si el email es válido. Si no lo es, se desactiva el botón +
   useEffect(() => {
-    setInputDisabled(!validUserMail(userMail));
-  }, [userMail]);
+    setInputDisabled(!validUserMail(userMail))
+  }, [userMail])
+
+  const handleEnter = (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault()
+      plusButton.current.click()
+    }
+  }
 
   const onSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
 
     const resInvite = await sendEventInvitations(
       jwt,
       eventInfo.event.url,
       userInvitations
-    );
+    )
     if (resInvite.success) {
-      setShowErrorMessage(false);
-      setShowSuccessMessage(true);
-      setTimeout(() => navigate(`/event/${eventInfo.event.url}`), 2000);
-      return;
+      setShowErrorMessage(false)
+      setShowSuccessMessage(true)
+      setTimeout(() => navigate(`/event/${eventInfo.event.url}`), 2000)
+      return
     }
-    setShowSuccessMessage(false);
-    setShowErrorMessage(true);
-    return;
-  };
+    setShowSuccessMessage(false)
+    setShowErrorMessage(true)
+    return
+  }
   return (
     <>
       <Header nameEvent={eventInfo.event.name}></Header>
@@ -92,13 +101,15 @@ function Invitation() {
                       id='userMail'
                       value={userMail}
                       onChange={(e) => setUserMail(e.target.value)}
+                      onKeyDown={handleEnter}
                     />
                     <button
                       className={`invitation__button invitation__plusButton ${
-                        inputDisabled && "invitation__button--disabled"
+                        inputDisabled && 'invitation__button--disabled'
                       }`}
                       onClick={addInvitation}
                       disabled={inputDisabled}
+                      ref={plusButton}
                       type='button'
                     >
                       +
@@ -107,7 +118,7 @@ function Invitation() {
                   {userInvitations.includes(userMail) ? (
                     <span
                       className='error'
-                      style={{ width: "100%", marginTop: "10px" }}
+                      style={{ width: '100%', marginTop: '10px' }}
                     >
                       Email already in the list
                     </span>
@@ -115,7 +126,7 @@ function Invitation() {
                     inputDisabled && (
                       <span
                         className='error'
-                        style={{ width: "100%", marginTop: "10px" }}
+                        style={{ width: '100%', marginTop: '10px' }}
                       >
                         Incorrect email format
                       </span>
@@ -148,7 +159,7 @@ function Invitation() {
               <span className='success'>Invitations sent successfully</span>
             ) : (
               showErrorMessage && (
-                <span className='error' style={{ width: "100%" }}>
+                <span className='error' style={{ width: '100%' }}>
                   An error has ocurred
                 </span>
               )
@@ -157,6 +168,6 @@ function Invitation() {
         </main>
       </div>
     </>
-  );
+  )
 }
-export default Invitation;
+export default Invitation

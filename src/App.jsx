@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect } from 'react'
 // import { io, Manager } from "socket.io-client";
 // const url = "http://172.30.4.55:3000";
 import {
@@ -8,56 +8,56 @@ import {
   useNavigate,
   useSearchParams,
   useLocation,
-} from "react-router-dom";
-import { checkLoginJwt } from "./services/checkLoginJwt.js";
-import { joinEvent } from "./services/joinEvent.js";
+} from 'react-router-dom'
+import { checkLoginJwt } from './services/checkLoginJwt.js'
+import { joinEvent } from './services/joinEvent.js'
 
-import "./App.css";
+import './App.css'
 
 import {
   ProtectedRoute,
   useLoginDataContext,
-} from "./contexts/LoginDataContext.jsx";
+} from './contexts/LoginDataContext.jsx'
 
 // PAGES
-import Login from "./pages/Login/Login";
-import SignUp from "./pages/SignUp/SignUp";
-import Home from "./pages/Home/Home";
-import Dashboard from "./pages/Dashboard/Dashboard";
-import Error404 from "./pages/Error404/Error404";
-import NewEvent from "./pages/NewEvent/NewEvent.jsx";
-import Header from "./globalComponents/Header/Header.jsx";
-import EventDetail from "./pages/EventDetail/EventDetail.jsx";
-import Verification from "./pages/Verification/Verification.jsx";
-import Users from "./pages/EventDetail/views/Calendar.jsx";
-import Invitation from "./pages/Invitation/Invitation.jsx";
+import Login from './pages/Login/Login'
+import SignUp from './pages/SignUp/SignUp'
+import Home from './pages/Home/Home'
+import Dashboard from './pages/Dashboard/Dashboard'
+import Error404 from './pages/Error404/Error404'
+import NewEvent from './pages/NewEvent/NewEvent.jsx'
+import Header from './globalComponents/Header/Header.jsx'
+import EventDetail from './pages/EventDetail/EventDetail.jsx'
+import Verification from './pages/Verification/Verification.jsx'
+import Users from './pages/EventDetail/views/Calendar.jsx'
+import Invitation from './pages/Invitation/Invitation.jsx'
 
 function App() {
-  const { loginContext, isLoggedIn } = useLoginDataContext();
-  const navigate = useNavigate();
-  const location = useLocation();
-  const params = useSearchParams();
+  const { loginContext, isLoggedIn } = useLoginDataContext()
+  const navigate = useNavigate()
+  const location = useLocation()
+  const params = useSearchParams()
 
   useEffect(() => {
     const checkLogin = async () => {
-      const jwt = localStorage.getItem("jwt");
+      const jwt = localStorage.getItem('jwt')
       if (!isLoggedIn && jwt) {
-        const resUserInfo = await checkLoginJwt(jwt);
+        const resUserInfo = await checkLoginJwt(jwt)
         if (resUserInfo.success) {
-          loginContext(resUserInfo);
-          if (location.pathname === "/login/invitation") {
-            const resJoinEvent = joinEvent(jwt, params[0].get("evt_url"));
+          loginContext(resUserInfo)
+          if (location.pathname === '/login/invitation') {
+            const resJoinEvent = joinEvent(jwt, params[0].get('evt_url'))
             if (resJoinEvent.success) {
-              return navigate(`/event/${params[0].get("evt_url")}`);
+              return navigate(`/event/${params[0].get('evt_url')}`)
             }
           }
-          navigate("/home");
+          navigate('/home')
         }
       }
-    };
+    }
 
-    checkLogin();
-  }, []);
+    checkLogin()
+  }, [])
 
   // const [ioSocket, setIoSocket] = useState(null);
   // useEffect(() => {
@@ -108,7 +108,7 @@ function App() {
           />
           <Route path='/dashboard' element={<Dashboard />} />
           <Route path='/new' element={<NewEvent />} />
-          <Route path='/error' element={<Error404 />} />
+          <Route path='*' element={<Error404 />} />
           <Route path='/event/:url' element={<EventDetail />} />
           <Route path='/login/invitation' element={<Login />} />
           <Route path='/invitation/:event_url' element={<Invitation />} />
@@ -117,7 +117,7 @@ function App() {
         </Routes>
       </div>
     </>
-  );
+  )
 }
 
-export default App;
+export default App
