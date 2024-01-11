@@ -58,6 +58,7 @@ function Invitation() {
     if (resInvite.success) {
       setShowErrorMessage(false);
       setShowSuccessMessage(true);
+      setTimeout(() => navigate(`/event/${eventInfo.event.url}`), 2000);
       return;
     }
     setShowSuccessMessage(false);
