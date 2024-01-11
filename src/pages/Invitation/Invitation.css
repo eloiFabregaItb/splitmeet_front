@@ -14,8 +14,21 @@
   cursor: pointer;
 }
 
+.invitation__button--disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
 .invitation__plusButton {
   background-color: var(--ocean_blue);
+}
+
+.userInvitations {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow-y: auto;
+  padding: 5px;
 }
 
 .invitation__crossButton {
@@ -30,6 +43,7 @@
 .form-container--invitation {
   justify-content: space-between;
   margin-top: 20px;
+  height: 100%;
 }
 
 .form-container__container-invitation {
