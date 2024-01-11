@@ -1,0 +1,24 @@
+.userInvitation {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 30px;
+  background-color: white;
+  color: var(--light_grey);
+  border-radius: 10px;
+  -webkit-box-shadow: 1px 2px 6px 0px rgba(105, 105, 105, 0.79);
+  -moz-box-shadow: 1px 2px 6px 0px rgba(105, 105, 105, 0.79);
+  box-shadow: 1px 2px 6px 0px rgba(105, 105, 105, 0.79);
+}
+
+.userInvitation > p {
+  padding: 0 10px;
+  font-size: 0.85rem;
+}
+
+.userInvitation > button {
+  width: 30px;
+  height: 100%;
+}

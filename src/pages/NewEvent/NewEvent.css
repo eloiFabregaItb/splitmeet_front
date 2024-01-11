@@ -164,6 +164,7 @@
   flex-direction: column;
   gap: 5px;
   width: 100%;
+  height: 250px;
 }
 
 .newevent__form_textarea {

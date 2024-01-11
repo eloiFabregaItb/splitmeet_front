@@ -5,11 +5,12 @@ import google from "../../assets/icons/google.svg";
 import candadoAbierto from "../../assets/icons/candadoAbierto.svg";
 import candadoCerrado from "../../assets/icons/candadoCerrado.svg";
 
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useState } from "react";
 
 import { SHA256 } from "crypto-js";
 import { checkLogin } from "../../services/checkLogin";
+import { joinEvent } from "../../services/joinEvent";
 import { api_url } from "../../utils/constants";
 import Header from "../../globalComponents/Header/Header";
 import Button from "../../globalComponents/Button";
@@ -25,6 +26,7 @@ function Login() {
   const { loginContext } = useLoginDataContext();
 
   const navigate = useNavigate();
+  const params = useSearchParams();
 
   /*
     Function that checks if the email inputed has an email structure.
@@ -54,6 +56,15 @@ function Login() {
         setShowDataError(false);
         // localStorage.setItem("jwt", resLogin.jwt);
         loginContext(resLogin);
+        if (location.pathname === "/login/invitation") {
+          const resJoinEvent = joinEvent(
+            resLogin.jwt,
+            params[0].get("evt_url")
+          );
+          if (resJoinEvent.success) {
+            return navigate(`/event/${params[0].get("evt_url")}`);
+          }
+        }
         return navigate("/home");
       }
       setShowDataError(true);
@@ -64,74 +75,74 @@ function Login() {
   return (
     <>
       <Header></Header>
-      <div className="contenedor">
+      <div className='contenedor'>
         <main
           className={`login ${
             showEmailError || showDataError ? "login--error" : ""
           }`}
         >
-          <img className="login_logo" src={logo} alt="Logo de Splitmeet" />
-          <h1 className="login_titulo">SplitMeet</h1>
+          <img className='login_logo' src={logo} alt='Logo de Splitmeet' />
+          <h1 className='login_titulo'>SplitMeet</h1>
 
-          <form noValidate onSubmit={onSubmit} className="login_form">
-            <div className="login_form_inputContainer">
+          <form noValidate onSubmit={onSubmit} className='login_form'>
+            <div className='login_form_inputContainer'>
               <img
                 src={user}
-                alt="Logo de usuario"
-                className="login_form_logo"
+                alt='Logo de usuario'
+                className='login_form_logo'
               />
               <input
-                className="login_form_input"
-                type="email"
-                placeholder="Email"
-                name="email"
-                id="email"
+                className='login_form_input'
+                type='email'
+                placeholder='Email'
+                name='email'
+                id='email'
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
             </div>
 
-            <div className="login_form_inputContainer">
+            <div className='login_form_inputContainer'>
               <img
                 src={showPassword ? candadoAbierto : candadoCerrado}
-                alt="Logo de un candado/password"
-                className="login_form_logo"
+                alt='Logo de un candado/password'
+                className='login_form_logo'
                 onClick={() => setShowPassword(!showPassword)}
               />
               <input
-                className="login_form_input"
+                className='login_form_input'
                 type={showPassword ? "text" : "password"}
-                placeholder="Password"
-                name="password"
-                id="password"
+                placeholder='Password'
+                name='password'
+                id='password'
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
 
             {showEmailError ? (
-              <span className="error">Incorrectly formatted email</span>
+              <span className='error'>Incorrectly formatted email</span>
             ) : showDataError ? (
-              <span className="error">
+              <span className='error'>
                 The email and/or password are incorrect
               </span>
             ) : (
               ""
             )}
             <Button
-              classname="login_form_btn login_form_btn--login"
-              text="LOGIN"
+              classname='login_form_btn login_form_btn--login'
+              text='LOGIN'
             />
           </form>
 
-          <p className="login_mensajeRegistro">
+          <p className='login_mensajeRegistro'>
             You do not have an account?
-            <Link to="/signup" className="subrayado">
+            <Link to='/signup' className='subrayado'>
               Sign up
             </Link>
           </p>
 
-          <div className="login_buttons">
+          <div className='login_buttons'>
             {/*                         <a
                             href="/"
                             className="login_form_btn login_form_btn--google"
@@ -145,13 +156,13 @@ function Login() {
                         </a> */}
             <a
               href={`${api_url}/auth/google`}
-              to="/auth/google"
-              className="subrayado login_form_btn login_form_btn--google"
+              to='/auth/google'
+              className='subrayado login_form_btn login_form_btn--google'
             >
               <img
-                className="login_buttons_logo"
+                className='login_buttons_logo'
                 src={google}
-                alt="Logo de Facebook"
+                alt='Logo de Google'
               />
               Continue with Google
             </a>
