@@ -9,6 +9,7 @@ import UserInvitation from '../Invitation/UserInvitation/UserInvitation'
 import { useLoginDataContext } from '../../contexts/LoginDataContext'
 import { addEvent } from '../../services/addEvent'
 import { uploadEventImg } from '../../services/uploadEventImg'
+import { sendEventInvitations } from '../../services/sendEventInvitations'
 import { useNavigate } from 'react-router-dom'
 
 function NewEvent() {
@@ -81,11 +82,17 @@ function NewEvent() {
   const onSubmit = async (e) => {
     e.preventDefault()
 
-    const resAdd = await addEvent(event_name, event_image, event_members, jwt)
+    const resAdd = await addEvent(event_name, event_image, userInvitations, jwt)
     if (resAdd.success) {
       setShowDataError(false)
       const resImg = await uploadEventImg(resAdd.evt_url, event_image, jwt)
       console.log(resImg)
+      const resInvite = await sendEventInvitations(
+        jwt,
+        resAdd.event.url,
+        userInvitations
+      )
+      console.log(resInvite)
       //loginContext(resAdd);
       //return navigate("/home");
     }
@@ -202,7 +209,7 @@ function NewEvent() {
                   )}
                 </div>
 
-                <div className='newevent__members'>
+                <div className='newevent__members newevent__members--newEvent'>
                   <label className='newevent__text' htmlFor='event_members'>
                     Invitations
                   </label>

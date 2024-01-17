@@ -172,6 +172,10 @@
   height: 250px;
 }
 
+.newevent__members--newEvent {
+  height: 120px;
+}
+
 .newevent__form_textarea {
   resize: none;
   outline: none;
