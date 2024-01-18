@@ -86,18 +86,19 @@ function NewEvent() {
     if (resAdd.success) {
       setShowDataError(false)
       const resImg = await uploadEventImg(resAdd.evt_url, event_image, jwt)
-      console.log(resImg)
-      const resInvite = await sendEventInvitations(
-        jwt,
-        resAdd.event.url,
-        userInvitations
-      )
-      console.log(resInvite)
+
+      if (resImg.success) {
+        const resInvite = await sendEventInvitations(
+          jwt,
+          resAdd.evt_url,
+          userInvitations
+        )
+      }
       //loginContext(resAdd);
-      //return navigate("/home");
+      return navigate(`/event/${resAdd.evt_url}`)
     }
     setShowDataError(true)
-    localStorage.clear()
+    //localStorage.clear()
   }
   return (
     <>
@@ -147,7 +148,13 @@ function NewEvent() {
                   Upload Image
                 </button>
               </div>
-              {event_image64 && <img src={event_image64} alt='' />}
+              {event_image64 && (
+                <img
+                  className='newevent__imagen'
+                  src={event_image64}
+                  alt={`Imagen del evento ${event_name}`}
+                />
+              )}
               {/* <div className="newevent__members">
                 <label className="newevent__text" htmlFor="event_members">
                   Event members

@@ -13,7 +13,8 @@
   align-items: center;
   background-color: var(--sky_blue);
   width: 621px;
-  height: 621px;
+  margin: 50px 0;
+  /* height: 621px; */
   flex-shrink: 0;
   min-height: 600px;
   min-width: 360px;
@@ -120,6 +121,11 @@
 .newevent__buttonFile--text {
   color: white;
   background-color: var(--ocean_blue);
+}
+
+.newevent__imagen {
+  width: 100%;
+  max-height: 250px;
 }
 
 .form-container {

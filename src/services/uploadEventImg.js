@@ -5,17 +5,12 @@ export const uploadEventImg = async (event_url, eventImage, jwt) => {
 
   const form = new FormData()
   form.append('evt_url', event_url)
-  form.append('img', eventImage)
   form.append('token', jwt)
+  form.append('img', eventImage)
 
   console.log(jwt)
   try {
-    response = await axios.post('/event/img', form, {
-      headers: {
-        accept: 'application/json',
-        'Content-Type': `multipart/form-data; boundary=${form._boundary}`,
-      },
-    })
+    response = await axios.post('/event/img', form)
 
     if (response.data) {
       console.log(response.data)
