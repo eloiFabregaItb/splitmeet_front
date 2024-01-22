@@ -1,26 +1,26 @@
-import { useState, useEffect } from "react";
-import { api_url } from "../../utils/constants";
-import "./EventDetail.css";
-import users from "../../assets/icons/users.svg";
-import calendar from "../../assets/icons/calendar.svg";
-import settings from "../../assets/icons/settings.svg";
-import exit from "../../assets/icons/exit.svg";
-import home from "../../assets/icons/home.svg";
-import { getEventInfo } from "../../services/getEventInfo";
-import { exitFromEvent } from "../../services/exitFromEvent";
-import Loader from "../../globalComponents/Loader/Loader";
-import Header from "../../globalComponents/Header/Header";
-import Expense from "./components/Expense/Expense";
-import Button from "../../globalComponents/Button";
-import { useLoginDataContext } from "../../contexts/LoginDataContext";
-import { Link, useNavigate } from "react-router-dom";
-import { useParams } from "react-router-dom";
-import ExpenseTransactions from "./components/ExpenseTransactions/ExpenseTransactions";
-import User from "./components/Users/User";
+import { useState, useEffect } from 'react'
+import { api_url } from '../../utils/constants'
+import './EventDetail.css'
+import users from '../../assets/icons/users.svg'
+import calendar from '../../assets/icons/calendar.svg'
+import settings from '../../assets/icons/settings.svg'
+import exit from '../../assets/icons/exit.svg'
+import home from '../../assets/icons/home.svg'
+import { getEventInfo } from '../../services/getEventInfo'
+import { exitFromEvent } from '../../services/exitFromEvent'
+import Loader from '../../globalComponents/Loader/Loader'
+import Header from '../../globalComponents/Header/Header'
+import Expense from './components/Expense/Expense'
+import Button from '../../globalComponents/Button'
+import { useLoginDataContext } from '../../contexts/LoginDataContext'
+import { Link, useNavigate } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
+import ExpenseTransactions from './components/ExpenseTransactions/ExpenseTransactions'
+import User from './components/Users/User'
 
 function EventDetail() {
-  const params = useParams();
-  const navigate = useNavigate();
+  const params = useParams()
+  const navigate = useNavigate()
 
   const {
     nombre,
@@ -31,50 +31,50 @@ function EventDetail() {
     logoutContext,
     setEventInfo,
     eventInfo,
-  } = useLoginDataContext();
+  } = useLoginDataContext()
 
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true)
   //const [eventInfo, setEventInfo] = useState({});
-  const [showExpenses, setShowExpenses] = useState(true);
-  const [currentExpense, setCurrentExpense] = useState({});
-  const [showUsers, setShowUsers] = useState(false);
+  const [showExpenses, setShowExpenses] = useState(true)
+  const [currentExpense, setCurrentExpense] = useState({})
+  const [showUsers, setShowUsers] = useState(false)
 
   //TODO -> Ordenar las expenses por fecha
   //TODO -> Crear desplegable para filtrar las expenses según usuarios
   useEffect(() => {
     const fetchInfo = async () => {
       if (isLoggedIn) {
-        const resEventsInfo = await getEventInfo(jwt, params.url);
+        const resEventsInfo = await getEventInfo(jwt, params.url)
         if (resEventsInfo.success) {
-          setEventInfo(resEventsInfo);
-          setLoading(false);
-          return;
+          setEventInfo(resEventsInfo)
+          setLoading(false)
+          return
         }
-        return;
+        return
       }
-    };
+    }
 
-    fetchInfo();
-  }, []);
+    fetchInfo()
+  }, [])
 
   const exitEvent = async () => {
-    const resExitEvent = await exitFromEvent(jwt, params.url);
+    const resExitEvent = await exitFromEvent(jwt, params.url)
     if (resExitEvent.success) {
-      navigate("/home");
-      return;
+      navigate('/home')
+      return
     }
-    return;
-  };
+    return
+  }
 
   const clickHome = () => {
-    setShowExpenses(true);
-    setShowUsers(false);
-  };
+    setShowExpenses(true)
+    setShowUsers(false)
+  }
 
   const clickUsers = () => {
-    setShowExpenses(false);
-    setShowUsers(true);
-  };
+    setShowExpenses(false)
+    setShowUsers(true)
+  }
 
   return (
     <>
@@ -95,14 +95,14 @@ function EventDetail() {
                 alt='Users icon'
                 onClick={clickUsers}
               />
-              <Link to={"calendar"}>
+              <Link to={'calendar'}>
                 <img
                   className='home-container_aside_icon'
                   src={calendar}
                   alt='Calendar icon'
                 />
               </Link>
-              <Link to={"settings"}>
+              <Link to={'settings'}>
                 <img
                   className='home-container_aside_icon'
                   src={settings}
@@ -119,10 +119,10 @@ function EventDetail() {
             <section className='home-container_section home-container_section--detail'>
               <h2 className='home-container_title'>
                 {showUsers
-                  ? "Users"
+                  ? 'Users'
                   : showExpenses
-                  ? "Expenses"
-                  : "Transactions"}
+                  ? 'Expenses'
+                  : 'Transactions'}
               </h2>
               {showUsers ? (
                 <div className='home-container_events'>
@@ -171,7 +171,7 @@ function EventDetail() {
               <article>
                 <h2 className='home-container_title'>Balance</h2>
                 <div className='home-container_events home-container_saldo'>
-                  <p className={`balance ${saldo >= 0 ? "green" : "red"}`}>
+                  <p className={`balance ${saldo >= 0 ? 'green' : 'red'}`}>
                     {saldo}€
                   </p>
                 </div>
@@ -190,7 +190,7 @@ function EventDetail() {
         </main>
       )}
     </>
-  );
+  )
 }
 
-export default EventDetail;
+export default EventDetail

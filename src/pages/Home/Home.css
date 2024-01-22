@@ -19,6 +19,7 @@
   min-width: 350px;
   display: flex;
   flex-direction: column;
+  height: calc(90vh - 50px);
 }
 
 .home-container_events {
