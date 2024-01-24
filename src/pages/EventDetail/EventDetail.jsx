@@ -76,6 +76,10 @@ function EventDetail() {
     setShowUsers(true)
   }
 
+  const handleNewExpense = () => {
+    console.log(params.url)
+  }
+
   return (
     <>
       {!loading ? (
@@ -150,8 +154,8 @@ function EventDetail() {
                       />
                     ))}
                   </div>
-                  <Link to='expense'>
-                    <Button text='NEW EXPENSE' />
+                  <Link to={`/newExpense/${params.url}`}>
+                    <Button text='NEW EXPENSE'/>
                   </Link>
                 </div>
               ) : (
