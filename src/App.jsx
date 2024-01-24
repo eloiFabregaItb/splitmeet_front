@@ -31,6 +31,7 @@ import EventDetail from './pages/EventDetail/EventDetail.jsx'
 import Verification from './pages/Verification/Verification.jsx'
 import Users from './pages/EventDetail/views/Calendar.jsx'
 import Invitation from './pages/Invitation/Invitation.jsx'
+import ProcessingVerification from './pages/Verification/ProcessingVerification.jsx'
 
 function App() {
   const { loginContext, isLoggedIn, emailValidated, jwt } =
@@ -118,6 +119,10 @@ function App() {
           <Route path='/invitation/:event_url' element={<Invitation />} />
           {/* <Route path="/event/:url/users" element={<Users />} /> */}
           <Route path='/verification/:jwt' element={<Verification />} />
+          <Route
+            path='/validateMail/:jwt'
+            element={<ProcessingVerification />}
+          />
         </Routes>
       </div>
     </>
