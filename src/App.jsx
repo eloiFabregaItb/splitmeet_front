@@ -32,33 +32,38 @@ import Verification from './pages/Verification/Verification.jsx'
 import Users from './pages/EventDetail/views/Calendar.jsx'
 import Invitation from './pages/Invitation/Invitation.jsx'
 import NewExpense from './pages/NewExpense/NewExpense.jsx'
+import ProcessingVerification from './pages/Verification/ProcessingVerification.jsx'
 
 function App() {
-  const { loginContext, isLoggedIn } = useLoginDataContext()
+  const { loginContext, isLoggedIn, emailValidated, jwt } =
+    useLoginDataContext()
   const navigate = useNavigate()
   const location = useLocation()
   const params = useSearchParams()
 
   useEffect(() => {
     const checkLogin = async () => {
-      const jwt = localStorage.getItem('jwt')
-      if (!isLoggedIn && jwt) {
-        const resUserInfo = await checkLoginJwt(jwt)
+      if (emailValidated === 0) {
+        return navigate(`/verification/${jwt}`)
+      }
+      const token = localStorage.getItem('jwt')
+      if (!isLoggedIn && token) {
+        const resUserInfo = await checkLoginJwt(token)
         if (resUserInfo.success) {
           loginContext(resUserInfo)
-          if (location.pathname === '/login/invitation') {
-            const resJoinEvent = joinEvent(jwt, params[0].get('evt_url'))
-            if (resJoinEvent.success) {
-              return navigate(`/event/${params[0].get('evt_url')}`)
-            }
-          }
-          navigate('/home')
+          return navigate('/home')
+        }
+      }
+      if (location.pathname === '/login/invitation') {
+        const resJoinEvent = joinEvent(jwt, params[0].get('evt_url'))
+        if (resJoinEvent.success) {
+          return navigate(`/event/${params[0].get('evt_url')}`)
         }
       }
     }
 
     checkLogin()
-  }, [])
+  }, [location.pathname])
 
   // const [ioSocket, setIoSocket] = useState(null);
   // useEffect(() => {
@@ -117,6 +122,10 @@ function App() {
           <Route path='/newExpense/:event_url' element={<NewExpense />} />
           
           <Route path='*' element={<Error404 />} />
+          <Route
+            path='/validateMail/:jwt'
+            element={<ProcessingVerification />}
+          />
         </Routes>
       </div>
     </>
