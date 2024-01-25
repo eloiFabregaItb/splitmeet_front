@@ -39,13 +39,25 @@ export function ModalDistributeExpenses({
 
   //page 0
   function handleCheckUser(user){
+    console.log(user)
     setEqualPartsDiv(prev=>{
-      const updated = [...prev]
+      const updated = prev.map(u=>({...u,amount:0}))
       const i = updated.findIndex(x=>x.usr_id === user.usr_id)
+
       updated[i].checked =!user.checked
       setIsAllChecked(updated.some(x=>x.checked))
+
+
+      // //update users amount
+      const participants = updated.filter(x=>x.checked)
+      const amounts = split_equal(amount,participants.length).sort((a,b)=>Math.random()>0.5?1:0)
+      participants.forEach((u,i) => {
+        u.amount = amounts[i]
+      });
+
       return updated
     })
+
   }
 
   //page 1
@@ -56,6 +68,8 @@ export function ModalDistributeExpenses({
       updated[i].amount = e.target.value
       return updated
     })
+
+
   }
 
   //page 2
@@ -123,7 +137,7 @@ export function ModalDistributeExpenses({
 
           <ul className="NewExpense__modal__nav">
             {
-              divisions.map((d,i)=>(<li><button onClick={()=>setPage(i)} className={page === i? "active":""}>{d}</button></li>))
+              divisions.map((d,i)=>(<li key={i}><button onClick={()=>setPage(i)} className={page === i? "active":""}>{d}</button></li>))
             }
           </ul>
           
@@ -145,7 +159,10 @@ export function ModalDistributeExpenses({
                         type="checkbox" 
                         onChange={()=>handleCheckUser(user)}
                         checked={user.checked}
-                      /> <label >{user.usr_name}</label>
+                      /> 
+                      <label >{user.usr_name}</label>
+                      _ 
+                      <span>{user.amount}€</span>
                     </p>  
                   )
                 }
@@ -157,18 +174,19 @@ export function ModalDistributeExpenses({
               </div>
             }
 
-{
+            {
               page===1 && //by quantity
               <div>
 
                 {
                   equalPartsDiv.map((user,i)=>
-                  <p>
+                  <p key={i}>
                     {user.usr_name}
                     <input type="number"
                       onChange={e=>handleChangeAmount(user,e)}
                       value={user.amount === undefined ? 0 : user.amount}
-                    ></input>
+                    />
+                    <span>{user.amount}</span>
                   </p>
                   )
                 }
