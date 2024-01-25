@@ -31,6 +31,7 @@ import EventDetail from './pages/EventDetail/EventDetail.jsx'
 import Verification from './pages/Verification/Verification.jsx'
 import Users from './pages/EventDetail/views/Calendar.jsx'
 import Invitation from './pages/Invitation/Invitation.jsx'
+import NewExpense from './pages/NewExpense/NewExpense.jsx'
 import ProcessingVerification from './pages/Verification/ProcessingVerification.jsx'
 
 function App() {
@@ -113,12 +114,14 @@ function App() {
           />
           <Route path='/dashboard' element={<Dashboard />} />
           <Route path='/new' element={<NewEvent />} />
-          <Route path='*' element={<Error404 />} />
           <Route path='/event/:url' element={<EventDetail />} />
           <Route path='/login/invitation' element={<Login />} />
           <Route path='/invitation/:event_url' element={<Invitation />} />
           {/* <Route path="/event/:url/users" element={<Users />} /> */}
           <Route path='/verification/:jwt' element={<Verification />} />
+          <Route path='/newExpense/:event_url' element={<NewExpense />} />
+          
+          <Route path='*' element={<Error404 />} />
           <Route
             path='/validateMail/:jwt'
             element={<ProcessingVerification />}
