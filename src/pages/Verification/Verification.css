@@ -1,0 +1,11 @@
+.verify_text {
+  text-align: center;
+  margin: 20px 0;
+  text-wrap: pretty;
+  padding: 0 35px;
+}
+
+.pt-40 {
+  padding-top: 20px;
+  margin-bottom: -20px;
+}
