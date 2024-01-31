@@ -23,7 +23,6 @@ import {
 import Login from './pages/Login/Login'
 import SignUp from './pages/SignUp/SignUp'
 import Home from './pages/Home/Home'
-import Dashboard from './pages/Dashboard/Dashboard'
 import Error404 from './pages/Error404/Error404'
 import NewEvent from './pages/NewEvent/NewEvent.jsx'
 import Header from './globalComponents/Header/Header.jsx'
@@ -51,7 +50,7 @@ function App() {
         const resUserInfo = await checkLoginJwt(token)
         if (resUserInfo.success) {
           loginContext(resUserInfo)
-          return navigate('/home')
+          return navigate('/')
         }
       }
       if (location.pathname === '/login/invitation') {
@@ -95,24 +94,14 @@ function App() {
         <Routes>
           <Route
             path='/'
-            element={
-              <>
-                <Header></Header>
-                <h1>Main page</h1>
-              </>
-            }
+            element={<ProtectedRoute>
+              <Home />
+            </ProtectedRoute>}
           />
           <Route path='/login' element={<Login />} />
           <Route path='/signup' element={<SignUp />} />
-          <Route
-            path='/home'
-            element={
-              <ProtectedRoute>
-                <Home />
-              </ProtectedRoute>
-            }
-          />
-          <Route path='/dashboard' element={<Dashboard />} />
+
+          
           <Route path='/new' element={<NewEvent />} />
           <Route path='/event/:url' element={<EventDetail />} />
           <Route path='/login/invitation' element={<Login />} />
@@ -121,11 +110,13 @@ function App() {
           <Route path='/verification/:jwt' element={<Verification />} />
           <Route path='/newExpense/:event_url' element={<NewExpense />} />
           
-          <Route path='*' element={<Error404 />} />
           <Route
             path='/validateMail/:jwt'
             element={<ProcessingVerification />}
           />
+
+          <Route path='*' element={<Error404 />} />
+          
         </Routes>
       </div>
     </>

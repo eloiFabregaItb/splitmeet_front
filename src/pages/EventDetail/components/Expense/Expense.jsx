@@ -1,10 +1,9 @@
 import "./Expense.css";
 import { api_url } from "../../../../utils/constants";
 
-function Expense({ setShowExpenses, setCurrentExpense, expenseInfo }) {
+function Expense({ onClick, expenseInfo }) {
   const handleClick = () => {
-    setCurrentExpense(expenseInfo);
-    setShowExpenses(false);
+    onClick(expenseInfo);
   };
 
   return (

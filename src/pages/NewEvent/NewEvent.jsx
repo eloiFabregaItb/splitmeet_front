@@ -14,7 +14,7 @@ import { useNavigate } from 'react-router-dom'
 
 function NewEvent() {
   const initialData = {
-    name: 'Oriol',
+    name: '',
   }
   const inputFileRef = useRef(null)
   const [userData] = useState(initialData)

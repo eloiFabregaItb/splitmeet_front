@@ -10,6 +10,8 @@ import "./Header.css";
 import "./Navbar.css";
 import { useEffect, useRef, useState } from "react";
 
+import icoLogout from "../../assets/icons/logout.svg"
+
 function Header({ nameEvent }) {
   const { logoutContext, nombre, fotoPerfil, isLoggedIn } =
     useLoginDataContext();
@@ -53,9 +55,14 @@ function Header({ nameEvent }) {
   return (
     <>
       <header className="header">
-        <button onClick={handleOpenNavbar} className="buttonActionIco">
-          <img src={ico_burger} alt="Icono del menú" />
-        </button>
+        <div className="left">
+          {
+            !isLoggedIn &&
+          <button onClick={handleOpenNavbar} className="buttonActionIco">
+            <img src={ico_burger} alt="Icono del menú" />
+          </button>
+          }
+        </div>
 
         <div className="header_logo">
           <h1 className="header_splitmeet">
@@ -65,21 +72,35 @@ function Header({ nameEvent }) {
             <img className="logo" src={logo} alt="Logo de SplitMeet" />
           )}
         </div>
+          
+        <div className="right">
+          {isLoggedIn && (
+            <div className="header_userInfo">
+              <p className="header_userInfo_username">{nombre}</p>
+              <img
+                className="header_userInfo_img"
+                /* src={`${api_url}/public/usrProfilePic/${fotoPerfil}`} */
+                src={`https://robohash.org/${nombre}`}
+                alt={`Icono del usuario ${nombre}`}
+              />
+              <nav className="header__userMenu">
+                <ul>
+                <li>
+                    <a href="#" onClick={handleLogout}>
+                      <img src={icoLogout} alt="" />
+                      Logout
+                    </a>
+                  </li>
 
-        {isLoggedIn && (
-          <div className="header_userInfo">
-            <p className="header_userInfo_username">{nombre}</p>
-            <img
-              className="header_userInfo_img"
-              /* src={`${api_url}/public/usrProfilePic/${fotoPerfil}`} */
-              src={`https://robohash.org/${nombre}`}
-              alt={`Icono del usuario ${nombre}`}
-            />
-          </div>
-        )}
+                  {/* <hr /> */}
+                </ul>
+              </nav>
+            </div>
+          )}
+        </div>
       </header>
 
-      {isNavbarOpen && (
+      {(isNavbarOpen && !isLoggedIn) && (
         <>
           <aside className="Navbar" ref={navbarRef}>
             <button
@@ -89,43 +110,18 @@ function Header({ nameEvent }) {
               <img src={ico_x} alt="Icono de una cruz" />
             </button>
             <nav>
-              {isLoggedIn ? (
-                <ul>
-                  <li>
-                    <Link onClick={handleClickNav} to="/">
-                      Home
-                    </Link>
-                  </li>
-                  <li>
-                    <a href="#" onClick={handleLogout}>
-                      Logout
-                    </a>
-                  </li>
-                  <li>
-                    <Link onClick={handleClickNav} to="/home">
-                      Dashboard
-                    </Link>
-                  </li>
-                </ul>
-              ) : (
-                <ul>
-                  <li>
-                    <Link onClick={handleClickNav} to="/">
-                      Home
-                    </Link>
-                  </li>
-                  <li>
-                    <Link onClick={handleClickNav} to="/login">
-                      Login
-                    </Link>
-                  </li>
-                  <li>
-                    <Link onClick={handleClickNav} to="/signup">
-                      Sign-Up
-                    </Link>
-                  </li>
-                </ul>
-              )}
+              <ul>
+                <li>
+                  <Link onClick={handleClickNav} to="/login">
+                    Login
+                  </Link>
+                </li>
+                <li>
+                  <Link onClick={handleClickNav} to="/signup">
+                    Sign-Up
+                  </Link>
+                </li>
+              </ul>
             </nav>
           </aside>
         </>

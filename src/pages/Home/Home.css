@@ -1,60 +1,81 @@
 .home-container {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
+
   width: 100vw;
+  max-width: var(--max-screem);
+  margin: 0;
   min-height: 90vh;
-  flex-wrap: wrap;
+
+  overflow: scroll;
+}
+
+.home-container .scroller {
+  overflow-y: scroll;
+  height: 100%;
+
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 100px 1fr;
+  grid-template-areas: "events balance" "events transactions";
+
+  gap: var(--bento-gap);
+  padding: 2rem;
+
+}
+
+.home-container_section.events {
+  grid-area: events;
+}
+
+.home-container_section.balance {
+  grid-area: balance;
+}
+
+.home-container_section.transactions {
+  grid-area: transactions;
 }
 
 .home-container_title {
   font-size: 1.2rem;
   font-weight: 400;
-  margin: 0 0 0.5rem 0.8rem;
 }
 
 .home-container_section {
-  margin-top: 50px;
-  width: 25%;
+  width: 100%;
   min-width: 350px;
   display: flex;
   flex-direction: column;
-  height: calc(90vh - 50px);
+  max-height: calc(90vh - 50px);
 }
 
 .home-container_events {
-  height: 80%;
-  background-color: var(--sky_blue);
+  height: 100%;
+  width: 100%;
+  background-color: var(--background-card);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  border-radius: 1rem;
-  padding-bottom: 1rem;
+  border-radius: var(--border-radius);
+
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
-/* .home-container_events_section {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  align-items: center;
-  overflow-y: scroll;
-} */
-
 .home-container_saldo {
-  height: auto;
   justify-content: center;
   padding: 1.5rem 0;
 }
 
+.home-container_events,
 .home-container_info {
-  margin: 20px 0;
-  width: 90%;
+  padding: 1rem;
+  overflow-y: auto;
+  width: 100%;
+
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 20px;
-  overflow-y: auto;
 }
 
 .router-link {
@@ -72,4 +93,46 @@
 
 .red {
   color: var(--red);
+}
+
+
+
+/* MEDIANO */
+@media (width < 1000px) {
+  .home-container .scroller {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 100px 1fr;
+    grid-template-areas: "balance balance" "events transactions";
+  }
+
+}
+
+
+/* PEQUEÑO  (1 columna) */
+
+@media (width < 780px) {
+  .home-container .scroller {
+    grid-template-columns: 1fr;
+    grid-template-rows: 100px 1fr 1fr;
+    grid-template-areas: "balance" "events" "transactions";
+    /* display: flex;
+    flex-direction: column;
+    height: 100%; */
+  }
+
+
+}
+
+/***** MAS PEQUEÑO ****
+ - borra los margenes laterales
+ */
+@media (width < 600px) {
+
+  .home-container .scroller {
+    padding: 0;
+  }
+
+  .home-container_events {
+    border-radius: 0;
+  }
 }

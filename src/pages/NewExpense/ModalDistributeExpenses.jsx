@@ -14,9 +14,9 @@ export function ModalDistributeExpenses({
   const divisions = ["Equal parts",  "Por cantidades","Por porcentaje"]
   const [page,setPage] = useState(0) // 0-> equal parts
   
-
+  const amounts = split_equal(amount,users.length)
   //equal parts
-  const [equalPartsDiv,setEqualPartsDiv] = useState(users.map(x=>({...x,checked:true})))
+  const [equalPartsDiv,setEqualPartsDiv] = useState(users.map((x,i)=>({...x,checked:true,amount:amounts[i]})))
   const [isAllChecked,setIsAllChecked] = useState(true)
   const [errMsg,setErrMsg] = useState("")
 
@@ -24,10 +24,7 @@ export function ModalDistributeExpenses({
   const remainingPercentage = 100 - equalPartsDiv.reduce((acc,u)=>acc + (u.percentage === undefined ? 0 : Number(u.percentage)),0)
 
 
-  useEffect(()=>{
-    console.log("users",equalPartsDiv)
 
-  },[equalPartsDiv])
 
 
   //page 0

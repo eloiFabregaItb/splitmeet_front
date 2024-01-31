@@ -1,11 +1,11 @@
 import "./ExpenseTransactions.css";
 import back from "../../../../assets/icons/back.svg";
 
-function ExpenseTransactions({ clickHome, expense }) {
+function ExpenseTransactions({ onClickBack, expense }) {
   return (
     <div className="expense-transactions">
       <div className="expense-transactions_info">
-        <img onClick={clickHome} src={back} alt="Icono de flecha hacia atrás" />
+        <img onClick={onClickBack} src={back} alt="Icono de flecha hacia atrás" />
         <div className="expense-transactions_info_header">
           <div className="expense-transactions_info_header_title">
             <h3>{expense.exp_concept}</h3>
