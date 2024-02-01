@@ -32,6 +32,7 @@ import Verification from './pages/Verification/Verification.jsx'
 import Users from './pages/EventDetail/views/Calendar.jsx'
 import Invitation from './pages/Invitation/Invitation.jsx'
 import ProcessingVerification from './pages/Verification/ProcessingVerification.jsx'
+import ForgotPassword from './pages/ForgotPassword/ForgotPassword.jsx'
 
 function App() {
   const { loginContext, isLoggedIn, emailValidated, jwt } =
@@ -122,6 +123,10 @@ function App() {
           <Route
             path='/validateMail/:jwt'
             element={<ProcessingVerification />}
+          />
+                    <Route
+            path='/forgotten/:jwt'
+            element={<ForgotPassword />}
           />
         </Routes>
       </div>
