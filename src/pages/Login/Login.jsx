@@ -10,6 +10,7 @@ import { useState } from 'react'
 
 import { SHA256 } from 'crypto-js'
 import { checkLogin } from '../../services/checkLogin'
+import {oauth} from "../../services/oauth"
 import { joinEvent } from '../../services/joinEvent'
 import { api_url } from '../../utils/constants'
 import Header from '../../globalComponents/Header/Header'
@@ -41,6 +42,13 @@ function Login() {
     }
     setShowEmailError(false)
     return false
+  }
+
+  const oauthLogin = async () => {
+    const resOauth = await oauth()
+    if (resOauth.success) {
+      console.log(resOauth);
+    }
   }
 
   /*
@@ -156,9 +164,10 @@ function Login() {
                             />
                             Continue with Google
                         </a> */}
-            <a
-              href={`${api_url}/auth/google`}
-              to='/auth/google'
+            <button
+              onClick={oauthLogin}
+/*               href={`${api_url}/auth/oauth`}
+              to='/auth/oauth' */
               className='subrayado login_form_btn login_form_btn--google'
             >
               <img
@@ -167,7 +176,7 @@ function Login() {
                 alt='Logo de Google'
               />
               Continue with Google
-            </a>
+            </button>
           </div>
         </main>
       </div>
