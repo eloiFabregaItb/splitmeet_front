@@ -105,17 +105,33 @@
   width: 40px;
 }
 
+.header__nav {
+  display: none;
+}
+
+.header .left .back img,
+.header__nav img {
+  height: 50px;
+  width: 50px;
+}
+
 @media (width < 780px) {
   .header__userMenu {
     top: auto;
     bottom: 80%;
   }
-}
 
-@media (max-width: 600px) {
+  .header__nav {
+    display: block;
+  }
+
   .header_logo {
     display: none;
   }
+}
+
+@media (max-width: 600px) {
+
 
   .header_userInfo_img {
     width: 45px;

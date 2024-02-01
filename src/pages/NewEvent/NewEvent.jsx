@@ -102,7 +102,7 @@ function NewEvent() {
   }
   return (
     <>
-      <Header></Header>
+      <Header back="/"></Header>
       <div className='container'>
         <main className='box'>
           <p>{showDataError}</p>

@@ -1,138 +1,41 @@
 .home-container {
 
-  width: 100vw;
-  max-width: var(--max-screem);
-  margin: 0;
-  min-height: 90vh;
-
-  overflow: scroll;
-}
-
-.home-container .scroller {
-  overflow-y: scroll;
   height: 100%;
-
-  display: grid;
-
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 100px 1fr;
-  grid-template-areas: "events balance" "events transactions";
-
-  gap: var(--bento-gap);
-  padding: 2rem;
-
-}
-
-.home-container_section.events {
-  grid-area: events;
-}
-
-.home-container_section.balance {
-  grid-area: balance;
-}
-
-.home-container_section.transactions {
-  grid-area: transactions;
-}
-
-.home-container_title {
-  font-size: 1.2rem;
-  font-weight: 400;
-}
-
-.home-container_section {
-  width: 100%;
-  min-width: 350px;
-  display: flex;
-  flex-direction: column;
-  max-height: calc(90vh - 50px);
-}
-
-.home-container_events {
-  height: 100%;
-  width: 100%;
   background-color: var(--background-card);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  border-radius: var(--border-radius);
 
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-}
-
-.home-container_saldo {
-  justify-content: center;
-  padding: 1.5rem 0;
-}
-
-.home-container_events,
-.home-container_info {
-  padding: 1rem;
   overflow-y: auto;
-  width: 100%;
+  overflow-x: clip;
+}
+
+.home-container--wrapper {
+  max-width: 500px;
 
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 20px;
+  gap: 1rem;
+
+  padding: 40px;
+
+  margin: 0 auto;
+
 }
 
 .router-link {
   all: unset;
 }
 
-.balance {
-  font-size: 3rem;
-  font-weight: 500;
-}
-
-.green {
-  color: var(--green);
-}
-
-.red {
-  color: var(--red);
-}
-
-
-
-/* MEDIANO */
-@media (width < 1000px) {
-  .home-container .scroller {
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 100px 1fr;
-    grid-template-areas: "balance balance" "events transactions";
-  }
-
-}
-
-
-/* PEQUEÑO  (1 columna) */
-
-@media (width < 780px) {
-  .home-container .scroller {
-    grid-template-columns: 1fr;
-    grid-template-rows: 100px 1fr 1fr;
-    grid-template-areas: "balance" "events" "transactions";
-    /* display: flex;
-    flex-direction: column;
-    height: 100%; */
-  }
-
-
-}
 
 /***** MAS PEQUEÑO ****
  - borra los margenes laterales
  */
 @media (width < 600px) {
 
-  .home-container .scroller {
-    padding: 0;
+  .home-container--wrapper {
+    padding-left: 0;
+    padding-right: 0;
   }
 
-  .home-container_events {
+  .event {
     border-radius: 0;
   }
 }

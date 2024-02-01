@@ -1,12 +1,23 @@
-import { useState, useEffect } from "react";
+//styles
 import "./Home.css";
+
+//lib
+import { useState, useEffect } from "react";
+
+//api
 import { getEvents } from "../../services/getEvents";
+
+//components
 import Loader from "../../globalComponents/Loader/Loader";
-import Button from "../../globalComponents/Button";
 import Header from "../../globalComponents/Header/Header";
 import EventCard from "./components/Event/Event";
-import { useLoginDataContext } from "../../contexts/LoginDataContext";
 import { Link } from "react-router-dom";
+
+//icons
+import ico_more from "../../assets/icons/add.svg"
+
+//constants & context
+import { useLoginDataContext } from "../../contexts/LoginDataContext";
 
 function Home() {
   const { nombre, saldo, fotoPerfil, isLoggedIn, jwt } = useLoginDataContext();
@@ -34,87 +45,18 @@ function Home() {
     <>
       {!loading ? (
         <>
-          <Header></Header>
+
+          <Header>
+            <Link to="/new"><img src={ico_more} alt="nuevo evento" /></Link>
+          </Header>
           <main className="home-container">
 
-            <div className="scroller">
-
-              <section className="home-container_section balance">
-                {/* <h2 className="home-container_title">Balance</h2> */}
-                <div className="home-container_events home-container_saldo">
-                  <p className={`balance ${saldo >= 0 ? "green" : "red"}`}>
-                    {saldo}€
-                  </p>
-                </div>
-              </section>
-
-              <section className="home-container_section events">
-                {/* <h2 className="home-container_title">Events</h2> */}
-                <div className="home-container_events">
-                  <div className="home-container_info">
-                    {events.map((event) => (
-                      <EventCard eventInfo={event} key={event.id} />
-                    ))}
-                  </div>
-                    {/* <Link to="/new">
-                      <Button text="NEW EVENT" />
-                    </Link> */}
-                </div>
-              </section>
-
-
-
-              <section className="home-container_section transactions">
-                {/* <h2 className="home-container_title">Last transactions</h2> */}
-                <div className="home-container_events">
-                    <p>last transaction</p>
-                    <p>last transaction</p>
-                    <p>last transaction</p>
-                    <p>last transaction</p>
-                    <p>last transaction</p>
-                    <p>last transaction</p>
-                    <p>last transaction</p>
-                    <p>last transaction</p>
-                    <p>last transaction</p>
-                    <p>last transaction</p>
-                    <p>last transaction</p>
-                    <p>last transaction</p>
-                    <p>last transaction</p>
-                    <p>last transaction</p>
-                    <p>last transaction</p>
-                    <p>last transaction</p>
-                    <p>last transaction</p>
-                    <p>last transaction</p>
-                    <p>last transaction</p>
-                    <p>last transaction</p>
-                    <p>last transaction</p>
-                    <p>last transaction</p>
-                    <p>last transaction</p>
-                    <p>last transaction</p>
-                    <p>last transaction</p>
-                    <p>last transaction</p>
-                    <p>last transaction</p>
-                    <p>last transaction</p>
-                    <p>last transaction</p>
-                    <p>last transaction</p>
-                    <p>last transaction</p>
-                    <p>last transaction</p>
-                    <p>last transaction</p>
-                    <p>last transaction</p>
-                    <p>last transaction</p>
-                    <p>last transaction</p>
-                    <p>last transaction</p>
-                    <p>last transaction</p>
-                    <p>last transaction</p>
-                    <p>last transaction</p>
-                    <p>last transaction</p>
-                    <p>last transaction</p>
-                    <p>last transaction</p>
-                    <p>last transaction</p>
-                </div>
-              </section>
-
+            <div className="home-container--wrapper">
+              {events.map((event) => (
+                <EventCard eventInfo={event} key={event.id} />
+              ))}
             </div>
+
 
           </main>
         </>

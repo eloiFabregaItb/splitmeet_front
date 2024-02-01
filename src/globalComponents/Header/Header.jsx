@@ -1,20 +1,24 @@
-//import user from "../../assets/icons/user.svg";
+//styles
+import "./Header.css";
+import "./Navbar.css";
+
+//lib
+import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+
+//icons
 import logo from "../../assets/icons/logo.svg";
 import ico_burger from "../../assets/icons/burger.svg";
 import ico_x from "../../assets/icons/x.svg";
+import ico_back from "../../assets/icons/back--arrow--black.svg"
 
+//constants & context
 import { useLoginDataContext } from "../../contexts/LoginDataContext";
-import { api_url } from "../../utils/constants";
-import "./Header.css";
-import "./Navbar.css";
-import { useEffect, useRef, useState } from "react";
 
 import icoLogout from "../../assets/icons/logout.svg"
 
-function Header({ nameEvent }) {
-  const { logoutContext, nombre, fotoPerfil, isLoggedIn } =
-    useLoginDataContext();
+function Header({ nameEvent,children, back }) {
+  const { logoutContext, nombre, fotoPerfil, isLoggedIn } = useLoginDataContext();
   const navigate = useNavigate();
   const navbarRef = useRef();
 
@@ -58,9 +62,15 @@ function Header({ nameEvent }) {
         <div className="left">
           {
             !isLoggedIn &&
-          <button onClick={handleOpenNavbar} className="buttonActionIco">
-            <img src={ico_burger} alt="Icono del menú" />
-          </button>
+            <button onClick={handleOpenNavbar} className="buttonActionIco">
+              <img src={ico_burger} alt="Icono del menú" />
+            </button>
+          }
+          {
+            back &&
+            <Link to={back} className="back">
+              <img src={ico_back}/>
+            </Link>
           }
         </div>
 
@@ -72,7 +82,15 @@ function Header({ nameEvent }) {
             <img className="logo" src={logo} alt="Logo de SplitMeet" />
           )}
         </div>
-          
+
+
+        <div className="header__nav">
+
+            {
+              children
+            }
+        </div>
+
         <div className="right">
           {isLoggedIn && (
             <div className="header_userInfo">
@@ -85,7 +103,7 @@ function Header({ nameEvent }) {
               />
               <nav className="header__userMenu">
                 <ul>
-                <li>
+                  <li>
                     <a href="#" onClick={handleLogout}>
                       <img src={icoLogout} alt="" />
                       Logout

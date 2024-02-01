@@ -1,23 +1,39 @@
-import { useState, useEffect } from 'react'
-import { api_url } from '../../utils/constants'
+//styles
 import './EventDetail.css'
+
+//lib
+import { useState, useEffect } from 'react'
+import { useParams } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+
+//constants & context
+import { api_url } from '../../utils/constants'
+import { useLoginDataContext } from '../../contexts/LoginDataContext'
+
+//icons
 import icoUsers from '../../assets/icons/users.svg'
-import calendar from '../../assets/icons/calendar.svg'
-import settings from '../../assets/icons/settings.svg'
+import IcoBack from "../../assets/icons/back--arrow.svg"
+import icoCalendar from '../../assets/icons/calendar.svg'
+import icoSettings from '../../assets/icons/settings.svg'
 import exit from '../../assets/icons/exit.svg'
 import icoHome from '../../assets/icons/home.svg'
-import { getEventInfo } from '../../services/getEventInfo'
-import { exitFromEvent } from '../../services/exitFromEvent'
+import icoAddMoney from "../../assets/icons/addMoney.svg"
+import icoAddUser from "../../assets/icons/add-user.svg"
+
+//components
 import Loader from '../../globalComponents/Loader/Loader'
 import Header from '../../globalComponents/Header/Header'
 import Expense from './components/Expense/Expense'
 import Button from '../../globalComponents/Button'
-import { useLoginDataContext } from '../../contexts/LoginDataContext'
-import { Link, useNavigate } from 'react-router-dom'
-import { useParams } from 'react-router-dom'
 import ExpenseTransactions from './components/ExpenseTransactions/ExpenseTransactions'
 import User from './components/Users/User'
-import IcoBack from "../../assets/icons/back--arrow.svg"
+
+//api
+import { getEventInfo } from '../../services/getEventInfo'
+import { exitFromEvent } from '../../services/exitFromEvent'
+import { TextModal } from '../../globalComponents/TextModal/TextModal'
+
+
 
 function EventDetail() {
   const params = useParams()
@@ -38,6 +54,9 @@ function EventDetail() {
   //const [eventInfo, setEventInfo] = useState({});
   const [expenseSelected, setExpenseSelected] = useState(null)
   const [page,setPage] = useState(0) // 0-users 1-expenses
+  const PAGES = ["Expenses","Users","Config"]
+
+  const [askExitModal,setAskExitModal] = useState(false)
 
 
   //TODO -> Ordenar las expenses por fecha
@@ -58,7 +77,7 @@ function EventDetail() {
     fetchInfo()
   }, [])
 
-  const icoExitEvent = async () => {
+  const handleExitEvent = async () => {
     const resExitEvent = await exitFromEvent(jwt, params.url)
     if (resExitEvent.success) {
       navigate('/')
@@ -74,56 +93,84 @@ function EventDetail() {
     </main>
   </>)
 
+
+  
+
   return (
     <>
+    {
+      askExitModal &&
+      <TextModal
+      title="Alert"
+      cancelar={()=>setAskExitModal(false)}
+      aceptar={handleExitEvent}
+      aceptarRed
+      >Estas seguro que quieres salir del evento?</TextModal>
+    }
+      <Header>
+
+      {
+          page === 0 &&
+          <>
+            <Link to={`/newExpense/${params.url}`}>
+              <img
+                className='home-container_aside_icon'
+                src={icoAddMoney}
+                alt='Calendar icon'
+              />
+            </Link>     
+          </>
+        }
+
+        {
+          page === 1 &&
+          <>
+            <Link to={`/invitation/${eventInfo.event.url}`}>
+              <img
+                className='home-container_aside_icon'
+                src={icoAddUser}
+                alt='Calendar icon'
+              />
+            </Link>  
+          </>
+        }
+
+      </Header>
+
       <div className='EventDetail'>
         <main className='EventDetail__content'>
+
           <header className='EventDetail__header' style={{background:`linear-gradient(#0004, #0009), url(${api_url}/public/evtPic/${eventInfo.event.imgUrl})`}}>
             <Link to="/" className='back'><img src={IcoBack} alt="" /></Link>
             <h1>{eventInfo.event.name}</h1>
           </header>
-
-
-          <section className='home-container_section home-container_section--detail'>
-
-            <article>
-              <h2 className='home-container_title'>Balance</h2>
-              <div className='home-container_events home-container_saldo'>
-                <p className={`balance ${saldo >= 0 ? 'green' : 'red'}`}>
-                  {saldo}€
-                </p>
-              </div>
-            </article>
-          </section>
-
-          
+          <nav className='EventDetail__navPages'>
+            <ul>
+              {
+                PAGES.map((x,i)=>
+                  <li key={i} className={page===i?"active":""} onClick={()=>setPage(i)}>{x}</li>
+                )
+              }
+            </ul>
+          </nav>
 
           <section className='home-container_section home-container_section--detail'>
             
-
-
-            {page===1&&
+          {(page===0 && !expenseSelected)&&
               <>
-                <h2 className='home-container_title'>Users</h2>
-                <div className='home-container_events'>
-                  <div className='home-container_info'>
-                    {eventInfo.users.map(
-                      (userInfo) =>
-                        userInfo.active === 1 && (
-                          <User userInfo={userInfo} key={userInfo.usr_id} />
-                        )
-                    )}
+                <article>
+                  <h2 className='home-container_title'>Balance</h2>
+                  <div className='home-container_events home-container_saldo'>
+                    <p className={`balance ${saldo >= 0 ? 'green' : 'red'}`}>
+                      {saldo}€
+                    </p>
                   </div>
-                  <Link to={`/invitation/${eventInfo.event.url}`}>
-                    <Button text='INVITE USERS' />
-                  </Link>
-                </div>
-              </>
-            }
-            {(page===0 && !expenseSelected)&&
-              <>
+                </article>
+
+                <article>
                 <h2 className='home-container_title'>Expenses</h2>
                 <div className='home-container_events'>
+                  
                   <div className='home-container_info'>
                     {eventInfo.expenses.map((expense) => (
                       <Expense
@@ -133,10 +180,8 @@ function EventDetail() {
                       />
                     ))}
                   </div>
-                  <Link to={`/newExpense/${params.url}`}>
-                    <Button text='NEW EXPENSE'/>
-                  </Link>
                 </div>
+                </article>
               </>
             }
 
@@ -151,6 +196,30 @@ function EventDetail() {
               </>
 
             }
+
+            {page===1&&
+              <>
+                <h2 className='home-container_title'>Users</h2>
+                <div className='home-container_events'>
+                  <div className='home-container_info'>
+                    {eventInfo.users.map(
+                      (userInfo) =>
+                        userInfo.active === 1 && (
+                          <User userInfo={userInfo} key={userInfo.usr_id} />
+                        )
+                    )}
+                  </div>
+                </div>
+              </>
+            }
+
+            {
+              page===2 &&
+              <>
+                <Button text="Salir del evento" onClick={()=>setAskExitModal(true)} red/>
+              </>
+            }
+
             
           </section>
 
@@ -159,42 +228,10 @@ function EventDetail() {
 
         
 
-
+{/* 
       <nav className='home-container_aside'>
-          <img
-            className='home-container_aside_icon'
-            src={icoHome}
-            alt='Users icon'
-            onClick={()=>setPage(0)}
-          />
-          <img
-            className='home-container_aside_icon'
-            src={icoUsers}
-            alt='Users icon'
-            onClick={()=>setPage(1)}
-          />
-          {/* <Link to={'calendar'}>
-            <img
-              className='home-container_aside_icon'
-              src={calendar}
-              alt='Calendar icon'
-            />
-          </Link> */}
           
-          <Link to={'settings'}>
-            <img
-              className='home-container_aside_icon'
-              src={settings}
-              alt='Settings icon'
-            />
-          </Link>
-          <img
-            onClick={icoExitEvent}
-            className='home-container_aside_icon'
-            src={exit}
-            alt='Exit icon'
-          />
-        </nav>
+        </nav> */}
       </div>
 
     </>
