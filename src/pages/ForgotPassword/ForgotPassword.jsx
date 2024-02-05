@@ -1,4 +1,5 @@
-import "../Login/Login.css"
+import '../Login/Login.css'
+import './ForgotPassword.css'
 
 import Header from '../../globalComponents/Header/Header'
 import Button from '../../globalComponents/Button'
@@ -11,7 +12,7 @@ function ForgotPassword() {
   const params = useParams()
   const errMsg = 'An error occurred while sending the email'
   const succMsg = 'The email has been sent successfully'
-  const [email, setEmail] = useState("")
+  const [email, setEmail] = useState('')
   const [showError, setShowError] = useState(false)
   const [showSuccess, setShowSuccess] = useState(false)
 
@@ -37,7 +38,12 @@ function ForgotPassword() {
           <p className='verify_text'>
             Write your email to receive a link to reset your password.
           </p>
-          <input type="text" className='login_form_input' value={email} onChange={(e) => setEmail(e.target.value)} />
+          <input
+            type='text'
+            className='input mb-20'
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
 
           <div onClick={sendEmail}>
             <Button
