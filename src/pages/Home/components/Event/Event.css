@@ -67,7 +67,7 @@
   background-size: cover !important;
   background-position: center !important;
 
-  border-radius: 1rem;
+  border-radius: 7px;
 
   background-color: var(--background-noImage);
 }

@@ -25,6 +25,15 @@ body {
 
 
 
+button {
+  cursor: pointer;
+}
+
+hr {
+  height: 1px;
+  background-color: #333;
+  margin: 1rem 10px;
+}
 
 .button {
   background-color: #fafafa;
@@ -43,4 +52,26 @@ body {
 .button:hover {
   background-color: #aaa;
   color: white;
+}
+
+
+.absoluteButton {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  border-radius: 50%;
+  background-color: var(--ocean_blue);
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+  transition: all .4s ease;
+}
+
+
+.absoluteButton:hover {
+  transform: scale(0.96) translate(0, -10%);
 }

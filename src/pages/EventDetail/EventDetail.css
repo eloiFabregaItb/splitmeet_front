@@ -12,22 +12,50 @@
   background-position: center !important;
 
   display: flex;
+  flex-direction: column;
+
   justify-content: center;
   align-items: center;
   color: var(--white);
 
   position: relative;
+
+  transition: height 250ms ease;
+
+}
+
+.EventDetail__header.small {
+  height: 100px;
+
+}
+
+.EventDetail__header .back,
+.EventDetail__header .config {
+  background: none;
+  position: absolute;
+  cursor: pointer;
 }
 
 .EventDetail__header .back {
-  position: absolute;
   top: 10px;
   left: 10px;
 }
 
+.EventDetail__header .config {
+  top: 10px;
+  right: 10px;
+  transition: transform 0.5s ease;
+
+}
+
+.EventDetail__header .config img,
 .EventDetail__header .back img {
   width: 40px;
   height: 40px;
+}
+
+.EventDetail__header.small .config {
+  transform: rotate(180deg);
 }
 
 .EventDetail__navPages {
@@ -38,12 +66,17 @@
   list-style: none;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
+  background-color: #e7e7e7;
+
 }
 
+
 .EventDetail__navPages ul li {
+  border-radius: 1rem;
+  margin: 1rem;
   text-align: center;
-  padding-top: 20px;
-  padding-bottom: 20px;
+  padding-top: 5px;
+  padding-bottom: 5px;
   cursor: pointer;
   background-color: var(--sky_blue);
 }
@@ -74,6 +107,13 @@
   margin: 20px auto;
 }
 
+.home-container {
+  background-color: #fafafa;
+  padding: 0 20px;
+  max-width: 600px !important;
+  margin: 0 auto;
+}
+
 .home-container_section--detail {
   width: 20%;
 }
@@ -98,6 +138,7 @@
   cursor: pointer;
 
 }
+
 
 
 

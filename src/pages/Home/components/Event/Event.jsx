@@ -5,7 +5,7 @@ import { api_url } from "../../../../utils/constants";
 function EventCard({ eventInfo }) {
 
 
-  const imgSrc = `${api_url}/public/evtPic/${eventInfo.imgUrl}`
+  const imgSrc = eventInfo.imgUrl
   const styleBg = eventInfo.imgUrl == null ? {} : {background:`url(${imgSrc})`}
 
   return (
