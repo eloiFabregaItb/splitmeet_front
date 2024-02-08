@@ -1,10 +1,11 @@
 import "../Login/Login.css";
 import "../ForgotPassword/ForgotPassword.css";
+import eyeClosed from "../../assets/icons/eyeClosed.svg";
+import eyeOpened from "../../assets/icons/eyeOpened.svg";
 
 import Header from "../../globalComponents/Header/Header";
 import Button from "../../globalComponents/Button";
 import logo from "../../assets/icons/logo.svg";
-import candadoAbierto from "../../assets/icons/candadoAbierto.svg";
 import candadoCerrado from "../../assets/icons/candadoCerrado.svg";
 import { changePassword } from "../../services/changePassword";
 import { useParams } from "react-router-dom";
@@ -75,10 +76,9 @@ function ChangePassword() {
           >
             <div className="login_form_inputContainer mb-20">
               <img
-                src={showPassword ? candadoAbierto : candadoCerrado}
+                src={candadoCerrado}
                 alt="Logo de un candado/password"
                 className="login_form_logo"
-                onClick={() => setShowPassword(!showPassword)}
               />
               <input
                 className="login_form_input"
@@ -89,15 +89,18 @@ function ChangePassword() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
+              <img
+                src={showPassword ? eyeOpened : eyeClosed}
+                alt={`Icono de ojo ${showPassword ? "abierto" : "cerrado"}`}
+                className="login_form_logo border-0"
+                onClick={() => setShowPassword(!showPassword)}
+              />
             </div>
             <div className="login_form_inputContainer mb-20">
               <img
-                src={showPasswordConfirmation ? candadoAbierto : candadoCerrado}
+                src={candadoCerrado}
                 alt="Logo de un candado/password"
                 className="login_form_logo"
-                onClick={() =>
-                  setShowPasswordConfirmation(!showPasswordConfirmation)
-                }
               />
               <input
                 className="login_form_input"
@@ -107,6 +110,16 @@ function ChangePassword() {
                 id="passwordConfirmation"
                 value={passwordConfirmation}
                 onChange={(e) => setPasswordConfirmation(e.target.value)}
+              />
+              <img
+                src={showPasswordConfirmation ? eyeOpened : eyeClosed}
+                alt={`Icono de ojo ${
+                  showPasswordConfirmation ? "abierto" : "cerrado"
+                }`}
+                className="login_form_logo border-0"
+                onClick={() =>
+                  setShowPasswordConfirmation(!showPasswordConfirmation)
+                }
               />
             </div>
             <Button
