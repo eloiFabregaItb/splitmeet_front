@@ -1,11 +1,13 @@
 import { signUp } from "../../services/signUp";
 import "../Login/Login.css";
 import "./SignUp.css";
+import "../ForgotPassword/ForgotPassword.css";
 import logo from "../../assets/icons/logo.svg";
 import user from "../../assets/icons/user.svg";
 import correo from "../../assets/icons/correo.svg";
-import candadoAbierto from "../../assets/icons/candadoAbierto.svg";
 import candadoCerrado from "../../assets/icons/candadoCerrado.svg";
+import eyeOpened from "../../assets/icons/eyeOpened.svg";
+import eyeClosed from "../../assets/icons/eyeClosed.svg";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { SHA256 } from "crypto-js";
@@ -147,10 +149,9 @@ function SignUp() {
 
             <div className="login_form_inputContainer">
               <img
-                src={showPassword1 ? candadoAbierto : candadoCerrado}
+                src={candadoCerrado}
                 alt="Logo de un candado/password"
                 className="login_form_logo"
-                onClick={() => setShowPassword1(!showPassword1)}
               />
               <input
                 className="login_form_input"
@@ -161,14 +162,19 @@ function SignUp() {
                 value={password1}
                 onChange={(e) => setPassword1(e.target.value)}
               />
+              <img
+                src={showPassword1 ? eyeOpened : eyeClosed}
+                alt={`Icono de ojo ${showPassword1 ? "abierto" : "cerrado"}`}
+                className="login_form_logo border-0"
+                onClick={() => setShowPassword1(!showPassword1)}
+              />
             </div>
 
             <div className="login_form_inputContainer">
               <img
-                src={showPassword2 ? candadoAbierto : candadoCerrado}
+                src={candadoCerrado}
                 alt="Logo de un candado/password"
                 className="login_form_logo"
-                onClick={() => setShowPassword2(!showPassword2)}
               />
               <input
                 className="login_form_input"
@@ -178,6 +184,12 @@ function SignUp() {
                 id="password2"
                 value={password2}
                 onChange={(e) => setPassword2(e.target.value)}
+              />
+              <img
+                src={showPassword2 ? eyeOpened : eyeClosed}
+                alt={`Icono de ojo ${showPassword2 ? "abierto" : "cerrado"}`}
+                className="login_form_logo border-0"
+                onClick={() => setShowPassword2(!showPassword2)}
               />
             </div>
 
