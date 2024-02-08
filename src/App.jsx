@@ -23,7 +23,6 @@ import {
 import Login from './pages/Login/Login'
 import SignUp from './pages/SignUp/SignUp'
 import Home from './pages/Home/Home'
-import Dashboard from './pages/Dashboard/Dashboard'
 import Error404 from './pages/Error404/Error404'
 import NewEvent from './pages/NewEvent/NewEvent.jsx'
 import Header from './globalComponents/Header/Header.jsx'
@@ -31,6 +30,7 @@ import EventDetail from './pages/EventDetail/EventDetail.jsx'
 import Verification from './pages/Verification/Verification.jsx'
 import Users from './pages/EventDetail/views/Calendar.jsx'
 import Invitation from './pages/Invitation/Invitation.jsx'
+import NewExpense from './pages/NewExpense/NewExpense.jsx'
 import ProcessingVerification from './pages/Verification/ProcessingVerification.jsx'
 import ForgotPassword from './pages/ForgotPassword/ForgotPassword.jsx'
 
@@ -51,7 +51,7 @@ function App() {
         const resUserInfo = await checkLoginJwt(token)
         if (resUserInfo.success) {
           loginContext(resUserInfo)
-          return navigate('/home')
+          return navigate('/')
         }
       }
       if (location.pathname === '/login/invitation') {
@@ -95,39 +95,32 @@ function App() {
         <Routes>
           <Route
             path='/'
-            element={
-              <>
-                <Header></Header>
-                <h1>Main page</h1>
-              </>
-            }
+            element={<ProtectedRoute>
+              <Home />
+            </ProtectedRoute>}
           />
           <Route path='/login' element={<Login />} />
           <Route path='/signup' element={<SignUp />} />
-          <Route
-            path='/home'
-            element={
-              <ProtectedRoute>
-                <Home />
-              </ProtectedRoute>
-            }
-          />
-          <Route path='/dashboard' element={<Dashboard />} />
+
+          
           <Route path='/new' element={<NewEvent />} />
-          <Route path='*' element={<Error404 />} />
           <Route path='/event/:url' element={<EventDetail />} />
           <Route path='/login/invitation' element={<Login />} />
           <Route path='/invitation/:event_url' element={<Invitation />} />
           {/* <Route path="/event/:url/users" element={<Users />} /> */}
           <Route path='/verification/:jwt' element={<Verification />} />
+          <Route path='/newExpense/:event_url' element={<NewExpense />} />
+          
           <Route
             path='/validateMail/:jwt'
             element={<ProcessingVerification />}
           />
-                    <Route
+          <Route
             path='/forgotten/:jwt'
             element={<ForgotPassword />}
           />
+          <Route path='*' element={<Error404 />} />
+          
         </Routes>
       </div>
     </>

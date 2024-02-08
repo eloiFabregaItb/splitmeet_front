@@ -75,7 +75,7 @@ function Login() {
           return navigate(`/verification/${resLogin.jwt}`)
         }
 
-        return navigate('/home')
+        return navigate('/')
       }
       setShowDataError(true)
       localStorage.clear()

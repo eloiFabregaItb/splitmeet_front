@@ -1,18 +1,24 @@
-//import user from "../../assets/icons/user.svg";
+//styles
+import "./Header.css";
+import "./Navbar.css";
+
+//lib
+import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+
+//icons
 import logo from "../../assets/icons/logo.svg";
 import ico_burger from "../../assets/icons/burger.svg";
 import ico_x from "../../assets/icons/x.svg";
+import ico_back from "../../assets/icons/back--arrow--black.svg"
 
+//constants & context
 import { useLoginDataContext } from "../../contexts/LoginDataContext";
-import { api_url } from "../../utils/constants";
-import "./Header.css";
-import "./Navbar.css";
-import { useEffect, useRef, useState } from "react";
 
-function Header({ nameEvent }) {
-  const { logoutContext, nombre, fotoPerfil, isLoggedIn } =
-    useLoginDataContext();
+import icoLogout from "../../assets/icons/logout.svg"
+
+function Header({ nameEvent,children, back }) {
+  const { logoutContext, nombre, fotoPerfil, isLoggedIn } = useLoginDataContext();
   const navigate = useNavigate();
   const navbarRef = useRef();
 
@@ -53,9 +59,20 @@ function Header({ nameEvent }) {
   return (
     <>
       <header className="header">
-        <button onClick={handleOpenNavbar} className="buttonActionIco">
-          <img src={ico_burger} alt="Icono del menú" />
-        </button>
+        <div className="left">
+          {
+            !isLoggedIn &&
+            <button onClick={handleOpenNavbar} className="buttonActionIco">
+              <img src={ico_burger} alt="Icono del menú" />
+            </button>
+          }
+          {
+            back &&
+            <Link to={back} className="back">
+              <img src={ico_back}/>
+            </Link>
+          }
+        </div>
 
         <div className="header_logo">
           <h1 className="header_splitmeet">
@@ -66,20 +83,42 @@ function Header({ nameEvent }) {
           )}
         </div>
 
-        {isLoggedIn && (
-          <div className="header_userInfo">
-            <p className="header_userInfo_username">{nombre}</p>
-            <img
-              className="header_userInfo_img"
-              /* src={`${api_url}/public/usrProfilePic/${fotoPerfil}`} */
-              src={`https://robohash.org/${nombre}`}
-              alt={`Icono del usuario ${nombre}`}
-            />
-          </div>
-        )}
+
+        <div className="header__nav">
+
+            {
+              children
+            }
+        </div>
+
+        <div className="right">
+          {isLoggedIn && (
+            <div className="header_userInfo">
+              <p className="header_userInfo_username">{nombre}</p>
+              <img
+                className="header_userInfo_img"
+                /* src={`${api_url}/public/usrProfilePic/${fotoPerfil}`} */
+                src={`https://robohash.org/${nombre}`}
+                alt={`Icono del usuario ${nombre}`}
+              />
+              <nav className="header__userMenu">
+                <ul>
+                  <li>
+                    <a href="#" onClick={handleLogout}>
+                      <img src={icoLogout} alt="" />
+                      Logout
+                    </a>
+                  </li>
+
+                  {/* <hr /> */}
+                </ul>
+              </nav>
+            </div>
+          )}
+        </div>
       </header>
 
-      {isNavbarOpen && (
+      {(isNavbarOpen && !isLoggedIn) && (
         <>
           <aside className="Navbar" ref={navbarRef}>
             <button
@@ -89,43 +128,18 @@ function Header({ nameEvent }) {
               <img src={ico_x} alt="Icono de una cruz" />
             </button>
             <nav>
-              {isLoggedIn ? (
-                <ul>
-                  <li>
-                    <Link onClick={handleClickNav} to="/">
-                      Home
-                    </Link>
-                  </li>
-                  <li>
-                    <a href="#" onClick={handleLogout}>
-                      Logout
-                    </a>
-                  </li>
-                  <li>
-                    <Link onClick={handleClickNav} to="/home">
-                      Dashboard
-                    </Link>
-                  </li>
-                </ul>
-              ) : (
-                <ul>
-                  <li>
-                    <Link onClick={handleClickNav} to="/">
-                      Home
-                    </Link>
-                  </li>
-                  <li>
-                    <Link onClick={handleClickNav} to="/login">
-                      Login
-                    </Link>
-                  </li>
-                  <li>
-                    <Link onClick={handleClickNav} to="/signup">
-                      Sign-Up
-                    </Link>
-                  </li>
-                </ul>
-              )}
+              <ul>
+                <li>
+                  <Link onClick={handleClickNav} to="/login">
+                    Login
+                  </Link>
+                </li>
+                <li>
+                  <Link onClick={handleClickNav} to="/signup">
+                    Sign-Up
+                  </Link>
+                </li>
+              </ul>
             </nav>
           </aside>
         </>

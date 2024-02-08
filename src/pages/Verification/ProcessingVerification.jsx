@@ -20,7 +20,7 @@ function ProcessingVerification() {
         if (resCheckLogin.success) {
           loginContext(resCheckLogin)
           localStorage.setItem('jwt', resCheckLogin.jwt)
-          return navigate('/home')
+          return navigate('/')
         }
         return navigate('/login')
       }

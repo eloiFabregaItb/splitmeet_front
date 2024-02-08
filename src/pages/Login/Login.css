@@ -37,6 +37,7 @@
   .contenedor {
     height: 100%;
   }
+
   .login {
     margin: 2rem 0;
   }
@@ -99,11 +100,17 @@
   height: 2.8rem;
   font-size: 1rem;
   font-weight: 400;
+  cursor: pointer;
 }
+
 
 .login_form_btn--login {
   color: white;
   background-color: var(--ocean_blue);
+}
+
+.login_form_btn--login.red {
+  background-color: var(--red);
 }
 
 .login_form_btn--login:hover {

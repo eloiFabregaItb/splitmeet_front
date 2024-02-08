@@ -1,0 +1,30 @@
+.ModalSelect {
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.ModalSelect__searchInput {
+  display: flex;
+  border-bottom: 1px solid black;
+}
+
+.ModalSelect__searchInput img {
+  height: 20px;
+}
+
+
+.ModalSelect__items {
+  overflow-y: auto;
+  flex: 1;
+}
+
+.ModalSelect__items__item {
+  cursor: pointer;
+}
+
+.ModalSelect__items__item:hover,
+.ModalSelect__items__item.active {
+  background-color: #ccc;
+}
