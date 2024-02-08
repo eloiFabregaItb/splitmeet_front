@@ -146,9 +146,7 @@ function Login() {
               <span className="error">
                 The email and/or password are incorrect
               </span>
-            ) : (
-              ""
-            )}
+            ) : null}
             <Button
               classname="login_form_btn login_form_btn--login"
               text="LOGIN"
@@ -159,6 +157,11 @@ function Login() {
             You do not have an account?
             <Link to="/signup" className="subrayado">
               Sign up
+            </Link>
+          </p>
+          <p className="login_mensajeRegistro">
+            <Link to="/forgotten" className="subrayado">
+              Forgot password?
             </Link>
           </p>
 

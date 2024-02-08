@@ -4,7 +4,7 @@ export const changePassword = async (jwt, password) => {
   let response
 
   try {
-    response = await axios.post('/user/updateUser', {
+    response = await axios.post('/auth/recoverPassword', {
       token: jwt,
       password: password,
     })

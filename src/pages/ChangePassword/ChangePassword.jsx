@@ -2,17 +2,17 @@ import "../Login/Login.css";
 import "../ForgotPassword/ForgotPassword.css";
 import eyeClosed from "../../assets/icons/eyeClosed.svg";
 import eyeOpened from "../../assets/icons/eyeOpened.svg";
-
+import { SHA256 } from "crypto-js";
 import Header from "../../globalComponents/Header/Header";
 import Button from "../../globalComponents/Button";
 import logo from "../../assets/icons/logo.svg";
 import candadoCerrado from "../../assets/icons/candadoCerrado.svg";
 import { changePassword } from "../../services/changePassword";
-import { useParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { useState } from "react";
 
 function ChangePassword() {
-  const params = useParams();
+  const params = useSearchParams();
   const errMsg = "An error occurred while sending the email";
   const succMsg = "The email has been sent successfully";
   const passError = "Passwords do not much";
@@ -40,12 +40,12 @@ function ChangePassword() {
     setShowSuccess(false);
     setShowPassEqualError(false);
 
-    if (checkPassEqualError(password, passwordConfirmation)) {
-      setShowPassEqualError(true);
-      return;
-    }
+    if (checkPassEqualError(password, passwordConfirmation)) return;
 
-    const resChangePassword = await changePassword(params.jwt, password);
+    const resChangePassword = await changePassword(
+      params[0].get("id"),
+      SHA256(password).toString()
+    );
     if (resChangePassword.success) {
       setShowSuccess(true);
       return;
@@ -133,7 +133,7 @@ function ChangePassword() {
                 showError ? "error pt-40" : showSuccess && "success pt-40"
               }
             >
-              {showError && errMsg} {showSuccess && succMsg}{" "}
+              {showError && errMsg} {showSuccess && succMsg}
               {showPassEqualError && passError}
             </span>
           )}

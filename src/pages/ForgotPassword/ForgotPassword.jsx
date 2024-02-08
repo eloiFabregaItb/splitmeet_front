@@ -5,11 +5,9 @@ import Header from "../../globalComponents/Header/Header";
 import Button from "../../globalComponents/Button";
 import logo from "../../assets/icons/logo.svg";
 import { sendForgottenPasswordEmail } from "../../services/sendForgottenPasswordEmail";
-import { useParams } from "react-router-dom";
 import { useState } from "react";
 
 function ForgotPassword() {
-  const params = useParams();
   const errMsg = "An error occurred while sending the email";
   const succMsg = "The email has been sent successfully";
   const [email, setEmail] = useState("");
@@ -17,7 +15,7 @@ function ForgotPassword() {
   const [showSuccess, setShowSuccess] = useState(false);
 
   const sendEmail = async () => {
-    const resSendEmail = await sendForgottenPasswordEmail(params.jwt, email);
+    const resSendEmail = await sendForgottenPasswordEmail(email);
     if (resSendEmail.success) {
       setShowError(false);
       setShowSuccess(true);

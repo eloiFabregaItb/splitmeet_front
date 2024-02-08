@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect } from "react";
 // import { io, Manager } from "socket.io-client";
 // const url = "http://172.30.4.55:3000";
 import {
@@ -8,63 +8,63 @@ import {
   useNavigate,
   useSearchParams,
   useLocation,
-} from 'react-router-dom'
-import { checkLoginJwt } from './services/checkLoginJwt.js'
-import { joinEvent } from './services/joinEvent.js'
+} from "react-router-dom";
+import { checkLoginJwt } from "./services/checkLoginJwt.js";
+import { joinEvent } from "./services/joinEvent.js";
 
-import './App.css'
+import "./App.css";
 
 import {
   ProtectedRoute,
   useLoginDataContext,
-} from './contexts/LoginDataContext.jsx'
+} from "./contexts/LoginDataContext.jsx";
 
 // PAGES
-import Login from './pages/Login/Login'
-import SignUp from './pages/SignUp/SignUp'
-import Home from './pages/Home/Home'
-import Dashboard from './pages/Dashboard/Dashboard'
-import Error404 from './pages/Error404/Error404'
-import NewEvent from './pages/NewEvent/NewEvent.jsx'
-import Header from './globalComponents/Header/Header.jsx'
-import EventDetail from './pages/EventDetail/EventDetail.jsx'
-import Verification from './pages/Verification/Verification.jsx'
-import Users from './pages/EventDetail/views/Calendar.jsx'
-import Invitation from './pages/Invitation/Invitation.jsx'
-import ProcessingVerification from './pages/Verification/ProcessingVerification.jsx'
-import ForgotPassword from './pages/ForgotPassword/ForgotPassword.jsx'
-import ChangePassword from './pages/ChangePassword/ChangePassword.jsx'
+import Login from "./pages/Login/Login";
+import SignUp from "./pages/SignUp/SignUp";
+import Home from "./pages/Home/Home";
+import Dashboard from "./pages/Dashboard/Dashboard";
+import Error404 from "./pages/Error404/Error404";
+import NewEvent from "./pages/NewEvent/NewEvent.jsx";
+import Header from "./globalComponents/Header/Header.jsx";
+import EventDetail from "./pages/EventDetail/EventDetail.jsx";
+import Verification from "./pages/Verification/Verification.jsx";
+import Users from "./pages/EventDetail/views/Calendar.jsx";
+import Invitation from "./pages/Invitation/Invitation.jsx";
+import ProcessingVerification from "./pages/Verification/ProcessingVerification.jsx";
+import ForgotPassword from "./pages/ForgotPassword/ForgotPassword.jsx";
+import ChangePassword from "./pages/ChangePassword/ChangePassword.jsx";
 
 function App() {
   const { loginContext, isLoggedIn, emailValidated, jwt } =
-    useLoginDataContext()
-  const navigate = useNavigate()
-  const location = useLocation()
-  const params = useSearchParams()
+    useLoginDataContext();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const params = useSearchParams();
 
   useEffect(() => {
     const checkLogin = async () => {
       if (emailValidated === 0) {
-        return navigate(`/verification/${jwt}`)
+        return navigate(`/verification/${jwt}`);
       }
-      const token = localStorage.getItem('jwt')
+      const token = localStorage.getItem("jwt");
       if (!isLoggedIn && token) {
-        const resUserInfo = await checkLoginJwt(token)
+        const resUserInfo = await checkLoginJwt(token);
         if (resUserInfo.success) {
-          loginContext(resUserInfo)
-          return navigate('/home')
+          loginContext(resUserInfo);
+          return navigate("/home");
         }
       }
-      if (location.pathname === '/login/invitation') {
-        const resJoinEvent = joinEvent(jwt, params[0].get('evt_url'))
+      if (location.pathname === "/login/invitation") {
+        const resJoinEvent = joinEvent(jwt, params[0].get("evt_url"));
         if (resJoinEvent.success) {
-          return navigate(`/event/${params[0].get('evt_url')}`)
+          return navigate(`/event/${params[0].get("evt_url")}`);
         }
       }
-    }
+    };
 
-    checkLogin()
-  }, [location.pathname])
+    checkLogin();
+  }, [location.pathname]);
 
   // const [ioSocket, setIoSocket] = useState(null);
   // useEffect(() => {
@@ -83,7 +83,7 @@ function App() {
 
   return (
     <>
-      <div className='App'>
+      <div className="App">
         {/* <button
           onClick={() => {
             ioSocket.emit("chatMsg", "hola");
@@ -95,7 +95,7 @@ function App() {
 
         <Routes>
           <Route
-            path='/'
+            path="/"
             element={
               <>
                 <Header></Header>
@@ -103,34 +103,36 @@ function App() {
               </>
             }
           />
-          <Route path='/login' element={<Login />} />
-          <Route path='/signup' element={<SignUp />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<SignUp />} />
           <Route
-            path='/home'
+            path="/home"
             element={
               <ProtectedRoute>
                 <Home />
               </ProtectedRoute>
             }
           />
-          <Route path='/dashboard' element={<Dashboard />} />
-          <Route path='/new' element={<NewEvent />} />
-          <Route path='*' element={<Error404 />} />
-          <Route path='/event/:url' element={<EventDetail />} />
-          <Route path='/login/invitation' element={<Login />} />
-          <Route path='/invitation/:event_url' element={<Invitation />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/new" element={<NewEvent />} />
+          <Route path="*" element={<Error404 />} />
+          <Route path="/event/:url" element={<EventDetail />} />
+          <Route path="/login/invitation" element={<Login />} />
+          <Route path="/invitation/:event_url" element={<Invitation />} />
           {/* <Route path="/event/:url/users" element={<Users />} /> */}
-          <Route path='/verification/:jwt' element={<Verification />} />
+          <Route path="/verification/:jwt" element={<Verification />} />{" "}
+          {/* ARREGLAR ERROR */}
           <Route
-            path='/validateMail/:jwt'
-            element={<ProcessingVerification />}
+            path="/validateMail/:jwt"
+            element={<ProcessingVerification />} /* ARREGLAR ERROR */
           />
-          <Route path='/forgotten/:jwt' element={<ForgotPassword />} />
-          <Route path='/change-password/:jwt' element={<ChangePassword />} />
+          <Route path="/forgotten" element={<ForgotPassword />} />
+          <Route path="/change-password" element={<ChangePassword />} />{" "}
+          {/* ARREGLAR ERROR */}
         </Routes>
       </div>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
