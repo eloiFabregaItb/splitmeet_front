@@ -8,7 +8,7 @@ function ExpenseTransactions({ onClickBack, expense,users }) {
 
   function getUserName(userId){
     const user = users.find(x=>x.usr_id === userId)
-    return user.usr_name
+    return user?.usr_name
   }
 
 
