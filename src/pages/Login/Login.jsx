@@ -77,7 +77,7 @@ function Login() {
         }
 
         if (resLogin.mailValidated === 0) {
-          return navigate(`/verification/${resLogin.jwt}`);
+          return navigate(`/verification?jwt=${resLogin.jwt}`);
         }
 
         return navigate("/home");

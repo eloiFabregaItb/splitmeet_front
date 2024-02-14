@@ -45,7 +45,7 @@ function App() {
   useEffect(() => {
     const checkLogin = async () => {
       if (emailValidated === 0) {
-        return navigate(`/verification/${jwt}`);
+        return navigate(`/verification?jwt=${jwt}`);
       }
       const token = localStorage.getItem("jwt");
       if (!isLoggedIn && token) {
@@ -120,10 +120,10 @@ function App() {
           <Route path="/login/invitation" element={<Login />} />
           <Route path="/invitation/:event_url" element={<Invitation />} />
           {/* <Route path="/event/:url/users" element={<Users />} /> */}
-          <Route path="/verification/:jwt" element={<Verification />} />{" "}
+          <Route path="/verification" element={<Verification />} />{" "}
           {/* ARREGLAR ERROR */}
           <Route
-            path="/validateMail/:jwt"
+            path="/validateMail"
             element={<ProcessingVerification />} /* ARREGLAR ERROR */
           />
           <Route path="/forgotten" element={<ForgotPassword />} />
