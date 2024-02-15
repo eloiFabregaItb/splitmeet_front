@@ -9,11 +9,6 @@ function Expense({ onClick, expenseInfo }) {
   return (
     <article className='expense' onClick={handleClick}>
       <div className='expense_img-concept'>
-        <img
-          /* src={`${api_url}/public/usrProfilePic/${expenseInfo.usr_id_lender}`} */
-          src={`https://robohash.org/${expenseInfo.usr_id_lender}`}
-          alt={`Icono del usuario ${expenseInfo.usr_id_lender}`}
-        />
         <p>{expenseInfo.exp_concept}</p>
       </div>
       <p

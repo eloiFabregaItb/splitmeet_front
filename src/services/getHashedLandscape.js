@@ -45,6 +45,8 @@ export async function getHashedLandscapeMultiple(size = "regular"){
 function hashStringToNumber(str, N) {
   let hash = 0;
 
+  if(!str) return hash
+
   for (let i = 0; i < str.length; i++) {
     const charCode = str.charCodeAt(i);
     hash = (hash << 5) - hash + charCode;
@@ -57,4 +59,10 @@ function hashStringToNumber(str, N) {
   const result = hash % (N + 1);
 
   return result;
+}
+
+
+export function hegHashColor(str){
+  const hue = hashStringToNumber(str,260)
+  return `hsl(${hue}, 92%, 47%)`
 }

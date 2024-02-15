@@ -1,16 +1,24 @@
 import "./ExpenseTransactions.css";
 import back from "../../../../assets/icons/back.svg";
+import { UserImage } from "../../../../globalComponents/UserImage/UserImage";
 
 function ExpenseTransactions({ onClickBack, expense,users }) {
 
-  console.log(expense)
-  console.log(users,users.find(x=>x.active))
+  const activeUsers = users.filter(x=>x.active)
+  console.log("USERS",activeUsers)
+  console.log("EXPENSE",expense)
 
   function getUserName(userId){
-    const user = users.find(x=>x.usr_id === userId)
-    return user?.usr_name
+    const user = users.find(x=>x.id === userId)
+    return user?.name
   }
 
+
+
+  function getUserInfo(userId){
+    console.log(userId)
+    return users.find(x=>x.id === userId)
+  }
 
   return (
     <div className="expense-transactions">
@@ -19,13 +27,14 @@ function ExpenseTransactions({ onClickBack, expense,users }) {
         <div className="expense-transactions_info_header">
           <div className="expense-transactions_info_header_title">
             <h3>{expense.exp_concept}</h3>
-            <img
-              src={`https://robohash.org/${expense.usr_id_lender}`}
-              alt={`Imagen del usuario ${expense.usr_id_lender}`}
-            />
+
           </div>
           <p>{expense.exp_description}</p>
-          <p>{`${getUserName(expense.usr_id_lender)} paid ${expense.total}€`}</p>
+          <p>
+            
+            <UserImage userInfo={getUserInfo(expense.usr_id_lender)} />
+            
+            {`${getUserName(expense.usr_id_lender)} paid ${expense.total}€`}</p>
         </div>
         <ul className="expense-transactions_info_transactions">
           {expense.transactions.map((transaction) => (
@@ -33,7 +42,8 @@ function ExpenseTransactions({ onClickBack, expense,users }) {
               className="expense-transactions_info_transactions_transaction"
               key={transaction.tra_id}
             >
-              {`${getUserName(transaction.usr_id_borrower)} paid ${transaction.tra_amount}€`}
+              <UserImage userInfo={getUserInfo(transaction.usr_id_borrower)} />
+              {`${transaction.tra_amount}€ of ${getUserName(transaction.usr_id_borrower)}`}
             </li>
           ))}
         </ul>

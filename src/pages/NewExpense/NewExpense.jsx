@@ -215,7 +215,7 @@ function NewEvent() {
                     and divided 
                     {
                       users.length>0&&
-                      <ModalDistributeExpenses 
+                      <McodeodalDistributeExpenses 
                         users={users}
                         onChange={handleChangeBorrowers}
                         amount={Number(inpAmount) || 0}

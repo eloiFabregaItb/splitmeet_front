@@ -16,9 +16,11 @@ import ico_back from "../../assets/icons/back--arrow--black.svg"
 import { useLoginDataContext } from "../../contexts/LoginDataContext";
 
 import icoLogout from "../../assets/icons/logout.svg"
+import { UserImage } from "../UserImage/UserImage";
 
 function Header({ nameEvent,children, back }) {
-  const { logoutContext, nombre, fotoPerfil, isLoggedIn } = useLoginDataContext();
+  const userInfo = useLoginDataContext();
+  const { logoutContext, nombre, fotoPerfil, isLoggedIn } = userInfo
   const navigate = useNavigate();
   const navbarRef = useRef();
 
@@ -95,12 +97,7 @@ function Header({ nameEvent,children, back }) {
           {isLoggedIn && (
             <div className="header_userInfo">
               <p className="header_userInfo_username">{nombre}</p>
-              <img
-                className="header_userInfo_img"
-                /* src={`${api_url}/public/usrProfilePic/${fotoPerfil}`} */
-                src={`https://robohash.org/${nombre}`}
-                alt={`Icono del usuario ${nombre}`}
-              />
+              <UserImage test userInfo={userInfo} />
               <nav className="header__userMenu">
                 <ul>
                   <li>

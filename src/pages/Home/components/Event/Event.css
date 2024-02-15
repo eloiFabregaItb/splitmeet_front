@@ -52,7 +52,9 @@
 }
 
 .event_info_userPic {
-  width: 30px;
+  width: 30px !important;
+  height: 30px !important;
+
   padding: 2px;
   /* background-color: var(--sky_blue); */
   background-color: black;

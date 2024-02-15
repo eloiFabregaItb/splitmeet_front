@@ -1,6 +1,7 @@
 import "./Event.css";
 import { Link } from "react-router-dom";
 import { api_url } from "../../../../utils/constants";
+import { UserImage } from "../../../../globalComponents/UserImage/UserImage";
 
 function EventCard({ eventInfo }) {
 
@@ -15,13 +16,7 @@ function EventCard({ eventInfo }) {
           <p className='event_info_name'>{eventInfo.name}</p>
           <div className='event_info_userPics'>
             {eventInfo.users.slice(0, 4).map((user, index) => (
-              <img
-                className='event_info_userPic'
-                /* src={`${api_url}/public/usrProfilePic/${user.img}`} */
-                src={`https://robohash.org/${user.name}`}
-                alt={`Imagen del usuario ${user.name}`}
-                key={index}
-              />
+              <UserImage userInfo={user} className="event_info_userPic" />
             ))}
             {eventInfo.users.length > 4 && (
               <span>{`+${eventInfo.users.length - 4}`}</span>

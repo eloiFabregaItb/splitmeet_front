@@ -56,6 +56,7 @@ function EventDetail() {
   const [expenseSelected, setExpenseSelected] = useState(null)
   const [page,setPage] = useState(PAGES.EXPENSES)
 
+  console.log(eventInfo)
 
 
   const [askExitModal,setAskExitModal] = useState(false)
