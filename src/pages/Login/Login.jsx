@@ -60,6 +60,7 @@ function Login() {
     //If the email has the proper structure, then the email and password is sent to the server.
     if (!checkEmailError(email) && password.trim() !== '') {
       const resLogin = await checkLogin(email, SHA256(password).toString())
+      console.log(resLogin);
       if (resLogin.success) {
         setShowDataError(false)
         // localStorage.setItem("jwt", resLogin.jwt);

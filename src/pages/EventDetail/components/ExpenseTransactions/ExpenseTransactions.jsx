@@ -16,7 +16,6 @@ function ExpenseTransactions({ onClickBack, expense,users }) {
 
 
   function getUserInfo(userId){
-    console.log(userId)
     return users.find(x=>x.id === userId)
   }
 

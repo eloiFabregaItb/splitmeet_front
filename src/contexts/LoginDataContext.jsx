@@ -44,7 +44,7 @@ export const LoginDataProvider = ({ children }) => {
   }
 
   function setUserFromObject(userData) {
-    setCodUsuario("");
+    setCodUsuario(userData.id);
     setFotoPerfil(userData.img);
     setTipoUsuario(userData.type);
     setNombre(userData.name);

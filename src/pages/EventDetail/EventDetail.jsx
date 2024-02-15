@@ -19,6 +19,7 @@ import icoAddUser from "../../assets/icons/add-user.svg"
 import Loader from '../../globalComponents/Loader/Loader'
 import Header from '../../globalComponents/Header/Header'
 import Expense from './components/Expense/Expense'
+import Debts from './components/Debts/Debts'
 import Button from '../../globalComponents/Button'
 import ExpenseTransactions from './components/ExpenseTransactions/ExpenseTransactions'
 import User from './components/Users/User'
@@ -29,9 +30,10 @@ import { exitFromEvent } from '../../services/exitFromEvent'
 import { TextModal } from '../../globalComponents/TextModal/TextModal'
 
 
+
 const PAGES = {
-  EXPENSES:"expenses",
-  CONFIG:"config"
+  EXPENSES: "expenses",
+  CONFIG: "config"
 }
 
 
@@ -49,17 +51,19 @@ function EventDetail() {
     logoutContext,
     setEventInfo,
     eventInfo,
+    codUsuario,
+    email
   } = useLoginDataContext()
 
   const [loading, setLoading] = useState(true)
   //const [eventInfo, setEventInfo] = useState({});
   const [expenseSelected, setExpenseSelected] = useState(null)
-  const [page,setPage] = useState(PAGES.EXPENSES)
+  const [page, setPage] = useState(PAGES.EXPENSES)
 
   console.log(eventInfo)
 
 
-  const [askExitModal,setAskExitModal] = useState(false)
+  const [askExitModal, setAskExitModal] = useState(false)
 
 
   //TODO -> Ordenar las expenses por fecha
@@ -78,7 +82,6 @@ function EventDetail() {
         return
       }
     }
-
     fetchInfo()
   }, [])
 
@@ -95,23 +98,44 @@ function EventDetail() {
 
 
 
-  function handleBack(){
-    if(page!==PAGES.EXPENSES){
+  function handleBack() {
+    if (page !== PAGES.EXPENSES) {
       setPage(PAGES.EXPENSES)
-    }else{
+    } else {
       navigate("/")
     }
   }
 
-  function handleConfig(){
-    if(page===PAGES.CONFIG){
+  function handleConfig() {
+    if (page === PAGES.CONFIG) {
       setPage(PAGES.EXPENSES)
-    }else{
+    } else {
       setPage(PAGES.CONFIG)
     }
   }
 
-  if(loading) return (<>
+
+  const calculateDebts = () => {
+    const debts = [];
+    const balanceMatrix = eventInfo.event.expenses.balance;
+    const user = eventInfo.users.findIndex(usr => usr.mail === email)
+
+    for (let i = 0; i < balanceMatrix.length; i++) {
+      for (let j = 0; j < balanceMatrix[i].length; j++) {
+        if (i !== j && balanceMatrix[i][j] !== 0 && i === user) {
+          const creditor = eventInfo.users[i].name;
+          const debtor = eventInfo.users[j].name;
+          const amount = balanceMatrix[i][j];
+          debts.push({ creditor, debtor, amount });
+        }
+      }
+    }
+
+    return debts;
+  };
+
+
+  if (loading) return (<>
     <main className='loader-container'>
       <Loader />
     </main>
@@ -119,64 +143,86 @@ function EventDetail() {
 
   return (
     <>
-    {
-      askExitModal &&
-      <TextModal
-      title="Alert"
-      cancelar={()=>setAskExitModal(false)}
-      aceptar={handleExitEvent}
-      aceptarRed
-      >Estas seguro que quieres salir del evento?</TextModal>
-    }
+      {
+        askExitModal &&
+        <TextModal
+          title="Alert"
+          cancelar={() => setAskExitModal(false)}
+          aceptar={handleExitEvent}
+          aceptarRed
+        >Estas seguro que quieres salir del evento?</TextModal>
+      }
 
       <nav className='absoluteButton'>
-      <Link to={`/newExpense/${params.url}`}>
-              <img
-                className='home-container_aside_icon'
-                src={icoAddMoney}
-                alt='Calendar icon'
-              />
-            </Link>    
+        <Link to={`/newExpense/${params.url}`}>
+          <img
+            className='home-container_aside_icon'
+            src={icoAddMoney}
+            alt='Calendar icon'
+          />
+        </Link>
       </nav>
 
       <div className='EventDetail'>
         <main className='EventDetail__content'>
 
-          <header className={'EventDetail__header' + (page===PAGES.CONFIG ? " small":"") } style={{background:`linear-gradient(#0004, #0009), url(${eventInfo.event.imgUrl})`}}>
+          <header className={'EventDetail__header' + (page === PAGES.CONFIG ? " small" : "")} style={{ background: `linear-gradient(#0004, #0009), url(${eventInfo.event.imgUrl})` }}>
             <button className='back' onClick={handleBack}><img src={IcoBack} alt="" /></button>
 
             <h1>{eventInfo.event.name}</h1>
             <button className='config' onClick={handleConfig}><img src={icoConfig} alt="" /></button>
 
-            <div style={{overflow: "hidden", position:"absolute",bottom:"-5px", width:"100%"}}>
-                      <svg
-              preserveAspectRatio="none"
-              viewBox="0 0 1200 120"
-              xmlns="http://www.w3.org/2000/svg"
-              style={{ fill: '#FAFAFA', width: '100%', height: 17, transform: 'rotate(180deg)' }}
-            >
-              <path d="M321.39 56.44c58-10.79 114.16-30.13 172-41.86 82.39-16.72 168.19-17.73 250.45-.39C823.78 31 906.67 72 985.66 92.83c70.05 18.48 146.53 26.09 214.34 3V0H0v27.35a600.21 600.21 0 00321.39 29.09z" />
-            </svg>
-          </div>
+            <div style={{ overflow: "hidden", position: "absolute", bottom: "-5px", width: "100%" }}>
+              <svg
+                preserveAspectRatio="none"
+                viewBox="0 0 1200 120"
+                xmlns="http://www.w3.org/2000/svg"
+                style={{ fill: '#FAFAFA', width: '100%', height: 17, transform: 'rotate(180deg)' }}
+              >
+                <path d="M321.39 56.44c58-10.79 114.16-30.13 172-41.86 82.39-16.72 168.19-17.73 250.45-.39C823.78 31 906.67 72 985.66 92.83c70.05 18.48 146.53 26.09 214.34 3V0H0v27.35a600.21 600.21 0 00321.39 29.09z" />
+              </svg>
+            </div>
 
           </header>
 
           <main className='home-container'>
-            
-          {(page===PAGES.EXPENSES && !expenseSelected)&&
+
+            {(page === PAGES.EXPENSES && !expenseSelected) &&
               <>
+
+
+
+
                 <section>
-                  <h2 className='home-container_title'>Balance</h2>
-                  <div className='home-container_events home-container_saldo'>
-                    <p className={`balance ${saldo >= 0 ? 'green' : 'red'}`}>
-                      {saldo}€
-                    </p>
+                  <h2 className='home-container_title'>Debts</h2>
+                  <div className='home-container_events'>
+                    {calculateDebts().map((debt, index) => (
+                      <Debts key={index} creditor={debt.creditor} debtor={debt.debtor} amount={debt.amount} users={eventInfo.users} />
+                    ))}
                   </div>
                 </section>
 
+
+                {/* [
+  [0,-5,-6],
+  [5,0,7],
+  [6,-7,0]
+]
+
+user0 -(5$)-> user1
+user0 -(6$)-> user2
+user2 -(7$)-> user1
+
+user0 -(11$)-> user2
+user2 -(12$)-> user1
+
+user0 -(11$)-> user1
+user2 -(1$)-> user1 */}
+
+
                 <section>
-                <h2 className='home-container_title'>Expenses</h2>
-                <div className='home-container_events'>
+                  <h2 className='home-container_title'>Expenses</h2>
+                  <div className='home-container_events'>
                     {eventInfo.expenses.map((expense) => (
                       <Expense
                         onClick={setExpenseSelected}
@@ -184,18 +230,18 @@ function EventDetail() {
                         key={expense.exp_id}
                       />
                     ))}
-                </div>
+                  </div>
                 </section>
               </>
             }
 
             {
-              (page===PAGES.EXPENSES && expenseSelected) &&
+              (page === PAGES.EXPENSES && expenseSelected) &&
               <>
                 <h2 className='home-container_title'>Expenses</h2>
                 <ExpenseTransactions
                   users={eventInfo.users}
-                  onClickBack={()=>setExpenseSelected(null)}
+                  onClickBack={() => setExpenseSelected(null)}
                   expense={expenseSelected}
                 />
               </>
@@ -203,9 +249,9 @@ function EventDetail() {
             }
 
             {
-              page===PAGES.CONFIG &&
+              page === PAGES.CONFIG &&
               <>
-              
+
                 <section className='home-container_events'>
                   <div className='home-container_info'>
                     <Link to={`/invitation/${eventInfo.event.url}`} className='user'>
@@ -215,9 +261,9 @@ function EventDetail() {
                         alt='Calendar icon'
                       />
                       <p>
-                      Add user to the group
+                        Add user to the group
                       </p>
-                    </Link>  
+                    </Link>
                     {eventInfo.users.map(
                       (userInfo) =>
                         userInfo.active === 1 && (
@@ -227,19 +273,19 @@ function EventDetail() {
                   </div>
                 </section>
                 <hr />
-                <Button text="Salir del evento" onClick={()=>setAskExitModal(true)} red/>
+                <Button text="Salir del evento" onClick={() => setAskExitModal(true)} red />
               </>
             }
 
-            
+
           </main>
 
 
         </main>
 
-        
 
-{/* 
+
+        {/* 
       <nav className='home-container_aside'>
           
         </nav> */}
