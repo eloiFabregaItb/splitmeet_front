@@ -1,30 +1,47 @@
-import "../Login/Login.css"
+import '../Login/Login.css'
+import './ForgotPassword.css'
 
 import Header from '../../globalComponents/Header/Header'
 import Button from '../../globalComponents/Button'
+import Loader from '../../globalComponents/Loader/Loader'
 import logo from '../../assets/icons/logo.svg'
 import { sendForgottenPasswordEmail } from '../../services/sendForgottenPasswordEmail'
-import { useParams } from 'react-router-dom'
 import { useState } from 'react'
 
 function ForgotPassword() {
-  const params = useParams()
-  const errMsg = 'An error occurred while sending the email'
+  const [errMsg, setErrMsg] = useState('An error has occurred')
   const succMsg = 'The email has been sent successfully'
-  const [email, setEmail] = useState("")
+  const emailErr = 'Incorrect email format'
+  const [email, setEmail] = useState('')
   const [showError, setShowError] = useState(false)
   const [showSuccess, setShowSuccess] = useState(false)
+  const [showEmailError, setShowEmailError] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   const sendEmail = async () => {
-    const resSendEmail = await sendForgottenPasswordEmail(params.jwt, email)
+    setLoading(true)
+    if (checkEmailError(email)) return setLoading(false)
+    const resSendEmail = await sendForgottenPasswordEmail(email)
     if (resSendEmail.success) {
+      setLoading(false)
       setShowError(false)
       setShowSuccess(true)
       return
     }
-
+    setLoading(false)
     setShowSuccess(false)
+    setErrMsg(resSendEmail.message)
     setShowError(true)
+  }
+
+  const checkEmailError = (email) => {
+    const expresionRegular = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/
+    if (!expresionRegular.test(email)) {
+      setShowEmailError(true)
+      return true
+    }
+    setShowEmailError(false)
+    return false
   }
 
   return (
@@ -37,7 +54,12 @@ function ForgotPassword() {
           <p className='verify_text'>
             Write your email to receive a link to reset your password.
           </p>
-          <input type="text" className='login_form_input' value={email} onChange={(e) => setEmail(e.target.value)} />
+          <input
+            type='text'
+            className='input mb-20'
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
 
           <div onClick={sendEmail}>
             <Button
@@ -45,13 +67,20 @@ function ForgotPassword() {
               text='VERIFY'
             />
           </div>
-          {(showError || showSuccess) && (
+          {loading && <Loader />}
+          {(showError || showSuccess || showEmailError) && (
             <span
               className={
-                showError ? 'error pt-40' : showSuccess && 'success pt-40'
+                showError || showEmailError
+                  ? 'error pt-40'
+                  : showSuccess && 'success pt-40'
               }
             >
-              {showError ? errMsg : showSuccess && succMsg}
+              {showEmailError
+                ? emailErr
+                : showError
+                ? errMsg
+                : showSuccess && succMsg}
             </span>
           )}
         </main>

@@ -1,8 +1,10 @@
 import './Login.css'
+import '../ForgotPassword/ForgotPassword.css'
 import logo from '../../assets/icons/logo.svg'
 import user from '../../assets/icons/user.svg'
 import google from '../../assets/icons/google.svg'
-import candadoAbierto from '../../assets/icons/candadoAbierto.svg'
+import eyeOpened from '../../assets/icons/eyeOpened.svg'
+import eyeClosed from '../../assets/icons/eyeClosed.svg'
 import candadoCerrado from '../../assets/icons/candadoCerrado.svg'
 
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
@@ -10,7 +12,7 @@ import { useState } from 'react'
 
 import { SHA256 } from 'crypto-js'
 import { checkLogin } from '../../services/checkLogin'
-import {oauth} from "../../services/oauth"
+import { oauth } from '../../services/oauth'
 import { joinEvent } from '../../services/joinEvent'
 import { api_url } from '../../utils/constants'
 import Header from '../../globalComponents/Header/Header'
@@ -47,7 +49,7 @@ function Login() {
   const oauthLogin = async () => {
     const resOauth = await oauth()
     if (resOauth.success) {
-      console.log(resOauth);
+      console.log(resOauth)
     }
   }
 
@@ -73,7 +75,7 @@ function Login() {
         }
 
         if (resLogin.mailValidated === 0) {
-          return navigate(`/verification/${resLogin.jwt}`)
+          return navigate(`/verification?jwt=${resLogin.jwt}`)
         }
 
         return navigate('/')
@@ -115,10 +117,9 @@ function Login() {
 
             <div className='login_form_inputContainer'>
               <img
-                src={showPassword ? candadoAbierto : candadoCerrado}
+                src={candadoCerrado}
                 alt='Logo de un candado/password'
                 className='login_form_logo'
-                onClick={() => setShowPassword(!showPassword)}
               />
               <input
                 className='login_form_input'
@@ -129,6 +130,12 @@ function Login() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
+              <img
+                src={showPassword ? eyeOpened : eyeClosed}
+                alt={`Icono de ojo ${showPassword ? 'abierto' : 'cerrado'}`}
+                className='login_form_logo border-0'
+                onClick={() => setShowPassword(!showPassword)}
+              />
             </div>
 
             {showEmailError ? (
@@ -137,9 +144,7 @@ function Login() {
               <span className='error'>
                 The email and/or password are incorrect
               </span>
-            ) : (
-              ''
-            )}
+            ) : null}
             <Button
               classname='login_form_btn login_form_btn--login'
               text='LOGIN'
@@ -150,6 +155,11 @@ function Login() {
             You do not have an account?
             <Link to='/signup' className='subrayado'>
               Sign up
+            </Link>
+          </p>
+          <p className='login_mensajeRegistro mt-07rem'>
+            <Link to='/forgotten' className='subrayado'>
+              Forgot password?
             </Link>
           </p>
 
@@ -167,7 +177,7 @@ function Login() {
                         </a> */}
             <button
               onClick={oauthLogin}
-/*               href={`${api_url}/auth/oauth`}
+              /*               href={`${api_url}/auth/oauth`}
               to='/auth/oauth' */
               className='subrayado login_form_btn login_form_btn--google'
             >
