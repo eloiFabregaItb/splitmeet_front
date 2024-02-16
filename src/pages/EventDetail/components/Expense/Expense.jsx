@@ -1,20 +1,14 @@
 import "./Expense.css";
 import { api_url } from "../../../../utils/constants";
 
-function Expense({ setShowExpenses, setCurrentExpense, expenseInfo }) {
+function Expense({ onClick, expenseInfo }) {
   const handleClick = () => {
-    setCurrentExpense(expenseInfo);
-    setShowExpenses(false);
+    onClick(expenseInfo);
   };
 
   return (
     <article className='expense' onClick={handleClick}>
       <div className='expense_img-concept'>
-        <img
-          /* src={`${api_url}/public/usrProfilePic/${expenseInfo.usr_id_lender}`} */
-          src={`https://robohash.org/${expenseInfo.usr_id_lender}`}
-          alt={`Icono del usuario ${expenseInfo.usr_id_lender}`}
-        />
         <p>{expenseInfo.exp_concept}</p>
       </div>
       <p

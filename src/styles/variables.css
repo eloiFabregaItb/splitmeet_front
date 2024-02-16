@@ -1,0 +1,24 @@
+:root {
+
+
+  /* COLORS LIGHT */
+  --background: #fafafa;
+  --background-card: #eee;
+  --background-noImage: #bbb;
+
+  --text-color: #333;
+
+  --white: #fafafa;
+  --sky_blue: #e1f5fe;
+  --ocean_blue: #01579b;
+  --green: #34a853;
+  --light_grey: #9a9a9a;
+  --red: #a00;
+
+
+  /* MEASUREMENTS */
+  --border-radius: .5rem;
+  --bento-gap: 1.5rem;
+
+  --max-screen: 1300px;
+}

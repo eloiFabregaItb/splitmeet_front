@@ -10,6 +10,7 @@ import { useState } from 'react'
 
 import { SHA256 } from 'crypto-js'
 import { checkLogin } from '../../services/checkLogin'
+import {oauth} from "../../services/oauth"
 import { joinEvent } from '../../services/joinEvent'
 import { api_url } from '../../utils/constants'
 import Header from '../../globalComponents/Header/Header'
@@ -43,6 +44,13 @@ function Login() {
     return false
   }
 
+  const oauthLogin = async () => {
+    const resOauth = await oauth()
+    if (resOauth.success) {
+      console.log(resOauth);
+    }
+  }
+
   /*
     Function that checks the email structure and sends the email and password to the server.
     */
@@ -52,6 +60,7 @@ function Login() {
     //If the email has the proper structure, then the email and password is sent to the server.
     if (!checkEmailError(email) && password.trim() !== '') {
       const resLogin = await checkLogin(email, SHA256(password).toString())
+      console.log(resLogin);
       if (resLogin.success) {
         setShowDataError(false)
         // localStorage.setItem("jwt", resLogin.jwt);
@@ -67,7 +76,7 @@ function Login() {
           return navigate(`/verification/${resLogin.jwt}`)
         }
 
-        return navigate('/home')
+        return navigate('/')
       }
       setShowDataError(true)
       localStorage.clear()
@@ -156,9 +165,10 @@ function Login() {
                             />
                             Continue with Google
                         </a> */}
-            <a
-              href={`${api_url}/auth/google`}
-              to='/auth/google'
+            <button
+              onClick={oauthLogin}
+/*               href={`${api_url}/auth/oauth`}
+              to='/auth/oauth' */
               className='subrayado login_form_btn login_form_btn--google'
             >
               <img
@@ -167,7 +177,7 @@ function Login() {
                 alt='Logo de Google'
               />
               Continue with Google
-            </a>
+            </button>
           </div>
         </main>
       </div>

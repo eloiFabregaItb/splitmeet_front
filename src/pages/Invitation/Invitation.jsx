@@ -115,15 +115,17 @@ function Invitation() {
                       +
                     </button>
                   </div>
-                  {userInvitations.includes(userMail) ? (
+
+                  {
+                  userInvitations.includes(userMail) ? (
                     <span
                       className='error'
                       style={{ width: '100%', marginTop: '10px' }}
                     >
                       Email already in the list
                     </span>
-                  ) : (
-                    inputDisabled && (
+                  ) : inputDisabled ? (
+                     (
                       <span
                         className='error'
                         style={{ width: '100%', marginTop: '10px' }}
@@ -131,7 +133,9 @@ function Invitation() {
                         Incorrect email format
                       </span>
                     )
-                  )}
+                  ) : null
+                  }
+
                 </div>
 
                 <div className='newevent__members'>

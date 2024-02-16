@@ -1,3 +1,119 @@
+.EventDetail {
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.EventDetail__header {
+  width: 100%;
+  height: 300px;
+  background-size: cover !important;
+  background-position: center !important;
+
+  display: flex;
+  flex-direction: column;
+
+  justify-content: center;
+  align-items: center;
+  color: var(--white);
+
+  position: relative;
+
+  transition: height 250ms ease;
+
+}
+
+.EventDetail__header.small {
+  height: 100px;
+
+}
+
+.EventDetail__header .back,
+.EventDetail__header .config {
+  background: none;
+  position: absolute;
+  cursor: pointer;
+}
+
+.EventDetail__header .back {
+  top: 10px;
+  left: 10px;
+}
+
+.EventDetail__header .config {
+  top: 10px;
+  right: 10px;
+  transition: transform 0.5s ease;
+
+}
+
+.EventDetail__header .config img,
+.EventDetail__header .back img {
+  width: 40px;
+  height: 40px;
+}
+
+.EventDetail__header.small .config {
+  transform: rotate(180deg);
+}
+
+.EventDetail__navPages {
+  margin: 0 !important;
+}
+
+.EventDetail__navPages ul {
+  list-style: none;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  background-color: #e7e7e7;
+
+}
+
+
+.EventDetail__navPages ul li {
+  border-radius: 1rem;
+  margin: 1rem;
+  text-align: center;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  cursor: pointer;
+  background-color: var(--sky_blue);
+}
+
+.EventDetail__navPages ul li:hover {
+  filter: brightness(.9);
+  /* background-color: var(--light_blue) ; */
+}
+
+.EventDetail__navPages ul li.active {
+  background-color: var(--ocean_blue);
+  color: white;
+}
+
+
+
+.EventDetail__content {
+  flex: 1;
+  overflow: auto;
+
+
+}
+
+.EventDetail__content> :not(header) {
+
+  width: 100%;
+  max-width: 1200px;
+  margin: 20px auto;
+}
+
+.home-container {
+  background-color: #fafafa;
+  padding: 0 20px;
+  max-width: 600px !important;
+  margin: 0 auto;
+}
+
 .home-container_section--detail {
   width: 20%;
 }
@@ -8,15 +124,11 @@
 }
 
 .home-container_aside {
-  width: 100px;
-  background-color: var(--sky_blue);
-  min-height: 60vh;
-  position: fixed;
-  top: 25vh;
-  left: 0;
-  border-radius: 10px;
+  width: 100%;
+  height: 80px;
+
+  background-color: var(--background-card);
   display: flex;
-  flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
 }
@@ -24,4 +136,14 @@
 .home-container_aside_icon {
   width: 40px;
   cursor: pointer;
+
+}
+
+
+
+
+
+
+@media (width < 600px) {
+  .EventDetail__content> :not(header) {}
 }

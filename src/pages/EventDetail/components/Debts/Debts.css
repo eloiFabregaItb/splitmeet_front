@@ -1,0 +1,40 @@
+.debts {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+
+
+.debts_img-concept {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.debts_img-concept > p {
+  cursor: pointer;
+  font-size: 1.1rem;
+}
+
+.debts_img-concept > img {
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+}
+
+.debts_amount {
+  font-size: 1.1rem;
+  font-weight: 500;
+  text-align: center;
+}
+
+.debts_amount--green {
+  color: var(--green);
+}
+
+.debts_amount--red {
+  color: var(--red);
+}

@@ -1,12 +1,23 @@
-import { useState, useEffect } from "react";
+//styles
 import "./Home.css";
+
+//lib
+import { useState, useEffect } from "react";
+
+//api
 import { getEvents } from "../../services/getEvents";
+
+//components
 import Loader from "../../globalComponents/Loader/Loader";
-import Button from "../../globalComponents/Button";
 import Header from "../../globalComponents/Header/Header";
-import Event from "./components/Event/Event";
-import { useLoginDataContext } from "../../contexts/LoginDataContext";
+import EventCard from "./components/Event/Event";
 import { Link } from "react-router-dom";
+
+//icons
+import ico_more from "../../assets/icons/add.svg"
+
+//constants & context
+import { useLoginDataContext } from "../../contexts/LoginDataContext";
 
 function Home() {
   const { nombre, saldo, fotoPerfil, isLoggedIn, jwt } = useLoginDataContext();
@@ -34,35 +45,19 @@ function Home() {
     <>
       {!loading ? (
         <>
-          <Header></Header>
-          <main className="background home-container">
-            <section className="home-container_section">
-              <h2 className="home-container_title">Events</h2>
-              <div className="home-container_events">
-                <div className="home-container_info">
-                  {events.map((event) => (
-                    <Event eventInfo={event} key={event.id} />
-                  ))}
-                </div>
-                <Link to="/new">
-                  <Button text="NEW EVENT" />
-                </Link>
-              </div>
-            </section>
 
-            <section className="home-container_section">
-              <h2 className="home-container_title">Balance</h2>
-              <div className="home-container_events home-container_saldo">
-                <p className={`balance ${saldo >= 0 ? "green" : "red"}`}>
-                  {saldo}€
-                </p>
-              </div>
-            </section>
+          <Header>
+            <Link to="/new"><img src={ico_more} alt="nuevo evento" /></Link>
+          </Header>
+          <main className="home-container">
 
-            <section className="home-container_section">
-              <h2 className="home-container_title">Last transactions</h2>
-              <div className="home-container_events"></div>
-            </section>
+            <div className="home-container--wrapper">
+              {events.map((event) => (
+                <EventCard eventInfo={event} key={event.id} />
+              ))}
+            </div>
+
+
           </main>
         </>
       ) : (
