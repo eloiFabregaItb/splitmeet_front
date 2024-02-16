@@ -5,35 +5,33 @@ import { UserImage } from '../../../../globalComponents/UserImage/UserImage';
 
 function Debts({ creditor, debtor, amount, users }) {
 
-    
-  function getUserInfo(userId){
-    return users.find(x=>x.id === userId)
-  }
+
+    //   function getUserInfo(userId){
+    //     return users.find(x=>x.id === userId)
+    //   }
 
 
 
     return (
-        <article className='expense' >
-            <div className='expense_img-concept'>
-              {/* <UserImage userInfo={userObject} /> */}
-                <img
-                    src={`https://robohash.org/${creditor}`} 
-                    alt={`Icono del usuario ${creditor}`} 
-                />
-                <p>{creditor}</p>
+        <article className='debts' >
+            <div className='debts_img-concept'>
+                <UserImage userInfo={creditor} />
+
+                <p>{creditor.name}</p>
             </div>
             <p>→</p>
-            <div className='expense_img-concept'>
-                <img
-                    src={`https://robohash.org/${debtor}`} 
-                    alt={`Icono del usuario ${debtor}`} 
-                />
-                <p>{debtor}</p>
+            <p className={`debts_amount debts_amount--red `}>
+                {Math.abs(amount)} €
+            </p>
+            <p>→</p>
+
+            <div className='debts_img-concept'>
+                <UserImage userInfo={debtor} />
+
+                <p>{debtor.name}</p>
             </div>
 
-            <p className={`expense_amount ${amount > 0 ? "expense_amount--red" : "expense_amount--green"}`}>
-                {amount > 0 ? `You owe ${amount}€ to ${creditor}` : `You lent ${-amount}€ to ${debtor}`}
-            </p>
+
         </article>
     );
 }

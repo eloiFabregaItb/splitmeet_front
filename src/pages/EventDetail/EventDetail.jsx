@@ -123,14 +123,14 @@ function EventDetail() {
     for (let i = 0; i < balanceMatrix.length; i++) {
       for (let j = 0; j < balanceMatrix[i].length; j++) {
         if (i !== j && balanceMatrix[i][j] !== 0 && i === user) {
-          const creditor = eventInfo.users[i].name;
-          const debtor = eventInfo.users[j].name;
+          const creditor = eventInfo.users[i];
+          const debtor = eventInfo.users[j];
           const amount = balanceMatrix[i][j];
           debts.push({ creditor, debtor, amount });
         }
       }
     }
-
+    console.log(debts);
     return debts;
   };
 
