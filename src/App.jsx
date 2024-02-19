@@ -31,6 +31,7 @@ import Invitation from './pages/Invitation/Invitation.jsx'
 import ProcessingVerification from './pages/Verification/ProcessingVerification.jsx'
 import ForgotPassword from './pages/ForgotPassword/ForgotPassword.jsx'
 import ChangePassword from "./pages/ChangePassword/ChangePassword.jsx"
+import { NewExpense } from "./pages/NewExpense/NewExpense.jsx";
 
 function App() {
   const { loginContext, isLoggedIn, emailValidated, jwt } =
@@ -101,6 +102,7 @@ function App() {
           <Route path='/signup' element={<SignUp />} />
 
           
+          <Route path='/newExpense/:event_url' element={<NewExpense />} />
           <Route path='/new' element={<NewEvent />} />
           <Route path='/event/:url' element={<EventDetail />} />
           <Route path='/login/invitation' element={<Login />} />
