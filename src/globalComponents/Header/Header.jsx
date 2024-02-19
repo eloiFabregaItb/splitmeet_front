@@ -99,7 +99,7 @@ function Header({ nameEvent, children, back }) {
               <nav className="header__userMenu">
                 <ul>
                   <li>
-                    <a href="#" onClick={handleLogout}>
+                    <a href="#" onClick={handleSettings}>
                       <img src={settings} alt="" />
                       Settings
                     </a>

@@ -119,7 +119,14 @@ function App() {
             }
           />
           <Route path="/login/invitation" element={<Login />} />
-          <Route path="/invitation/:event_url" element={<Invitation />} />
+          <Route
+            path="/invitation/:event_url"
+            element={
+              <ProtectedRoute>
+                <Invitation />
+              </ProtectedRoute>
+            }
+          />
           {/* <Route path="/event/:url/users" element={<Users />} /> */}
           <Route
             path="/verification"
