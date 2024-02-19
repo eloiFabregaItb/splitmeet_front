@@ -23,7 +23,7 @@ const PAGES={
   DISTRIBURION:"distribution"
 }
 
-function NewEvent() {
+export function NewExpense() {
   const initialData = {
     name: 'Oriol',
   }
@@ -239,4 +239,3 @@ function NewEvent() {
     </>
   )
 }
-export default NewEvent

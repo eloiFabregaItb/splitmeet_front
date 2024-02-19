@@ -60,7 +60,8 @@ function EventDetail() {
   const [expenseSelected, setExpenseSelected] = useState(null)
   const [page, setPage] = useState(PAGES.EXPENSES)
 
-  const IS_CREATOR = codUsuario === eventInfo.event.creator.id
+
+  const IS_CREATOR = codUsuario === eventInfo?.event?.creator?.id
 
   const [askExitModal, setAskExitModal] = useState(false)
 
@@ -281,6 +282,7 @@ user2 -(1$)-> user1 */}
                           />
                         )
                     )}
+
                   </div>
                 </section>
                 <hr />

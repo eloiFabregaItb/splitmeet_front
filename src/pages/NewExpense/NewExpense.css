@@ -145,6 +145,7 @@
   line-height: 18px;
 }
 
+.add_amount,
 .add_name {
   width: 100%;
   display: flex;
@@ -152,6 +153,7 @@
   gap: 5px;
 }
 
+.add_amount>input,
 .add_name>input {
   width: 100%;
 }
