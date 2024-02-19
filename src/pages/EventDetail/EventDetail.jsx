@@ -26,7 +26,7 @@ import User from './components/Users/User'
 
 //api
 import { getEventInfo } from '../../services/getEventInfo'
-import { exitFromEvent } from '../../services/exitFromEvent'
+import { exitFromEvent, fireFromEvent } from '../../services/exitFromEvent'
 import { TextModal } from '../../globalComponents/TextModal/TextModal'
 
 
@@ -60,8 +60,7 @@ function EventDetail() {
   const [expenseSelected, setExpenseSelected] = useState(null)
   const [page, setPage] = useState(PAGES.EXPENSES)
 
-  console.log(eventInfo)
-
+  const IS_CREATOR = codUsuario === eventInfo.event.creator.id
 
   const [askExitModal, setAskExitModal] = useState(false)
 
@@ -133,6 +132,18 @@ function EventDetail() {
 
     return debts;
   };
+
+
+
+  const handleFire = async (userInfo) => {
+    const {success,users} = await fireFromEvent(jwt, params.url,userInfo.id)
+    if(success){
+      setEventInfo(prev=>{
+        prev.users = users
+        return prev
+      })
+    }
+  }
 
 
   if (loading) return (<>
@@ -260,14 +271,14 @@ user2 -(1$)-> user1 */}
                         src={icoAddUser}
                         alt='Calendar icon'
                       />
-                      <p>
-                        Add user to the group
-                      </p>
+                      <p>Add user to the group</p>
                     </Link>
                     {eventInfo.users.map(
                       (userInfo) =>
                         userInfo.active === 1 && (
-                          <User userInfo={userInfo} key={userInfo.usr_id} />
+                          <User userInfo={userInfo} key={userInfo.usr_id}
+                            onFire={ (IS_CREATOR && userInfo.id !== codUsuario ) ? handleFire : undefined}
+                          />
                         )
                     )}
                   </div>
@@ -283,12 +294,6 @@ user2 -(1$)-> user1 */}
 
         </main>
 
-
-
-        {/* 
-      <nav className='home-container_aside'>
-          
-        </nav> */}
       </div>
 
     </>

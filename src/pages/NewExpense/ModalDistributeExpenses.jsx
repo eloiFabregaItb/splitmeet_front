@@ -2,6 +2,13 @@ import { useEffect, useState } from "react";
 import { TextModal } from "../../globalComponents/TextModal/TextModal";
 
 
+const PAGES = {
+  EQUAL:"equal",
+  QUANTITY:"quantity",
+  PERCENTAGE:"percentage"
+}
+
+
 export function ModalDistributeExpenses({
   users,
   onChange,
@@ -12,7 +19,7 @@ export function ModalDistributeExpenses({
   const [isOpen,setIsOpen] = useState()
   
   const divisions = ["Equal parts",  "Por cantidades","Por porcentaje"]
-  const [page,setPage] = useState(0) // 0-> equal parts
+  const [page,setPage] = useState(PAGES.EQUAL)
   
   const amounts = split_equal(amount,users.length)
   //equal parts
@@ -27,14 +34,14 @@ export function ModalDistributeExpenses({
 
 
 
-  //page 0
+  //page EQUAL PARTS
   function handleClickAllCheckbox(e){
     const newVal = !isAllChecked
     setIsAllChecked(newVal)
     setEqualPartsDiv(prev=>prev.map(x=>({...x,checked:newVal})))
   }
 
-  //page 0
+  //page EQUAL PARTS
   function handleCheckUser(user){
     console.log(user)
     setEqualPartsDiv(prev=>{
@@ -57,7 +64,7 @@ export function ModalDistributeExpenses({
 
   }
 
-  //page 1
+  //page QUANTITY
   function handleChangeAmount(user,e){
     setEqualPartsDiv(prev=>{
       const updated = [...prev]
@@ -69,7 +76,7 @@ export function ModalDistributeExpenses({
 
   }
 
-  //page 2
+  //page PERCENTAGE
   function handleChangePercentage(user,e){
     setEqualPartsDiv(prev=>{
       const updated = [...prev]
@@ -81,16 +88,16 @@ export function ModalDistributeExpenses({
   
   function handleSubmit(){
     // onChange && onChange()
-    if(page===0){
+    if(page===PAGES.EQUAL){
       const participants = equalPartsDiv.reduce((acc,u)=>acc+u.checked,0)
       const each = amount/participants
 
-    }else if(page === 1){
+    }else if(page === PAGES.QUANTITY){
       if(remaining !== 0){
         setErrMsg((remaining>0?"Faltan":"Sobran")+`${remaining}€ por distribuir`)
       }
 
-    }else if(page === 2){
+    }else if(page === PAGES.PERCENTAGE){
       if(remainingPercentage !== 0){
         setErrMsg((remainingPercentage>0?"Faltan":"Sobran")+`${remainingPercentage}% por distribuir`)
       }
@@ -99,7 +106,7 @@ export function ModalDistributeExpenses({
   }
 
   function calcEachUserPay(){
-    if(page === 0){
+    if(page === PAGES.EQUAL){
       const participants = equalPartsDiv.filter(x=>x.checked)
       const amounts = split_equal(amount,participants.length)
       setEqualPartsDiv(prev=>{
@@ -113,9 +120,9 @@ export function ModalDistributeExpenses({
         return updated
       })
 
-    }else if(page === 1){
+    }else if(page === PAGES.QUANTITY){
 
-    }else if(page === 2){
+    }else if(page === PAGES.PERCENTAGE){
 
     }
   }
@@ -140,7 +147,7 @@ export function ModalDistributeExpenses({
           
           <main className="NewExpense__modal__content">
             {
-              page===0 && //equal parts
+              page=== PAGES.EQUAL && //equal parts
               <div>
                 <p className="NewExpense__modal__content__header"> <input 
                 type="checkbox" 
@@ -172,7 +179,7 @@ export function ModalDistributeExpenses({
             }
 
             {
-              page===1 && //by quantity
+              page=== PAGES.QUANTITY && //by quantity
               <div>
 
                 {
@@ -200,7 +207,7 @@ export function ModalDistributeExpenses({
 
 
             {
-              page===2 && //by percentage
+              page=== PAGES.PERCENTAGE && //by percentage
               <div>
 
                 {
