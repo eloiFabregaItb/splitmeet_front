@@ -68,20 +68,20 @@ function EventDetail() {
 
   //TODO -> Ordenar las expenses por fecha
   //TODO -> Crear desplegable para filtrar las expenses según usuarios
-  useEffect(() => {
-    const fetchInfo = async () => {
+  const fetchInfo = async () => {
 
 
-      if (isLoggedIn) {
-        const resEventsInfo = await getEventInfo(jwt, params.url)
-        if (resEventsInfo.success) {
-          setEventInfo(resEventsInfo)
-          setLoading(false)
-          return
-        }
+    if (isLoggedIn) {
+      const resEventsInfo = await getEventInfo(jwt, params.url)
+      if (resEventsInfo.success) {
+        setEventInfo(resEventsInfo)
+        setLoading(false)
         return
       }
+      return
     }
+  }
+  useEffect(() => {
     fetchInfo()
   }, [])
 
@@ -139,10 +139,7 @@ function EventDetail() {
   const handleFire = async (userInfo) => {
     const {success,users} = await fireFromEvent(jwt, params.url,userInfo.id)
     if(success){
-      setEventInfo(prev=>{
-        prev.users = users
-        return prev
-      })
+      fetchInfo()
     }
   }
 
