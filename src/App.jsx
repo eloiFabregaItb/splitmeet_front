@@ -20,17 +20,18 @@ import {
 } from "./contexts/LoginDataContext.jsx";
 
 // PAGES
-import Login from './pages/Login/Login'
-import SignUp from './pages/SignUp/SignUp'
-import Home from './pages/Home/Home'
-import Error404 from './pages/Error404/Error404'
-import NewEvent from './pages/NewEvent/NewEvent.jsx'
-import EventDetail from './pages/EventDetail/EventDetail.jsx'
-import Verification from './pages/Verification/Verification.jsx'
-import Invitation from './pages/Invitation/Invitation.jsx'
-import ProcessingVerification from './pages/Verification/ProcessingVerification.jsx'
-import ForgotPassword from './pages/ForgotPassword/ForgotPassword.jsx'
-import ChangePassword from "./pages/ChangePassword/ChangePassword.jsx"
+import Login from "./pages/Login/Login";
+import SignUp from "./pages/SignUp/SignUp";
+import Home from "./pages/Home/Home";
+import Error404 from "./pages/Error404/Error404";
+import NewEvent from "./pages/NewEvent/NewEvent.jsx";
+import EventDetail from "./pages/EventDetail/EventDetail.jsx";
+import Verification from "./pages/Verification/Verification.jsx";
+import Invitation from "./pages/Invitation/Invitation.jsx";
+import ProcessingVerification from "./pages/Verification/ProcessingVerification.jsx";
+import Settings from "./pages/Settings/Settings.jsx";
+import ForgotPassword from "./pages/ForgotPassword/ForgotPassword.jsx";
+import ChangePassword from "./pages/ChangePassword/ChangePassword.jsx";
 
 function App() {
   const { loginContext, isLoggedIn, emailValidated, jwt } =
@@ -48,8 +49,8 @@ function App() {
       if (!isLoggedIn && token) {
         const resUserInfo = await checkLoginJwt(token);
         if (resUserInfo.success) {
-          loginContext(resUserInfo)
-          return navigate('/')
+          loginContext(resUserInfo);
+          return navigate("/");
         }
       }
       if (location.pathname === "/login/invitation") {
@@ -92,32 +93,66 @@ function App() {
 
         <Routes>
           <Route
-            path='/'
-            element={<ProtectedRoute>
-              <Home />
-            </ProtectedRoute>}
+            path="/"
+            element={
+              <ProtectedRoute>
+                <Home />
+              </ProtectedRoute>
+            }
           />
-          <Route path='/login' element={<Login />} />
-          <Route path='/signup' element={<SignUp />} />
-
-          
-          <Route path='/new' element={<NewEvent />} />
-          <Route path='/event/:url' element={<EventDetail />} />
-          <Route path='/login/invitation' element={<Login />} />
-          <Route path='/invitation/:event_url' element={<Invitation />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route
+            path="/new"
+            element={
+              <ProtectedRoute>
+                <NewEvent />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/event/:url"
+            element={
+              <ProtectedRoute>
+                <EventDetail />
+              </ProtectedRoute>
+            }
+          />
+          <Route path="/login/invitation" element={<Login />} />
+          <Route path="/invitation/:event_url" element={<Invitation />} />
           {/* <Route path="/event/:url/users" element={<Users />} /> */}
-          <Route path="/verification" element={<Verification />} />{" "}
+          <Route
+            path="/verification"
+            element={
+              <ProtectedRoute>
+                <Verification />
+              </ProtectedRoute>
+            }
+          />{" "}
           {/* ARREGLAR ERROR */}
           <Route
             path="/validateMail"
             element={<ProcessingVerification />} /* ARREGLAR ERROR */
           />
+          <Route
+            path="/settings"
+            element={
+              <ProtectedRoute>
+                <Settings />
+              </ProtectedRoute>
+            }
+          />
           <Route path="/forgotten" element={<ForgotPassword />} />
-          <Route path="/change-password" element={<ChangePassword />} />{" "}
+          <Route
+            path="/change-password"
+            element={
+              <ProtectedRoute>
+                <ChangePassword />
+              </ProtectedRoute>
+            }
+          />{" "}
           {/* ARREGLAR ERROR */}
-
-          <Route path='*' element={<Error404 />} />
-
+          <Route path="*" element={<Error404 />} />
         </Routes>
       </div>
     </>
