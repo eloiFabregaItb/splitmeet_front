@@ -14,6 +14,7 @@ import { SHA256 } from "crypto-js";
 import { useNavigate } from "react-router-dom";
 import Header from "../../globalComponents/Header/Header";
 import Button from "../../globalComponents/Button";
+import Loader from "../../globalComponents/Loader/Loader";
 
 function SignUp() {
   const [username, setUsername] = useState("");
@@ -27,6 +28,7 @@ function SignUp() {
   const [showPassEqualError, setShowPassEqualError] = useState(false);
   const [showDataError, setShowDataError] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -76,6 +78,7 @@ function SignUp() {
       !checkEmailError(email) &&
       !checkPassEqualError(password1, password2)
     ) {
+      setLoading(true);
       const resLogin = await signUp(
         username,
         email,
@@ -85,11 +88,13 @@ function SignUp() {
         setShowDataError(false);
         setShowSuccess(true);
         localStorage.setItem("jwt", resLogin.jwt);
+        setLoading(false);
         setTimeout(() => {
           navigate("/login");
         }, 2000);
         return;
       }
+      setLoading(false);
       setShowDataError(true);
     }
   };
@@ -192,7 +197,7 @@ function SignUp() {
                 onClick={() => setShowPassword2(!showPassword2)}
               />
             </div>
-
+            {loading && <Loader />}
             {showInputError ? (
               <span className="error">Fill in all fields</span>
             ) : showEmailError ? (
