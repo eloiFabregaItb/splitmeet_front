@@ -66,7 +66,7 @@ export function TextModal({
                   {aceptarLoading ?
                   <span className="spinner--small"/>
                   :
-                  "ACEPTAR"
+                  "ACCEPT"
                   }
                 </button>
               )
@@ -77,7 +77,7 @@ export function TextModal({
                 {cancelarLoading ?
                 <span className="spinner--small"/>
                 :
-                "CANCELAR"}
+                "CANCEL"}
                   </button>
               )
             }

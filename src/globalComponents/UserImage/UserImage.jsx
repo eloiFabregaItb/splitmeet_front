@@ -2,12 +2,8 @@ import { hegHashColor } from "../../services/getHashedLandscape"
 import { api_url } from "../../utils/constants"
 import "./UserImage.css"
 
-export function UserImage({userInfo,className="",test}){
+export function UserImage({userInfo,className=""}){
 
-  if(test){
-
-    console.log(userInfo)
-  }
   const useRobohash = true
 
   const name = userInfo.name || userInfo.usr_name || userInfo.nombre

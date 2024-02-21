@@ -1,4 +1,4 @@
-export default function Button({ classname, text, red, ...props }) {
+export default function Button({ classname, text, red, children, ...props }) {
     return (
         <button
             className={
@@ -8,7 +8,7 @@ export default function Button({ classname, text, red, ...props }) {
             }
             {...props}
         >
-            {text}
+            {text || children}
         </button>
     );
 }
