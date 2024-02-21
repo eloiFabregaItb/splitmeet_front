@@ -26,7 +26,7 @@ import User from './components/Users/User'
 
 //api
 import { getEventInfo } from '../../services/getEventInfo'
-import { exitFromEvent } from '../../services/exitFromEvent'
+import { exitFromEvent, fireFromEvent } from '../../services/exitFromEvent'
 import { TextModal } from '../../globalComponents/TextModal/TextModal'
 
 
@@ -60,28 +60,28 @@ function EventDetail() {
   const [expenseSelected, setExpenseSelected] = useState(null)
   const [page, setPage] = useState(PAGES.EXPENSES)
 
-  console.log(eventInfo)
 
+  const IS_CREATOR = codUsuario === eventInfo?.event?.creator?.id
 
   const [askExitModal, setAskExitModal] = useState(false)
 
 
   //TODO -> Ordenar las expenses por fecha
   //TODO -> Crear desplegable para filtrar las expenses según usuarios
-  useEffect(() => {
-    const fetchInfo = async () => {
+  const fetchInfo = async () => {
 
 
-      if (isLoggedIn) {
-        const resEventsInfo = await getEventInfo(jwt, params.url)
-        if (resEventsInfo.success) {
-          setEventInfo(resEventsInfo)
-          setLoading(false)
-          return
-        }
+    if (isLoggedIn) {
+      const resEventsInfo = await getEventInfo(jwt, params.url)
+      if (resEventsInfo.success) {
+        setEventInfo(resEventsInfo)
+        setLoading(false)
         return
       }
+      return
     }
+  }
+  useEffect(() => {
     fetchInfo()
   }, [])
 
@@ -133,6 +133,15 @@ function EventDetail() {
     console.log(debts);
     return debts;
   };
+
+
+
+  const handleFire = async (userInfo) => {
+    const {success,users} = await fireFromEvent(jwt, params.url,userInfo.id)
+    if(success){
+      fetchInfo()
+    }
+  }
 
 
   if (loading) return (<>
@@ -260,16 +269,17 @@ user2 -(1$)-> user1 */}
                         src={icoAddUser}
                         alt='Calendar icon'
                       />
-                      <p>
-                        Add user to the group
-                      </p>
+                      <p>Add user to the group</p>
                     </Link>
                     {eventInfo.users.map(
                       (userInfo) =>
                         userInfo.active === 1 && (
-                          <User userInfo={userInfo} key={userInfo.usr_id} />
+                          <User userInfo={userInfo} key={userInfo.usr_id}
+                            onFire={ (IS_CREATOR && userInfo.id !== codUsuario ) ? handleFire : undefined}
+                          />
                         )
                     )}
+
                   </div>
                 </section>
                 <hr />
@@ -283,12 +293,6 @@ user2 -(1$)-> user1 */}
 
         </main>
 
-
-
-        {/* 
-      <nav className='home-container_aside'>
-          
-        </nav> */}
       </div>
 
     </>
