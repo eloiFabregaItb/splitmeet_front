@@ -1,35 +1,43 @@
-import "./NewEvent.css";
+import "../NewEvent/NewEvent.css";
+import "../Login/Login.css";
+import "../ForgotPassword/ForgotPassword.css";
 import Header from "../../globalComponents/Header/Header";
 import user from "../../assets/icons/user.svg";
+import candadoCerrado from "../../assets/icons/candadoCerrado.svg";
+import eyeClosed from "../../assets/icons/eyeClosed.svg";
+import eyeOpened from "../../assets/icons/eyeOpened.svg";
 
 import { useRef, useState, useEffect } from "react";
 
 import Button from "../../globalComponents/Button";
 import UserInvitation from "../Invitation/UserInvitation/UserInvitation";
-import Loader from "../../globalComponents/Loader/Loader";
 import { useLoginDataContext } from "../../contexts/LoginDataContext";
 import { addEvent } from "../../services/addEvent";
 import { uploadEventImg } from "../../services/uploadEventImg";
 import { sendEventInvitations } from "../../services/sendEventInvitations";
 import { useNavigate } from "react-router-dom";
 
-function NewEvent() {
+function Settings() {
   const initialData = {
     name: "",
   };
+  const passError = "Passwords do not much";
   const inputFileRef = useRef(null);
   const [userData] = useState(initialData);
-  const { jwt } = useLoginDataContext();
+  const { jwt, nombre } = useLoginDataContext();
   const [event_name, setName] = useState("");
   const [event_image, setImage] = useState(null);
   const [event_image64, setImage64] = useState(null);
-  const [userMail, setUserMail] = useState("");
+  const [password, setPassword] = useState("");
+  const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const [inputDisabled, setInputDisabled] = useState(true);
   const [userInvitations, setUserInvitations] = useState([]);
   const { loginContext } = useLoginDataContext();
   const [showDataError, setShowDataError] = useState(false);
-  const [loading, setLoading] = useState(false);
-
+  const [showPassword, setShowPassword] = useState(false);
+  const [showPasswordConfirmation, setShowPasswordConfirmation] =
+    useState(false);
+  const [showPassEqualError, setShowPassEqualError] = useState(false);
   const navigate = useNavigate();
 
   const plusButton = useRef(null);
@@ -55,9 +63,9 @@ function NewEvent() {
   };
 
   //Cuando cambia el email, se comprueba si el email es válido. Si no lo es, se desactiva el botón +
-  useEffect(() => {
+  /*   useEffect(() => {
     setInputDisabled(!validUserMail(userMail));
-  }, [userMail]);
+  }, [userMail]); */
 
   const handleEnter = (e) => {
     if (e.key === "Enter") {
@@ -84,7 +92,7 @@ function NewEvent() {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
+
     const resAdd = await addEvent(
       event_name,
       event_image,
@@ -102,11 +110,9 @@ function NewEvent() {
           userInvitations
         );
       }
-      setLoading(false);
       //loginContext(resAdd);
       return navigate(`/event/${resAdd.evt_url}`);
     }
-    setLoading(false);
     setShowDataError(true);
     //localStorage.clear()
   };
@@ -116,19 +122,19 @@ function NewEvent() {
       <div className="container">
         <main className="box">
           <p>{showDataError}</p>
-          <h1 className="newevent__title">New event</h1>
+          <h1 className="newevent__title">User information</h1>
 
           <form noValidate onSubmit={onSubmit} className="event_form">
             <div className="form-container">
               <div className="add_name">
                 <label className="newevent__text" htmlFor="name">
-                  Event Name
+                  User name
                 </label>
                 <div className="newevent__form_inputContainer">
                   <input
                     className="newevent__form_input"
                     type="text"
-                    placeholder="event Name"
+                    placeholder={nombre}
                     name="event_name"
                     id="event_name"
                     value={event_name}
@@ -139,7 +145,7 @@ function NewEvent() {
 
               <div className="add_image">
                 <label className="newevent__text" htmlFor="event_image">
-                  Event Image
+                  User image
                 </label>
 
                 <input
@@ -181,68 +187,68 @@ function NewEvent() {
               </div> */}
               <div className="form-container__container-invitation">
                 <div className="add_name">
-                  <label className="newevent__text" htmlFor="userMail">
-                    User email
+                  <label className="newevent__text" htmlFor="password">
+                    New password
                   </label>
-                  <div className="newevent__form_inputContainer newevent__form_inputContainer--invitation">
-                    <input
-                      className="newevent__form_input newevent__form_input--invitation"
-                      type="text"
-                      placeholder="user-example@gmail.com"
-                      name="userMail"
-                      id="userMail"
-                      value={userMail}
-                      onChange={(e) => setUserMail(e.target.value)}
-                      onKeyDown={handleEnter}
+                  <div className="login_form_inputContainer mb-20">
+                    <img
+                      src={candadoCerrado}
+                      alt="Logo de un candado/password"
+                      className="login_form_logo"
                     />
-                    <button
-                      className={`invitation__button invitation__plusButton ${
-                        inputDisabled && "invitation__button--disabled"
+                    <input
+                      className="login_form_input"
+                      type={showPassword ? "text" : "password"}
+                      placeholder="**********"
+                      name="password"
+                      id="password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                    />
+                    <img
+                      src={showPassword ? eyeOpened : eyeClosed}
+                      alt={`Icono de ojo ${
+                        showPassword ? "abierto" : "cerrado"
                       }`}
-                      onClick={addInvitation}
-                      disabled={inputDisabled}
-                      ref={plusButton}
-                      type="button"
-                    >
-                      +
-                    </button>
+                      className="login_form_logo border-0"
+                      onClick={() => setShowPassword(!showPassword)}
+                    />
                   </div>
-
-                  {userInvitations.includes(userMail) ? (
-                    <span
-                      className="error"
-                      style={{ width: "100%", marginTop: "10px" }}
-                    >
-                      Email already in the list
-                    </span>
-                  ) : (
-                    inputDisabled && (
-                      <span
-                        className="error"
-                        style={{ width: "100%", marginTop: "10px" }}
-                      >
-                        Incorrect email format
-                      </span>
-                    )
-                  )}
-                </div>
-
-                <div className="newevent__members newevent__members--newEvent">
-                  <label className="newevent__text" htmlFor="event_members">
-                    Invitations
+                  <label
+                    className="newevent__text"
+                    htmlFor="passwordConfirmation"
+                  >
+                    Confirm new password
                   </label>
-                  <ul className="userInvitations">
-                    {userInvitations.map((mail, index) => (
-                      <UserInvitation
-                        key={index}
-                        mail={mail}
-                        removeInvitation={removeInvitation}
-                      />
-                    ))}
-                  </ul>
+                  <div className="login_form_inputContainer mb-20">
+                    <img
+                      src={candadoCerrado}
+                      alt="Logo de un candado/password"
+                      className="login_form_logo"
+                    />
+                    <input
+                      className="login_form_input"
+                      type={showPasswordConfirmation ? "text" : "password"}
+                      placeholder="***********"
+                      name="passwordConfirmation"
+                      id="passwordConfirmation"
+                      value={passwordConfirmation}
+                      onChange={(e) => setPasswordConfirmation(e.target.value)}
+                    />
+                    <img
+                      src={showPasswordConfirmation ? eyeOpened : eyeClosed}
+                      alt={`Icono de ojo ${
+                        showPasswordConfirmation ? "abierto" : "cerrado"
+                      }`}
+                      className="login_form_logo border-0"
+                      onClick={() =>
+                        setShowPasswordConfirmation(!showPasswordConfirmation)
+                      }
+                    />
+                  </div>
                 </div>
               </div>
-              {loading && <Loader />}
+
               <Button
                 className="newevent_form_btn newevent_form_btn--login"
                 text="SUBMIT"
@@ -254,4 +260,4 @@ function NewEvent() {
     </>
   );
 }
-export default NewEvent;
+export default Settings;
