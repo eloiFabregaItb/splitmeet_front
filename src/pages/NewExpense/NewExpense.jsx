@@ -39,7 +39,8 @@ export function NewExpense() {
   const [inputDisabled, setInputDisabled] = useState(true)
   const [userInvitations, setUserInvitations] = useState([])
   const { loginContext } = useLoginDataContext()
-  const [showDataError, setShowDataError] = useState(false)
+  const [errName, setErrName] = useState(false)
+  const [errAmount, setErrAmount] = useState(false)
 
   const [inpAmount,setInpAmount] = useState("")
   const [users,setUsers] = useState([])
@@ -120,7 +121,7 @@ export function NewExpense() {
   function handleNextPage(e){
     e.preventDefault()
     if(Number(inpAmount) <= 0){
-      setShowDataError("campo valor necesario")
+      setErrAmount("campo valor necesario")
       return
     }
 
@@ -139,12 +140,11 @@ export function NewExpense() {
       <div className='container'>
         <main className='box'>
 
-          {showDataError && <p>{showDataError}</p>}
 
-          <h1 className='newevent__title'>New expense</h1>
           {
             page===PAGES.AMOUNT &&
             <>
+            <h1 className='newevent__title'>New expense</h1>
               <form noValidate onSubmit={handleNextPage} className='event_form'>
                 <div className='form-container'>
 
@@ -152,6 +152,7 @@ export function NewExpense() {
                     <label className='newevent__text' htmlFor='name'>
                       Expense Name
                     </label>
+                    {errName && <p className='error'>{errName}</p>}
                     <div className='newevent__form_inputContainer'>
                       <input
                         className='newevent__form_input'
@@ -170,6 +171,7 @@ export function NewExpense() {
                     <label className='newevent__text'>
                       Amount
                     </label>
+                    {errAmount && <p className='error'>{errAmount}</p>}
                     <div className='newevent__form_inputContainer'>
                       <input
                         className='newevent__form_input'
@@ -199,7 +201,7 @@ export function NewExpense() {
             page===PAGES.DISTRIBURION && 
             <form onSubmit={onSubmit}>
 
-              <h2>{eventName}</h2>
+              <h1>{eventName}</h1>
               <h2>{inpAmount}€</h2>
 
               <div className='who_paid'>
@@ -214,8 +216,8 @@ export function NewExpense() {
                     />
                     and divided 
                     {
-                      users.length>0&&
-                      <McodeodalDistributeExpenses 
+                      users?.length>0&&
+                      <ModalDistributeExpenses 
                         users={users}
                         onChange={handleChangeBorrowers}
                         amount={Number(inpAmount) || 0}
