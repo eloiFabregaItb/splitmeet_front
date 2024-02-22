@@ -173,23 +173,11 @@ function Login() {
             </Link>
           </p>
 
-          <div className="login_buttons">
-            {/*                         <a
-                            href="/"
-                            className="login_form_btn login_form_btn--google"
-                        >
-                            <img
-                                className="lWogin_buttons_logo"
-                                src={google}
-                                alt="Logo de Google"
-                            />
-                            Continue with Google
-                        </a> */}
-            <button
-              onClick={oauthLogin}
-              /*               href={`${api_url}/auth/oauth`}
-              to='/auth/oauth' */
-              className="subrayado login_form_btn login_form_btn--google"
+          <div className='login_buttons'>
+          <a
+              href={`${api_url}/auth/google`}
+              to='/auth/google'
+              className='subrayado login_form_btn login_form_btn--google'
             >
               <img
                 className="login_buttons_logo"
@@ -197,7 +185,8 @@ function Login() {
                 alt="Logo de Google"
               />
               Continue with Google
-            </button>
+            </a>
+           
           </div>
         </main>
       </div>

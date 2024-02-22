@@ -70,7 +70,7 @@ function Header({ nameEvent, children, back }) {
         <div className="left">
           {!isLoggedIn && (
             <button onClick={handleOpenNavbar} className="buttonActionIco">
-              <img src={ico_burger} alt="Icono del menú" />
+              <img src={ico_burger} alt="Menu icon" />
             </button>
           )}
           {back && (
@@ -85,7 +85,7 @@ function Header({ nameEvent, children, back }) {
             {nameEvent ? nameEvent : "SplitMeet"}
           </h1>
           {!nameEvent && (
-            <img className="logo" src={logo} alt="Logo de SplitMeet" />
+            <img className="logo" src={logo} alt="SplitMeet Logo" />
           )}
         </div>
 
@@ -126,7 +126,7 @@ function Header({ nameEvent, children, back }) {
               onClick={() => setIsNavbarOpen(false)}
               className="buttonActionIco"
             >
-              <img src={ico_x} alt="Icono de una cruz" />
+              <img src={ico_x} alt="Cross icon" />
             </button>
             <nav>
               <ul>

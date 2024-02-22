@@ -1,5 +1,5 @@
 import axios from "axios"
-import { UNSPLASH_API_KEY } from "../utils/constants";
+import { UNSPLASH_API_KEY } from "../utils/constants.js";
 const unsplashApi = axios.create({
   baseURL: 'https://api.unsplash.com',
 });

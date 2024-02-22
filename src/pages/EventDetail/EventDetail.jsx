@@ -143,7 +143,7 @@ function EventDetail() {
 
   return (
     <>
-      {askExitModal && (
+{askExitModal && (
         <TextModal
           title="Alert"
           cancelar={() => setAskExitModal(false)}
@@ -153,7 +153,6 @@ function EventDetail() {
           Do you want to leave the event?
         </TextModal>
       )}
-
       <nav className="absoluteButton">
         <Link to={`/newExpense/${params.url}`}>
           <img
@@ -225,27 +224,14 @@ function EventDetail() {
                   </div>
                 </section>
 
-                {/* [
-  [0,-5,-6],
-  [5,0,7],
-  [6,-7,0]
-]
 
-user0 -(5$)-> user1
-user0 -(6$)-> user2
-user2 -(7$)-> user1
-
-user0 -(11$)-> user2
-user2 -(12$)-> user1
-
-user0 -(11$)-> user1
-user2 -(1$)-> user1 */}
 
                 <section>
                   <h2 className="home-container_title">Expenses</h2>
                   <div className="home-container_events">
                     {eventInfo.expenses.map((expense) => (
                       <Expense
+                        className="test"
                         onClick={setExpenseSelected}
                         expenseInfo={expense}
                         key={expense.exp_id}

@@ -16,7 +16,7 @@ export function UserImage({userInfo,className=""}){
         style={{backgroundColor:bgColor}}
         className={"userImage " + className }
         src={`https://robohash.org/${name}`}
-        alt={`Icono del usuario ${name}`}
+        alt={`User icon ${name}`}
       />
   </>
   }
@@ -28,7 +28,7 @@ export function UserImage({userInfo,className=""}){
     <img
       className={"userImage " + className }
       src={`${api_url}/public/usrProfilePic/${image}`}
-      alt={`Icono del usuario ${name}`}
+      alt={`User icon ${name}`}
     />
   </>
 }

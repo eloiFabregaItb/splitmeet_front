@@ -1,15 +1,30 @@
 .expense {
+  padding-top: 0; /* Eliminamos el padding superior */
+  padding-bottom: 0; /* Eliminamos el padding inferior */
+  /* El resto de tu CSS aquí */
+  height: 100px;
+  overflow: hidden;
+  padding-left: 1.1rem; /* Mantenemos el padding izquierdo */
+  padding-right: 1.1rem; /* Mantenemos el padding derecho */
   width: 100%;
   display: flex;
+  gap: 1rem;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  background-color: var(--background);
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: transform .2s;
+  margin: 1.1rem;
+  height: 3rem;
 }
+
 
 .expense:hover {
   cursor: pointer;
-  background-color: #caedff;
-  border-radius: 10px;
+  transform: scale(1.04);
 }
 
 .expense_img-concept {

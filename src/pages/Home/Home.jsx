@@ -12,9 +12,9 @@ import Loader from "../../globalComponents/Loader/Loader";
 import Header from "../../globalComponents/Header/Header";
 import EventCard from "./components/Event/Event";
 import { Link } from "react-router-dom";
-
 //icons
 import ico_more from "../../assets/icons/add.svg"
+import ico_more_1 from "../../assets/icons/add_1.svg"
 
 //constants & context
 import { useLoginDataContext } from "../../contexts/LoginDataContext";
@@ -50,15 +50,23 @@ function Home() {
             <Link to="/new"><img src={ico_more} alt="nuevo evento" /></Link>
           </Header>
           <main className="home-container">
-
             <div className="home-container--wrapper">
               {events.map((event) => (
                 <EventCard eventInfo={event} key={event.id} />
               ))}
             </div>
 
-
           </main>
+          <nav className='absoluteButton'>
+            <Link to={`/new`}>
+              <img
+                className='home-container_aside_icon'
+                src={ico_more_1}
+                alt="New event"
+              />
+            </Link>
+          </nav>
+
         </>
       ) : (
         <main className="loader-container">
