@@ -27,6 +27,8 @@ const PAGES={
 export function NewExpense() {
   const params = useParams()
 
+  const navigate = useNavigate()
+
   const { jwt, email } = useLoginDataContext()
   const [expenseName, setExpenseName] = useState('')
   const [errName, setErrName] = useState(false)
@@ -81,6 +83,7 @@ export function NewExpense() {
     const response = await addExpense(jwt,eventInfo.url,expenseName,lender.id,""/*description*/,now, ""/*coords*/,transactions)
 
     console.log("EXPENSE RESPONSE", response)
+    navigate(`/event/${params.event_url}`)
     
   }
 
