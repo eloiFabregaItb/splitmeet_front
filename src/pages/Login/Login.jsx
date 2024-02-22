@@ -68,7 +68,7 @@ function Login() {
       console.log(resLogin);
       if (resLogin.success) {
         setShowDataError(false);
-        // localStorage.setItem("jwt", resLogin.jwt);
+        localStorage.setItem("jwt", resLogin.jwt);
         loginContext(resLogin);
         if (location.pathname === "/login/invitation") {
           const resJoinEvent = joinEvent(

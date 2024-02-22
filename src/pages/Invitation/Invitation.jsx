@@ -7,7 +7,7 @@ import { useEffect, useRef, useState } from "react";
 import Button from "../../globalComponents/Button";
 import { useLoginDataContext } from "../../contexts/LoginDataContext";
 import { sendEventInvitations } from "../../services/sendEventInvitations";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import UserInvitation from "./UserInvitation/UserInvitation";
 import Loader from "../../globalComponents/Loader/Loader";
 
@@ -23,6 +23,7 @@ function Invitation() {
   const [loading, setLoading] = useState(false);
   const [showErrorMessage, setShowErrorMessage] = useState(false);
   const navigate = useNavigate();
+  const params = useParams();
 
   const plusButton = useRef(null);
 
@@ -80,7 +81,10 @@ function Invitation() {
   };
   return (
     <>
-      <Header nameEvent={eventInfo.event.name}></Header>
+      <Header
+        back={`/event/${params.event_url}`}
+        nameEvent={eventInfo.event.name}
+      ></Header>
       <div className="container">
         <main className="box">
           <h1 className="newevent__title">Invite Users</h1>
