@@ -1,48 +1,51 @@
-import '../Login/Login.css'
-import './ForgotPassword.css'
+import "../Login/Login.css";
+import "./ForgotPassword.css";
 
-import Header from '../../globalComponents/Header/Header'
-import Button from '../../globalComponents/Button'
-import Loader from '../../globalComponents/Loader/Loader'
-import logo from '../../assets/icons/logo.svg'
-import { sendForgottenPasswordEmail } from '../../services/sendForgottenPasswordEmail'
-import { useState } from 'react'
+import Header from "../../globalComponents/Header/Header";
+import Button from "../../globalComponents/Button";
+import Loader from "../../globalComponents/Loader/Loader";
+import logo from "../../assets/icons/logo.svg";
+import { sendForgottenPasswordEmail } from "../../services/sendForgottenPasswordEmail";
+import { useState } from "react";
+import { useNavigate } from "react-router";
 
 function ForgotPassword() {
-  const [errMsg, setErrMsg] = useState('An error has occurred')
-  const succMsg = 'The email has been sent successfully'
-  const emailErr = 'Incorrect email format'
-  const [email, setEmail] = useState('')
-  const [showError, setShowError] = useState(false)
-  const [showSuccess, setShowSuccess] = useState(false)
-  const [showEmailError, setShowEmailError] = useState(false)
-  const [loading, setLoading] = useState(false)
+  const navigate = useNavigate();
+  const [errMsg, setErrMsg] = useState("An error has occurred");
+  const succMsg = "The email has been sent successfully";
+  const emailErr = "Incorrect email format";
+  const [email, setEmail] = useState("");
+  const [showError, setShowError] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [showEmailError, setShowEmailError] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const sendEmail = async () => {
-    setLoading(true)
-    if (checkEmailError(email)) return setLoading(false)
-    const resSendEmail = await sendForgottenPasswordEmail(email)
+    setLoading(true);
+    if (checkEmailError(email)) return setLoading(false);
+    const resSendEmail = await sendForgottenPasswordEmail(email);
     if (resSendEmail.success) {
-      setLoading(false)
-      setShowError(false)
-      setShowSuccess(true)
-      return
+      setLoading(false);
+      setShowError(false);
+      setShowSuccess(true);
+      setTimeout(() => navigate("/login"), 2000);
+      return;
     }
-    setLoading(false)
-    setShowSuccess(false)
-    setErrMsg(resSendEmail.message)
-    setShowError(true)
-  }
+    setLoading(false);
+    setShowSuccess(false);
+    setErrMsg(resSendEmail.message);
+    setShowError(true);
+  };
 
   const checkEmailError = (email) => {
-    const expresionRegular = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/
+    const expresionRegular = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
     if (!expresionRegular.test(email)) {
-      setShowEmailError(true)
-      return true
+      setShowEmailError(true);
+      return true;
     }
-    setShowEmailError(false)
-    return false
-  }
+    setShowEmailError(false);
+    return false;
+  };
 
   return (
     <>
@@ -72,8 +75,8 @@ function ForgotPassword() {
             <span
               className={
                 showError || showEmailError
-                  ? 'error pt-40'
-                  : showSuccess && 'success pt-40'
+                  ? "error pt-40"
+                  : showSuccess && "success pt-40"
               }
             >
               {showEmailError
@@ -86,7 +89,7 @@ function ForgotPassword() {
         </main>
       </div>
     </>
-  )
+  );
 }
 
-export default ForgotPassword
+export default ForgotPassword;

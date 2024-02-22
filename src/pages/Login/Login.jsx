@@ -71,7 +71,6 @@ function Login() {
         localStorage.setItem("jwt", resLogin.jwt);
         loginContext(resLogin);
         if (location.pathname === "/login/invitation") {
-          console.log("invitacion");
           const resJoinEvent = await joinEvent(
             resLogin.jwt,
             params[0].get("evt_url")

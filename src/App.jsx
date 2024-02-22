@@ -47,6 +47,15 @@ function App() {
         return navigate(`/verification?jwt=${jwt}`);
       }
       const token = localStorage.getItem("jwt");
+      if (location.pathname === "/login/invitation") {
+        const resJoinEvent = await joinEvent(
+          /* jwt */ token,
+          params[0].get("evt_url")
+        );
+        if (resJoinEvent.success) {
+          return navigate(`/event/${params[0].get("evt_url")}`);
+        }
+      }
       if (!isLoggedIn && token) {
         const resUserInfo = await checkLoginJwt(token);
         if (resUserInfo.success) {
