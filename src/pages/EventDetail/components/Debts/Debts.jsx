@@ -13,26 +13,43 @@ function Debts({ creditor, debtor, amount, users }) {
 
 
     return (
-        <article className='debts' >
+<article className='debts'>
+    {amount < 0 ? (
+        <>
             <div className='debts_img-concept'>
                 <UserImage userInfo={creditor} />
-
                 <p>{creditor.name}</p>
             </div>
             <p>→</p>
-            <p className={`debts_amount ${amount<0?'debts_amount--red ':'debts_amount--green'}`}>
+            <p className={`debts_amount debts_amount--red`}>
                 {Math.abs(amount)} €
             </p>
             <p>→</p>
-
             <div className='debts_img-concept'>
                 <UserImage userInfo={debtor} />
-
                 <p>{debtor.name}</p>
             </div>
+        </>
+    ) : (
+        <>
+            <div className='debts_img-concept'>
+                <UserImage userInfo={debtor} />
+                <p>{debtor.name}</p>
 
+            </div>
+            <p>→</p>
+            <p className={`debts_amount debts_amount--green`}>
+                {amount} €
+            </p>
+            <p>→</p>
+            <div className='debts_img-concept'>
+                <UserImage userInfo={creditor} />
+                <p>{creditor.name}</p>
+            </div>
+        </>
+    )}
+</article>
 
-        </article>
     );
 }
 
