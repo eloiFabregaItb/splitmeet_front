@@ -68,14 +68,17 @@ function Login() {
       console.log(resLogin);
       if (resLogin.success) {
         setShowDataError(false);
-        // localStorage.setItem("jwt", resLogin.jwt);
+        localStorage.setItem("jwt", resLogin.jwt);
         loginContext(resLogin);
         if (location.pathname === "/login/invitation") {
-          const resJoinEvent = joinEvent(
+          console.log("invitacion");
+          const resJoinEvent = await joinEvent(
             resLogin.jwt,
             params[0].get("evt_url")
           );
+          console.log(resJoinEvent);
           if (resJoinEvent.success) {
+            console.log("exito invitacion");
             setLoading(false);
             return navigate(`/event/${params[0].get("evt_url")}`);
           }
@@ -89,7 +92,7 @@ function Login() {
       }
       setLoading(false);
       setShowDataError(true);
-      localStorage.clear();
+      //localStorage.clear();
     }
   };
 

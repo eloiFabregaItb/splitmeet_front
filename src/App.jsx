@@ -55,8 +55,9 @@ function App() {
         }
       }
       if (location.pathname === "/login/invitation") {
-        const resJoinEvent = joinEvent(jwt, params[0].get("evt_url"));
+        const resJoinEvent = await joinEvent(jwt, params[0].get("evt_url"));
         if (resJoinEvent.success) {
+          console.log("app");
           return navigate(`/event/${params[0].get("evt_url")}`);
         }
       }
