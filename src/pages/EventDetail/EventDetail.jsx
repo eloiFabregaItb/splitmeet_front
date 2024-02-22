@@ -206,7 +206,13 @@ function EventDetail() {
                   <h2 className='home-container_title'>Debts</h2>
                   <div className='home-container_events'>
                     {calculateDebts().map((debt, index) => (
-                      <Debts key={index} creditor={debt.creditor} debtor={debt.debtor} amount={debt.amount} users={eventInfo.users} />
+                      <Debts 
+                        key={index} 
+                        creditor={debt.creditor} 
+                        debtor={debt.debtor} 
+                        amount={debt.amount} 
+                        users={eventInfo.users}
+                      />
                     ))}
                   </div>
                 </section>

@@ -20,7 +20,7 @@ function Debts({ creditor, debtor, amount, users }) {
                 <p>{creditor.name}</p>
             </div>
             <p>→</p>
-            <p className={`debts_amount debts_amount--red `}>
+            <p className={`debts_amount ${amount<0?'debts_amount--red ':'debts_amount--green'}`}>
                 {Math.abs(amount)} €
             </p>
             <p>→</p>

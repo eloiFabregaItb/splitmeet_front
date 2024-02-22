@@ -17,6 +17,7 @@ import { useNavigate } from 'react-router-dom'
 import { getEventInfo } from '../../services/getEventInfo'
 import { ModalSelect } from '../../globalComponents/ModalSelect/ModalSelect'
 import { ModalDistributeExpenses } from './ModalDistributeExpenses'
+import { addExpense } from '../../services/addExpense'
 
 const PAGES={
   AMOUNT:"amount",
@@ -24,34 +25,23 @@ const PAGES={
 }
 
 export function NewExpense() {
-  const initialData = {
-    name: 'Oriol',
-  }
   const params = useParams()
 
-  const inputFileRef = useRef(null)
-  const [userData] = useState(initialData)
+  const navigate = useNavigate()
+
   const { jwt, email } = useLoginDataContext()
-  const [eventName, setEventName] = useState('')
-  const [event_image, setImage] = useState(null)
-  const [event_image64, setImage64] = useState(null)
-  const [userMail, setUserMail] = useState('')
-  const [inputDisabled, setInputDisabled] = useState(true)
-  const [userInvitations, setUserInvitations] = useState([])
-  const { loginContext } = useLoginDataContext()
+  const [expenseName, setExpenseName] = useState('')
   const [errName, setErrName] = useState(false)
   const [errAmount, setErrAmount] = useState(false)
 
   const [inpAmount,setInpAmount] = useState("")
   const [users,setUsers] = useState([])
 
-  const navigate = useNavigate()
-
-  const plusButton = useRef(null)
 
   const [lender,setLender] = useState(null)
-  const [lenders,setLenders] = useState([])
+  const [borrowers,setBorrowers] = useState([])
 
+  const [eventInfo,setEventInfo] = useState({})
 
   const [page, setPage] = useState(PAGES.AMOUNT)
 
@@ -61,34 +51,23 @@ export function NewExpense() {
   },[])
 
   
-  //Cuando cambia el email, se comprueba si el email es válido. Si no lo es, se desactiva el botón +
-  useEffect(() => {
-    setInputDisabled(!validUserMail(userMail))
-  }, [userMail])
-
 
     
   async function fetchEventInfo(){
     const eventData = await getEventInfo(jwt,params.event_url)
     if(eventData?.success){
+      console.log("EVENT DATA",eventData)
       const apiUsers = eventData.users 
       const apiLender = apiUsers.find(x=>x.mail === email )
-      console.log(apiUsers,apiLender)
       setUsers(apiUsers)
       setLender(apiLender)
+      setEventInfo(eventData.event)
     }else{
       setUsers(eventData.users)
     }
   }
 
 
-  const validUserMail = (email) => {
-    if (userInvitations.includes(email)) return false
-
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    if (!emailRegex.test(email)) return false
-    return true
-  }
 
 
   function handleChangeBorrowers(borrowers){
@@ -98,23 +77,22 @@ export function NewExpense() {
   const onSubmit = async (e) => {
     e.preventDefault()
 
-    // const resAdd = await addEvent(event_name, event_image, userInvitations, jwt)
-    // if (resAdd.success) {
-    //   setShowDataError(false)
-    //   const resImg = await uploadEventImg(resAdd.evt_url, event_image, jwt)
+    const now = new Date().toISOString().slice(0, 10) 
+    const transactions = makeTransactions(borrowers)
 
-    //   if (resImg.success) {
-    //     const resInvite = await sendEventInvitations(
-    //       jwt,
-    //       resAdd.evt_url,
-    //       userInvitations
-    //     )
-    //   }
-    //   //loginContext(resAdd);
-    //   return navigate(`/event/${resAdd.evt_url}`)
-    // }
-    // setShowDataError(true)
-    //localStorage.clear()
+    const response = await addExpense(jwt,eventInfo.url,expenseName,lender.id,""/*description*/,now, ""/*coords*/,transactions)
+
+    console.log("EXPENSE RESPONSE", response)
+    navigate(`/event/${params.event_url}`)
+    
+  }
+
+  function makeTransactions(borrowers){
+    return borrowers.filter(x=>x.hasOwnProperty("amount")&&!isNaN(x.amount)&&x.amount!==0).map(x=>({
+      borrowerId:x.id,
+      amount:x.amount
+    }))
+
   }
 
 
@@ -125,8 +103,8 @@ export function NewExpense() {
       return
     }
 
-    if(eventName === ""){
-      setEventName("New expense")
+    if(expenseName === ""){
+      setExpenseName("New expense")
     }
 
     setPage(PAGES.DISTRIBURION)
@@ -160,8 +138,8 @@ export function NewExpense() {
                         placeholder='Road trip...'
                         name='event_name'
                         id='event_name'
-                        value={eventName}
-                        onChange={(e) => setEventName(e.target.value)}
+                        value={expenseName}
+                        onChange={(e) => setExpenseName(e.target.value)}
                       />
                     </div>
                   </div>
@@ -199,9 +177,9 @@ export function NewExpense() {
 
           {
             page===PAGES.DISTRIBURION && 
-            <form onSubmit={onSubmit}>
+            <form onSubmit={e=> e.preventDefault()}>
 
-              <h1>{eventName}</h1>
+              <h1>{expenseName}</h1>
               <h2>{inpAmount}€</h2>
 
               <div className='who_paid'>
@@ -229,6 +207,7 @@ export function NewExpense() {
                   <Button
                     className='newevent_form_btn newevent_form_btn--login'
                     text='NEXT'
+                    onClick={onSubmit}
                   />
 
             </form>

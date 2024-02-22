@@ -1,6 +1,6 @@
 import "./NewExpense.css"
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { TextModal } from "../../globalComponents/TextModal/TextModal";
 
 
@@ -41,6 +41,11 @@ export function ModalDistributeExpenses({
 
 
 
+
+  useEffect(()=>{
+    //ejecuta solo cargar el componente para cargar configuracion base
+    onChange(moneyDistribution)
+  },[])
 
 
   function handleSetPage(newPage){
@@ -168,20 +173,10 @@ export function ModalDistributeExpenses({
     if(page===PAGES.EQUAL){
       if(!moneyDistribution.some(x=>x.checked)) return
 
-      const participants = moneyDistribution.reduce((acc,u)=>acc+u.checked,0)
-      const each = amount/participants
-
-    }else if(page === PAGES.QUANTITY){
-      if(remaining !== 0){
-        setErrMsg(`${remaining}€ ${(remaining>0?FALTA:SOBRA)} to share`)
-      }
-
-    }else if(page === PAGES.PERCENTAGE){
-      if(remainingPercentage !== 0){
-        setErrMsg(`${remainingPercentage}% ${(remainingPercentage>0?FALTA:SOBRA)} to share`)
-      }
     }
-    
+
+    onChange(moneyDistribution)
+    setIsOpen(false)
   }
 
 
