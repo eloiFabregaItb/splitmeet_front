@@ -46,12 +46,7 @@ function Login() {
     return false
   }
 
-  const oauthLogin = async () => {
-    const resOauth = await oauth()
-    if (resOauth.success) {
-      console.log(resOauth)
-    }
-  }
+  
 
   /*
     Function that checks the email structure and sends the email and password to the server.
@@ -164,21 +159,9 @@ function Login() {
           </p>
 
           <div className='login_buttons'>
-            {/*                         <a
-                            href="/"
-                            className="login_form_btn login_form_btn--google"
-                        >
-                            <img
-                                className="lWogin_buttons_logo"
-                                src={google}
-                                alt="Logo de Google"
-                            />
-                            Continue with Google
-                        </a> */}
-            <button
-              onClick={oauthLogin}
-              /*               href={`${api_url}/auth/oauth`}
-              to='/auth/oauth' */
+          <a
+              href={`${api_url}/auth/google`}
+              to='/auth/google'
               className='subrayado login_form_btn login_form_btn--google'
             >
               <img
@@ -187,7 +170,8 @@ function Login() {
                 alt='Logo de Google'
               />
               Continue with Google
-            </button>
+            </a>
+           
           </div>
         </main>
       </div>

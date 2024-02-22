@@ -118,7 +118,7 @@ function NewEvent() {
                   <input
                     className='newevent__form_input'
                     type='text'
-                    placeholder='event Name'
+                    placeholder='Ski trip'
                     name='event_name'
                     id='event_name'
                     value={event_name}

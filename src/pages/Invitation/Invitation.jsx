@@ -76,9 +76,11 @@ function Invitation() {
   }
   return (
     <>
-      <Header nameEvent={eventInfo.event.name}></Header>
+      <Header nameEvent={eventInfo.event.name} back={`/event/${eventInfo.event.url}`}></Header>
       <div className='container'>
+
         <main className='box'>
+          
           <h1 className='newevent__title'>Invite Users</h1>
 
           <form

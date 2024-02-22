@@ -23,8 +23,6 @@
   border-radius: var(--border-radius);
   cursor: pointer;
   transition: transform .2s;
-  /* Animation */
-
 }
 
 .event:hover {

@@ -144,6 +144,7 @@
 
 
 
+
 @media (width < 600px) {
   .EventDetail__content> :not(header) {}
 }

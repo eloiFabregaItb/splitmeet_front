@@ -107,7 +107,7 @@ function ChangePassword() {
             <div className='login_form_inputContainer mb-20'>
               <img
                 src={candadoCerrado}
-                alt='Logo de un candado/password'
+                alt='Padlock/password logo'
                 className='login_form_logo'
               />
               <input
