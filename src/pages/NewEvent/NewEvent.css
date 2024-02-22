@@ -5,6 +5,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
+
+  overflow-y: auto;
+}
+
+.pt-100 {
+  padding-top: 100px;
 }
 
 .box {
@@ -125,8 +131,10 @@
 }
 
 .newevent__imagen {
-  width: 100%;
+  max-width: 200px;
+  width: auto;
   max-height: 250px;
+  border-radius: 10px;
 }
 
 .form-container {
@@ -156,6 +164,15 @@
 
 .add_name > input {
   width: 100%;
+}
+
+.add_image_wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
 }
 
 .add_image {

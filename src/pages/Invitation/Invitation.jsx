@@ -131,7 +131,7 @@ function Invitation() {
                     >
                       Email already in the list
                     </span>
-                  ) : inputDisabled ? (
+                  ) : (inputDisabled && userMail!=="" ) ? (
                     <span
                       className="error"
                       style={{ width: "100%", marginTop: "10px" }}

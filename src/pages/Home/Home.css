@@ -40,8 +40,8 @@
   }
 }
 
-@media (width < 780px){
-  nav.absoluteButton{
+@media (width < 780px) {
+  nav.absoluteButton:not(.noHide) {
     display: none;
   }
 }

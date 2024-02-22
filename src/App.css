@@ -3,28 +3,13 @@
   height: 100%;
   overflow: hidden;
 
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: 1fr;
-  /* grid-template-rows: 60px 1fr; */
-
-  grid-template-areas: "header" "main";
+  display: flex;
+  flex-direction: column;
 }
-
-.App>header.header {
-  grid-area: header;
-}
-
-.App>main.home-container {
-  grid-area: main;
-}
-
 
 @media (width < 780px) {
 
   .App {
-    grid-template-areas: "main" "header";
-    grid-template-rows: 1fr 60px;
-    ;
+    flex-direction: column-reverse;
   }
 }

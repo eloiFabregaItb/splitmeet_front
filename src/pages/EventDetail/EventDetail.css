@@ -21,12 +21,14 @@
   position: relative;
 
   transition: height 250ms ease;
-
 }
 
 .EventDetail__header.small {
   height: 160px;
+}
 
+.small-main {
+  height: calc(100vh - 200px) !important;
 }
 
 .EventDetail__header .back,
@@ -45,7 +47,6 @@
   top: 10px;
   right: 10px;
   transition: transform 0.5s ease;
-
 }
 
 .EventDetail__header .config img,
@@ -67,9 +68,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   background-color: #e7e7e7;
-
 }
-
 
 .EventDetail__navPages ul li {
   border-radius: 1rem;
@@ -82,7 +81,7 @@
 }
 
 .EventDetail__navPages ul li:hover {
-  filter: brightness(.9);
+  filter: brightness(0.9);
   /* background-color: var(--light_blue) ; */
 }
 
@@ -91,20 +90,16 @@
   color: white;
 }
 
-
-
 .EventDetail__content {
   flex: 1;
   overflow: auto;
-
-
 }
 
 .EventDetail__content> :not(header) {
-
   width: 100%;
   max-width: 1200px;
   margin: 20px auto;
+  height: calc(100vh - 340px);
 }
 
 .home-container {
@@ -142,14 +137,13 @@
 .home-container_aside_icon {
   width: 40px;
   cursor: pointer;
-
 }
 
 .expense-transactions_info_transactions,
 .home-container_events {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 20px;
   margin-top: 10px;
   margin-bottom: 10px;
 }
@@ -159,14 +153,31 @@
   align-items: center;
   width: 100%;
   gap: 20px;
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px,
+    rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
   border-radius: 10px;
   padding: 17px;
 }
 
-
-
+.pointer {
+  cursor: pointer;
+}
 
 @media (width < 600px) {
   .EventDetail__content> :not(header) {}
+}
+
+
+
+.addUserToGroup {
+  color: var(--ocean_blue);
+  text-decoration: none;
+}
+
+.addUserToGroup:hover {
+  text-decoration: underline;
+}
+
+.center {
+  width: 100%;
 }

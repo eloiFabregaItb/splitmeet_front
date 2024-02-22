@@ -162,14 +162,7 @@ function App() {
             }
           />
           <Route path='/forgotten' element={<ForgotPassword />} />
-          <Route
-            path='/change-password'
-            element={
-              <ProtectedRoute>
-                <ChangePassword />
-              </ProtectedRoute>
-            }
-          />{' '}
+          <Route path='/change-password' element={<ChangePassword />} />{' '}
           {/* ARREGLAR ERROR */}
           <Route path='*' element={<Error404 />} />
         </Routes>

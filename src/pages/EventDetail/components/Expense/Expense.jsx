@@ -21,7 +21,7 @@ function Expense({ onClick, expenseInfo }) {
         }`}
       >
         {expenseInfo.status === "NONE"
-          ? "You don't participate"
+          ? "You didn't participate"
           : `You ${expenseInfo.status === "PAID" ? "lent" : "owe"} ${
               expenseInfo.total
             }€`}

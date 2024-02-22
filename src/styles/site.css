@@ -2,13 +2,11 @@ body {
   background-color: var(--background);
 }
 
-
 .shadow {
   -webkit-box-shadow: -3px -3px 53px 0px rgba(0, 0, 0, 0.75);
   -moz-box-shadow: -3px -3px 53px 0px rgba(0, 0, 0, 0.75);
   box-shadow: -3px -3px 53px 0px rgba(0, 0, 0, 0.75);
 }
-
 
 .buttonActionIco {
   width: 40px;
@@ -22,8 +20,6 @@ body {
   width: 30px;
   height: 30px;
 }
-
-
 
 button {
   cursor: pointer;
@@ -46,14 +42,13 @@ hr {
   justify-content: center;
   align-items: center;
 
-  transition: background-color .2s ease, color .2s ease;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .button:hover {
   background-color: #aaa;
   color: white;
 }
-
 
 .absoluteButton {
   position: absolute;
@@ -68,10 +63,32 @@ hr {
   justify-content: center;
 
   box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
-  transition: all .4s ease;
+  transition: all 0.4s ease;
 }
-
 
 .absoluteButton:hover {
   transform: scale(0.96) translate(0, -10%);
+}
+
+.absoluteButton_flex {
+  display: flex;
+}
+
+
+.button {
+  color: white;
+  background-color: var(--ocean_blue);
+
+  width: 100%;
+  min-width: 150px;
+  border-radius: 10px;
+  height: 2.8rem;
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+
+hr {
+  background-color: #888;
+  border-color: #888;
 }

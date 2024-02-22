@@ -14,40 +14,33 @@ function Debts({ creditor, debtor, amount, users }) {
 
     return (
 <article className='debts'>
-    {amount < 0 ? (
-        <>
-            <div className='debts_img-concept'>
-                <UserImage userInfo={creditor} />
-                <p>{creditor.name}</p>
-            </div>
-            <p>→</p>
-            <p className={`debts_amount debts_amount--red`}>
-                {Math.abs(amount)} €
-            </p>
-            <p>→</p>
-            <div className='debts_img-concept'>
-                <UserImage userInfo={debtor} />
-                <p>{debtor.name}</p>
-            </div>
-        </>
-    ) : (
-        <>
-            <div className='debts_img-concept'>
-                <UserImage userInfo={debtor} />
-                <p>{debtor.name}</p>
+  {amount < 0 ? (
+    <>
+      <div className='debts_img-concept'>
+        <UserImage userInfo={debtor} />
+        <p>{debtor.name}</p>
+      </div>
 
-            </div>
-            <p>→</p>
-            <p className={`debts_amount debts_amount--green`}>
-                {amount} €
-            </p>
-            <p>→</p>
-            <div className='debts_img-concept'>
-                <UserImage userInfo={creditor} />
-                <p>{creditor.name}</p>
-            </div>
-        </>
-    )}
+      <p className={`debts_amount debts_amount--red`}>
+        You owe
+        {" "+Math.abs(amount).toFixed(2)} €
+      </p>
+
+    </>
+  ) : (
+    <>
+      <div className='debts_img-concept'>
+        <UserImage userInfo={debtor} />
+        <p>{debtor.name}</p>
+      </div>
+
+      <p className={`debts_amount debts_amount--green`}>
+        Owes you
+        {" "+amount.toFixed(2)} €
+      </p>
+
+    </>
+  )}
 </article>
 
     );

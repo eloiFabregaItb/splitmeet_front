@@ -1,5 +1,6 @@
 import { createContext, useContext, useState } from "react";
 import { Navigate, useLocation } from "react-router-dom";
+import { getUserProfileValidUrl } from "../services/userImage";
 
 export const LoginDataContext = createContext();
 
@@ -13,6 +14,7 @@ export const LoginDataProvider = ({ children }) => {
 
   const [nombre, setNombre] = useState("");
   const [fotoPerfil, setFotoPerfil] = useState("");
+  const [imgUrl,setImgUrl] = useState("")
   const [tipoUsuario, setTipoUsuario] = useState("");
   const [email, setEmail] = useState("");
   const [emailValidated, setEmailValidated] = useState(false);
@@ -43,15 +45,25 @@ export const LoginDataProvider = ({ children }) => {
     setEventInfo({});
   }
 
-  function setUserFromObject(userData) {
+  async function setUserFromObject(userData) {
+
     setCodUsuario(userData.id);
     setFotoPerfil(userData.img);
-    setTipoUsuario(userData.type);
-    setNombre(userData.name);
     setEmail(userData.mail);
     setEmailValidated(userData.mailValidated);
-    setJwt(userData.jwt);
+    setNombre(userData.name);
+    
+    if(userData.type !== undefined){
+      setTipoUsuario(userData.type);
+    }
+    if(userData.jwt){
+      setJwt(userData.jwt);
+    }
     //userData.oauth?
+
+
+    const imgUrl = await getUserProfileValidUrl(userData.img)
+    setImgUrl(imgUrl)
   }
 
   return (
@@ -59,10 +71,12 @@ export const LoginDataProvider = ({ children }) => {
       value={{
         loginContext: login,
         logoutContext: logout,
+        setUserFromObject,
         isLoggedIn,
         nombre,
         codUsuario,
         fotoPerfil,
+        fotoPerfilUrl : imgUrl,
         email,
         tipoUsuario,
         emailValidated,

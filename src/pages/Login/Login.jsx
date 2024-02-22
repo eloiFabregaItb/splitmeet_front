@@ -12,7 +12,6 @@ import { useState } from "react";
 
 import { SHA256 } from "crypto-js";
 import { checkLogin } from "../../services/checkLogin";
-import { oauth } from "../../services/oauth";
 import { joinEvent } from "../../services/joinEvent";
 import { api_url } from "../../utils/constants";
 import Header from "../../globalComponents/Header/Header";
@@ -48,13 +47,15 @@ function Login() {
     return false;
   };
 
-  const oauthLogin = async () => {
-    const resOauth = await oauth();
-    if (resOauth.success) {
-      console.log(resOauth);
+
+  const getGoogleLink = () => {
+    if (location.pathname === '/login/invitation') {
+      const evtUrlParam = params[0].get("evt_url")
+      return evtUrlParam ? `${api_url}/auth/google?evt_url=${evtUrlParam}` : `${api_url}/auth/google`;
+    } else {
+      return `${api_url}/auth/google`;
     }
   };
-
   /*
     Function that checks the email structure and sends the email and password to the server.
     */
@@ -175,7 +176,8 @@ function Login() {
 
           <div className='login_buttons'>
           <a
-              href={`${api_url}/auth/google`}
+              // href={`${api_url}/auth/google`}
+              href={getGoogleLink()}
               to='/auth/google'
               className='subrayado login_form_btn login_form_btn--google'
             >

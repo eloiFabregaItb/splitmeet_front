@@ -4,7 +4,6 @@ import user from '../../assets/icons/user.svg'
 
 import { Link, useParams } from 'react-router-dom'
 
-
 import { useRef, useState, useEffect } from 'react'
 
 import Button from '../../globalComponents/Button'
@@ -19,9 +18,9 @@ import { ModalSelect } from '../../globalComponents/ModalSelect/ModalSelect'
 import { ModalDistributeExpenses } from './ModalDistributeExpenses'
 import { addExpense } from '../../services/addExpense'
 
-const PAGES={
-  AMOUNT:"amount",
-  DISTRIBURION:"distribution"
+const PAGES = {
+  AMOUNT: 'amount',
+  DISTRIBURION: 'distribution',
 }
 
 export function NewExpense() {
@@ -34,98 +33,95 @@ export function NewExpense() {
   const [errName, setErrName] = useState(false)
   const [errAmount, setErrAmount] = useState(false)
 
-  const [inpAmount,setInpAmount] = useState("")
-  const [users,setUsers] = useState([])
+  const [inpAmount, setInpAmount] = useState('')
+  const [users, setUsers] = useState([])
 
+  const [lender, setLender] = useState(null)
+  const [borrowers, setBorrowers] = useState([])
 
-  const [lender,setLender] = useState(null)
-  const [borrowers,setBorrowers] = useState([])
-
-  const [eventInfo,setEventInfo] = useState({})
+  const [eventInfo, setEventInfo] = useState({})
 
   const [page, setPage] = useState(PAGES.AMOUNT)
 
-
-  useEffect(()=>{
+  useEffect(() => {
     fetchEventInfo()
-  },[])
+  }, [])
 
-  
-
-    
-  async function fetchEventInfo(){
-    const eventData = await getEventInfo(jwt,params.event_url)
-    if(eventData?.success){
-      console.log("EVENT DATA",eventData)
-      const apiUsers = eventData.users 
-      const apiLender = apiUsers.find(x=>x.mail === email )
+  async function fetchEventInfo() {
+    const eventData = await getEventInfo(jwt, params.event_url)
+    if (eventData?.success) {
+      console.log('EVENT DATA', eventData)
+      const apiUsers = eventData.users
+      const apiLender = apiUsers.find((x) => x.mail === email)
       setUsers(apiUsers)
       setLender(apiLender)
       setEventInfo(eventData.event)
-    }else{
+    } else {
       setUsers(eventData.users)
     }
   }
 
-
-
-
-  function handleChangeBorrowers(borrowers){
+  function handleChangeBorrowers(borrowers) {
     setBorrowers(borrowers)
   }
 
   const onSubmit = async (e) => {
     e.preventDefault()
 
-    const now = new Date().toISOString().slice(0, 10) 
+    const now = new Date().toISOString().slice(0, 10)
     const transactions = makeTransactions(borrowers)
 
-    const response = await addExpense(jwt,eventInfo.url,expenseName,lender.id,""/*description*/,now, ""/*coords*/,transactions)
+    const response = await addExpense(
+      jwt,
+      eventInfo.url,
+      expenseName,
+      lender.id,
+      '' /*description*/,
+      now,
+      '' /*coords*/,
+      transactions
+    )
 
-    console.log("EXPENSE RESPONSE", response)
+    console.log('EXPENSE RESPONSE', response)
     navigate(`/event/${params.event_url}`)
-    
   }
 
-  function makeTransactions(borrowers){
-    return borrowers.filter(x=>x.hasOwnProperty("amount")&&!isNaN(x.amount)&&x.amount!==0).map(x=>({
-      borrowerId:x.id,
-      amount:x.amount
-    }))
-
+  function makeTransactions(borrowers) {
+    return borrowers
+      .filter(
+        (x) => x.hasOwnProperty('amount') && !isNaN(x.amount) && x.amount !== 0
+      )
+      .map((x) => ({
+        borrowerId: x.id,
+        amount: x.amount,
+      }))
   }
 
-
-  function handleNextPage(e){
+  function handleNextPage(e) {
     e.preventDefault()
-    if(Number(inpAmount) <= 0){
-      setErrAmount("campo valor necesario")
+    if (Number(inpAmount) <= 0) {
+      setErrAmount('Fill the amount field')
       return
     }
 
-    if(expenseName === ""){
-      setExpenseName("New expense")
+    if (expenseName === '') {
+      setExpenseName('New expense')
     }
 
     setPage(PAGES.DISTRIBURION)
   }
 
-
   return (
-      <>
+    <>
       <Header back={`/event/${params.event_url}`}></Header>
-        
+
       <div className='container'>
         <main className='box'>
-
-
-          {
-            page===PAGES.AMOUNT &&
+          {page === PAGES.AMOUNT && (
             <>
-            <h1 className='newevent__title'>New expense</h1>
+              <h1 className='newevent__title'>New expense</h1>
               <form noValidate onSubmit={handleNextPage} className='event_form'>
                 <div className='form-container'>
-
                   <div className='add_name'>
                     <label className='newevent__text' htmlFor='name'>
                       Expense Name
@@ -144,12 +140,8 @@ export function NewExpense() {
                     </div>
                   </div>
 
-      
                   <div className='add_amount'>
-                    <label className='newevent__text'>
-                      Amount
-                    </label>
-                    {errAmount && <p className='error'>{errAmount}</p>}
+                    <label className='newevent__text'>Amount</label>
                     <div className='newevent__form_inputContainer'>
                       <input
                         className='newevent__form_input'
@@ -161,60 +153,50 @@ export function NewExpense() {
                     </div>
                   </div>
 
-
-
+                  {errAmount && <p className='error w-100'>{errAmount}</p>}
                   <Button
                     className='newevent_form_btn newevent_form_btn--login'
                     text='NEXT'
                   />
                 </div>
               </form>
-            
-
-            
             </>
-          }
+          )}
 
-          {
-            page===PAGES.DISTRIBURION && 
-            <form onSubmit={e=> e.preventDefault()}>
-
-              <h1>{expenseName}</h1>
+          {page === PAGES.DISTRIBURION && (
+            <form onSubmit={(e) => e.preventDefault()} className='ExpenseDistribution__form'>
+              <h1 className='newevent__title'>{expenseName}</h1>
               <h2>{inpAmount}€</h2>
 
               <div className='who_paid'>
-                    Payed by
-                    <ModalSelect 
-                      
-                      items={users}
-                      getItemText={u=>u.mail === email ? "You" : u.name}
+                Paid by
+                <ModalSelect
+                  items={users}
+                  getItemText={(u) => (u.mail === email ? 'You' : u.name)}
+                  onSelect={(u) => setLender(u)}
+                  itemSelected={lender}
+                />
+              </div>
 
-                      onSelect={u=>setLender(u)}
-                      itemSelected={lender}
-                    />
-                    and divided 
-                    {
-                      users?.length>0&&
-                      <ModalDistributeExpenses 
-                        users={users}
-                        onChange={handleChangeBorrowers}
-                        amount={Number(inpAmount) || 0}
-                      />
-                    }
-                  </div>
-                
+              <div className='who_paid'>
 
-                  <Button
-                    className='newevent_form_btn newevent_form_btn--login'
-                    text='NEXT'
-                    onClick={onSubmit}
+                and split
+                {users?.length > 0 && (
+                  <ModalDistributeExpenses
+                    users={users}
+                    onChange={handleChangeBorrowers}
+                    amount={Number(inpAmount) || 0}
                   />
+                )}
+              </div>
 
+              <Button
+                className='newevent_form_btn newevent_form_btn--login'
+                text='NEXT'
+                onClick={onSubmit}
+              />
             </form>
-          }
-
-
-
+          )}
         </main>
       </div>
     </>

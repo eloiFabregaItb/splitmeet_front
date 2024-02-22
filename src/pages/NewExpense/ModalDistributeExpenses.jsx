@@ -11,8 +11,8 @@ const PAGES = {
 }
 
 const PAGES_NAMES = {
- equal:"Equal parts" ,
- quantity:"By Quantity",
+ equal:"Equaly" ,
+ quantity:"Unequaly",
  percentage:"By percentage"
 }
 
