@@ -1,6 +1,23 @@
+import "./NewExpense.css"
+
 import { useEffect, useState } from "react";
 import { TextModal } from "../../globalComponents/TextModal/TextModal";
 
+
+const PAGES = {
+  EQUAL:"equal",
+  QUANTITY:"quantity",
+  PERCENTAGE:"percentage"
+}
+
+const PAGES_NAMES = {
+ equal:"Equal parts" ,
+ quantity:"By Quantity",
+ percentage:"By percentage"
+}
+
+const FALTA = "missing"
+const SOBRA = "left"
 
 export function ModalDistributeExpenses({
   users,
@@ -10,42 +27,67 @@ export function ModalDistributeExpenses({
 }){
 
   const [isOpen,setIsOpen] = useState()
-  
-  const divisions = ["Equal parts",  "Por cantidades","Por porcentaje"]
-  const [page,setPage] = useState(0) // 0-> equal parts
+  const [page,setPage] = useState(PAGES.EQUAL)
   
   const amounts = split_equal(amount,users.length)
-  //equal parts
-  const [equalPartsDiv,setEqualPartsDiv] = useState(users.map((x,i)=>({...x,checked:true,amount:amounts[i]})))
-  const [isAllChecked,setIsAllChecked] = useState(true)
+  
+  const [moneyDistribution,setMoneyDistribution] = useState(users.map((x,i)=>({...x,checked:true,amount:amounts[i]})))
   const [errMsg,setErrMsg] = useState("")
 
-  const remaining = amount - equalPartsDiv.reduce((acc,u)=>acc + (u.amount === undefined ? 0 : Number(u.amount)),0)
-  const remainingPercentage = 100 - equalPartsDiv.reduce((acc,u)=>acc + (u.percentage === undefined ? 0 : Number(u.percentage)),0)
+  //page quantity
+  const remaining = amount - moneyDistribution.reduce((acc,u)=>acc + (u.amount === undefined ? 0 : Number(u.amount)),0)
+  //page percentage
+  const remainingPercentage = 100 - moneyDistribution.reduce((acc,u)=>acc + (u.percentage === undefined ? 0 : Number(u.percentage)),0)
 
 
 
 
+  useEffect(()=>{
+    //ejecuta solo cargar el componente para cargar configuracion base
+    onChange(moneyDistribution)
+  },[])
 
-  //page 0
-  function handleClickAllCheckbox(e){
-    const newVal = !isAllChecked
-    setIsAllChecked(newVal)
-    setEqualPartsDiv(prev=>prev.map(x=>({...x,checked:newVal})))
+
+  function handleSetPage(newPage){
+    setPage(newPage)
+
+    if(newPage === PAGES.EQUAL){
+      updateUsersByEqualPartsOpen()
+    } else if(newPage === PAGES.PERCENTAGE){
+      updateUsersByPercentage()
+    }
   }
 
-  //page 0
+
+
+  // --------------------------- EQUAL PARTS ----------------------------
+  //checkbox all
+  function handleClickAllCheckbox(e){
+    const newVal = ! moneyDistribution.every(x=>x.checked)
+    const updatedUsers = moneyDistribution.map(x=>({...x,checked:newVal}))
+    updateUsersByEqualParts(updatedUsers)
+  }
+
+  //checbox user
   function handleCheckUser(user){
-    console.log(user)
-    setEqualPartsDiv(prev=>{
-      const updated = prev.map(u=>({...u,amount:0}))
-      const i = updated.findIndex(x=>x.usr_id === user.usr_id)
-
-      updated[i].checked =!user.checked
-      setIsAllChecked(updated.some(x=>x.checked))
+    const index = moneyDistribution.findIndex(x=>x.id === user.id)
+    const updatedUsers = moneyDistribution.map((x,i)=> i === index ? ({...x,checked:!x.checked}) : x)
+    updateUsersByEqualParts(updatedUsers)
+  }
 
 
-      // //update users amount
+  function updateUsersByEqualPartsOpen(){
+    const updatedUsers = moneyDistribution.map((x)=> ({...x,checked:x.amount>0}) )
+
+    updateUsersByEqualParts(updatedUsers)
+  }
+
+  function updateUsersByEqualParts(users=moneyDistribution){
+    setMoneyDistribution(()=>{
+
+      const updated = users.map(u=>({...u,amount:0}))
+      
+      //update users amount
       const participants = updated.filter(x=>x.checked)
       const amounts = split_equal(amount,participants.length).sort((a,b)=>Math.random()>0.5?1:0)
       participants.forEach((u,i) => {
@@ -54,12 +96,19 @@ export function ModalDistributeExpenses({
 
       return updated
     })
-
   }
 
-  //page 1
+  // --------------------------------------------------------------------
+
+
+
+
+
+
+
+  //-------------------------------- QUANTITY ---------------------------
   function handleChangeAmount(user,e){
-    setEqualPartsDiv(prev=>{
+    setMoneyDistribution(prev=>{
       const updated = [...prev]
       const i = updated.indexOf(user)
       updated[i].amount = e.target.value
@@ -67,62 +116,73 @@ export function ModalDistributeExpenses({
     })
 
 
+
   }
 
-  //page 2
+  //--------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+  // -------------------------- PERCENTAGE -----------------------------
   function handleChangePercentage(user,e){
-    setEqualPartsDiv(prev=>{
+    setMoneyDistribution(prev=>{
       const updated = [...prev]
       const i = updated.indexOf(user)
       updated[i].percentage = e.target.value
+      
+      const newAmount = amount * Number(e.target.value) / 100
+      if( ! isNaN(newAmount) ){
+        updated[i].amount = newAmount
+      }
+
       return updated
     })
   }
+
+
+  function updateUsersByPercentage(){
+    // get the percentage based on the amounts
+
+    const quantityTotal = moneyDistribution.reduce((acc,v)=>acc+Number(v.amount),0)
+
+    setMoneyDistribution(prev=>{
+      const updated = prev.map(x=>({...x,percentage:(x.amount/quantityTotal*100).toFixed(2) }))
+
+
+      return updated
+    })
+  }
+
+
+  // ------------------------------------------------------------------
+
+
+
+
+  
   
   function handleSubmit(){
     // onChange && onChange()
-    if(page===0){
-      const participants = equalPartsDiv.reduce((acc,u)=>acc+u.checked,0)
-      const each = amount/participants
-
-    }else if(page === 1){
-      if(remaining !== 0){
-        setErrMsg((remaining>0?"Faltan":"Sobran")+`${remaining}€ por distribuir`)
-      }
-
-    }else if(page === 2){
-      if(remainingPercentage !== 0){
-        setErrMsg((remainingPercentage>0?"Faltan":"Sobran")+`${remainingPercentage}% por distribuir`)
-      }
-    }
-    
-  }
-
-  function calcEachUserPay(){
-    if(page === 0){
-      const participants = equalPartsDiv.filter(x=>x.checked)
-      const amounts = split_equal(amount,participants.length)
-      setEqualPartsDiv(prev=>{
-        const updated = prev.map(u=>({u,amount:0}))
-
-        participants.forEach((u,i) => {
-          const j = updated.indexOf(u)
-          updated[j].amount = amounts[i]
-        });
-
-        return updated
-      })
-
-    }else if(page === 1){
-
-    }else if(page === 2){
+    if(page===PAGES.EQUAL){
+      if(!moneyDistribution.some(x=>x.checked)) return
 
     }
+
+    onChange(moneyDistribution)
+    setIsOpen(false)
   }
+
 
   return (
     <>
-      <button className="button" onClick={()=>setIsOpen(true)}>{divisions[page]}</button>
+      <button className="button" onClick={()=>setIsOpen(true)} >{PAGES_NAMES[page]}</button>
       {
         isOpen &&
         <TextModal
@@ -134,56 +194,64 @@ export function ModalDistributeExpenses({
 
           <ul className="NewExpense__modal__nav">
             {
-              divisions.map((d,i)=>(<li key={i}><button onClick={()=>setPage(i)} className={page === i? "active":""}>{d}</button></li>))
+              Object.values(PAGES).map((d,i)=>(<li key={i}><button onClick={()=>handleSetPage(d)} className={page === d? "active":""}>{PAGES_NAMES[d]}</button></li>))
             }
           </ul>
           
           <main className="NewExpense__modal__content">
             {
-              page===0 && //equal parts
-              <div>
-                <p className="NewExpense__modal__content__header"> <input 
-                type="checkbox" 
-                onChange={handleClickAllCheckbox}
-                checked={isAllChecked}
-                /> Tdods </p>
+              page=== PAGES.EQUAL && //equal parts
+              <div className="User__distribution__list">
+                <p 
+                  className="NewExpense__modal__content__header"
+                  onClick={handleClickAllCheckbox}
+                > 
+                <input 
+                  type="checkbox" 
+                  onChange={handleClickAllCheckbox}
+                  checked={moneyDistribution.every(x=>x.checked)}
+                /> Everybody </p>
                 {
-                  equalPartsDiv.map((user,i)=>
+                  moneyDistribution.map((user,i)=>
                     <p
                       key={i}
+                      className="User__distribution__element"
+                      onClick={()=>handleCheckUser(user)}
                     >
                       <input 
                         type="checkbox" 
                         onChange={()=>handleCheckUser(user)}
                         checked={user.checked}
                       /> 
-                      <label >{user.usr_name}</label>
-                      _ 
+                      <label>{user.name}</label>
                       <span>{user.amount}€</span>
                     </p>  
                   )
                 }
 
-                <div>
-                  {roundStr(amount/equalPartsDiv.reduce((acc,u)=>acc+u.checked,0))}€/person
+                <div className={!moneyDistribution.some(x=>x.checked) ? "error" : ""}>
+                  {roundStr(amount/moneyDistribution.reduce((acc,u)=>acc+u.checked,0))} € / person
                 </div>
 
               </div>
             }
 
             {
-              page===1 && //by quantity
-              <div>
+              page=== PAGES.QUANTITY && //by quantity
+              <div className="User__distribution__list">
 
                 {
-                  equalPartsDiv.map((user,i)=>
-                  <p key={i}>
-                    {user.usr_name}
+                  moneyDistribution.map((user,i)=>
+                  <p 
+                    key={i}
+                    className="User__distribution__element"
+                  >
+                    <label>{user.name}</label>
                     <input type="number"
                       onChange={e=>handleChangeAmount(user,e)}
                       value={user.amount === undefined ? 0 : user.amount}
                     />
-                    <span>{user.amount}</span>
+                    €
                   </p>
                   )
                 }
@@ -191,8 +259,8 @@ export function ModalDistributeExpenses({
 
               {remaining !== 0 &&
                 <p className={remaining === 0?"":"error"}>
-                  {remaining > 0 ? "Falta " : "Sobra "}
-                  {remaining}€
+                  {Math.abs(remaining)}€
+                  {remaining > 0 ? FALTA : SOBRA}
                 </p>
               } 
               </div>
@@ -200,25 +268,34 @@ export function ModalDistributeExpenses({
 
 
             {
-              page===2 && //by percentage
-              <div>
+              page=== PAGES.PERCENTAGE && //by percentage
+              <div className="User__distribution__list">
 
                 {
-                  equalPartsDiv.map((user,i)=>
-                  <p>
-                    {user.usr_name}
-                    <input type="number"
-                      onChange={e=>handleChangePercentage(user,e)}
-                      value={user.percentage === undefined ? 0 : user.percentage}
-                    ></input>
+                  moneyDistribution.map((user,i)=>
+                  <p 
+                    key={i}
+                    className="User__distribution__element"
+                  >
+                    <label>{user.name}</label>
+
+                    <span>
+                      <input type="number"
+                        onChange={e=>handleChangePercentage(user,e)}
+                        value={user.percentage === undefined ? 0 : user.percentage}
+                      ></input>%
+                    </span>
+
+                    <span>{roundStr(user.amount)} €</span>
+
                   </p>
                   )
                 }
 
               {remainingPercentage !== 0 &&
                 <p className={remainingPercentage === 0?"":"error"}>
-                  {remainingPercentage > 0 ? "Falta " : "Sobra "}
-                  {remainingPercentage}%
+                  {Math.abs(remainingPercentage)}%
+                  {remainingPercentage > 0 ? FALTA : SOBRA}
                 </p>
               } 
               </div>

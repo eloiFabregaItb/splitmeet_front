@@ -17,40 +17,29 @@ import { useNavigate } from 'react-router-dom'
 import { getEventInfo } from '../../services/getEventInfo'
 import { ModalSelect } from '../../globalComponents/ModalSelect/ModalSelect'
 import { ModalDistributeExpenses } from './ModalDistributeExpenses'
+import { addExpense } from '../../services/addExpense'
 
 const PAGES={
   AMOUNT:"amount",
   DISTRIBURION:"distribution"
 }
 
-function NewEvent() {
-  const initialData = {
-    name: 'Oriol',
-  }
+export function NewExpense() {
   const params = useParams()
 
-  const inputFileRef = useRef(null)
-  const [userData] = useState(initialData)
   const { jwt, email } = useLoginDataContext()
-  const [eventName, setEventName] = useState('')
-  const [event_image, setImage] = useState(null)
-  const [event_image64, setImage64] = useState(null)
-  const [userMail, setUserMail] = useState('')
-  const [inputDisabled, setInputDisabled] = useState(true)
-  const [userInvitations, setUserInvitations] = useState([])
-  const { loginContext } = useLoginDataContext()
-  const [showDataError, setShowDataError] = useState(false)
+  const [expenseName, setExpenseName] = useState('')
+  const [errName, setErrName] = useState(false)
+  const [errAmount, setErrAmount] = useState(false)
 
   const [inpAmount,setInpAmount] = useState("")
   const [users,setUsers] = useState([])
 
-  const navigate = useNavigate()
-
-  const plusButton = useRef(null)
 
   const [lender,setLender] = useState(null)
-  const [lenders,setLenders] = useState([])
+  const [borrowers,setBorrowers] = useState([])
 
+  const [eventInfo,setEventInfo] = useState({})
 
   const [page, setPage] = useState(PAGES.AMOUNT)
 
@@ -60,34 +49,23 @@ function NewEvent() {
   },[])
 
   
-  //Cuando cambia el email, se comprueba si el email es válido. Si no lo es, se desactiva el botón +
-  useEffect(() => {
-    setInputDisabled(!validUserMail(userMail))
-  }, [userMail])
-
 
     
   async function fetchEventInfo(){
     const eventData = await getEventInfo(jwt,params.event_url)
     if(eventData?.success){
+      console.log("EVENT DATA",eventData)
       const apiUsers = eventData.users 
       const apiLender = apiUsers.find(x=>x.mail === email )
-      console.log(apiUsers,apiLender)
       setUsers(apiUsers)
       setLender(apiLender)
+      setEventInfo(eventData.event)
     }else{
       setUsers(eventData.users)
     }
   }
 
 
-  const validUserMail = (email) => {
-    if (userInvitations.includes(email)) return false
-
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    if (!emailRegex.test(email)) return false
-    return true
-  }
 
 
   function handleChangeBorrowers(borrowers){
@@ -97,35 +75,33 @@ function NewEvent() {
   const onSubmit = async (e) => {
     e.preventDefault()
 
-    // const resAdd = await addEvent(event_name, event_image, userInvitations, jwt)
-    // if (resAdd.success) {
-    //   setShowDataError(false)
-    //   const resImg = await uploadEventImg(resAdd.evt_url, event_image, jwt)
+    const now = new Date().toISOString().slice(0, 10) 
+    const transactions = makeTransactions(borrowers)
 
-    //   if (resImg.success) {
-    //     const resInvite = await sendEventInvitations(
-    //       jwt,
-    //       resAdd.evt_url,
-    //       userInvitations
-    //     )
-    //   }
-    //   //loginContext(resAdd);
-    //   return navigate(`/event/${resAdd.evt_url}`)
-    // }
-    // setShowDataError(true)
-    //localStorage.clear()
+    const response = await addExpense(jwt,eventInfo.url,expenseName,lender.id,""/*description*/,now, ""/*coords*/,transactions)
+
+    console.log("EXPENSE RESPONSE", response)
+    
+  }
+
+  function makeTransactions(borrowers){
+    return borrowers.filter(x=>x.hasOwnProperty("amount")&&!isNaN(x.amount)&&x.amount!==0).map(x=>({
+      borrowerId:x.id,
+      amount:x.amount
+    }))
+
   }
 
 
   function handleNextPage(e){
     e.preventDefault()
     if(Number(inpAmount) <= 0){
-      setShowDataError("campo valor necesario")
+      setErrAmount("campo valor necesario")
       return
     }
 
-    if(eventName === ""){
-      setEventName("New expense")
+    if(expenseName === ""){
+      setExpenseName("New expense")
     }
 
     setPage(PAGES.DISTRIBURION)
@@ -139,12 +115,11 @@ function NewEvent() {
       <div className='container'>
         <main className='box'>
 
-          {showDataError && <p>{showDataError}</p>}
 
-          <h1 className='newevent__title'>New expense</h1>
           {
             page===PAGES.AMOUNT &&
             <>
+            <h1 className='newevent__title'>New expense</h1>
               <form noValidate onSubmit={handleNextPage} className='event_form'>
                 <div className='form-container'>
 
@@ -152,6 +127,7 @@ function NewEvent() {
                     <label className='newevent__text' htmlFor='name'>
                       Expense Name
                     </label>
+                    {errName && <p className='error'>{errName}</p>}
                     <div className='newevent__form_inputContainer'>
                       <input
                         className='newevent__form_input'
@@ -159,8 +135,8 @@ function NewEvent() {
                         placeholder='Road trip...'
                         name='event_name'
                         id='event_name'
-                        value={eventName}
-                        onChange={(e) => setEventName(e.target.value)}
+                        value={expenseName}
+                        onChange={(e) => setExpenseName(e.target.value)}
                       />
                     </div>
                   </div>
@@ -170,6 +146,7 @@ function NewEvent() {
                     <label className='newevent__text'>
                       Amount
                     </label>
+                    {errAmount && <p className='error'>{errAmount}</p>}
                     <div className='newevent__form_inputContainer'>
                       <input
                         className='newevent__form_input'
@@ -197,9 +174,9 @@ function NewEvent() {
 
           {
             page===PAGES.DISTRIBURION && 
-            <form onSubmit={onSubmit}>
+            <form onSubmit={e=> e.preventDefault()}>
 
-              <h2>{eventName}</h2>
+              <h1>{expenseName}</h1>
               <h2>{inpAmount}€</h2>
 
               <div className='who_paid'>
@@ -214,8 +191,8 @@ function NewEvent() {
                     />
                     and divided 
                     {
-                      users.length>0&&
-                      <McodeodalDistributeExpenses 
+                      users?.length>0&&
+                      <ModalDistributeExpenses 
                         users={users}
                         onChange={handleChangeBorrowers}
                         amount={Number(inpAmount) || 0}
@@ -227,6 +204,7 @@ function NewEvent() {
                   <Button
                     className='newevent_form_btn newevent_form_btn--login'
                     text='NEXT'
+                    onClick={onSubmit}
                   />
 
             </form>
@@ -239,4 +217,3 @@ function NewEvent() {
     </>
   )
 }
-export default NewEvent

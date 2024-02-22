@@ -10,17 +10,18 @@ import { Link, useNavigate } from "react-router-dom";
 import logo from "../../assets/icons/logo.svg";
 import ico_burger from "../../assets/icons/burger.svg";
 import ico_x from "../../assets/icons/x.svg";
-import ico_back from "../../assets/icons/back--arrow--black.svg"
+import ico_back from "../../assets/icons/back--arrow--black.svg";
 
 //constants & context
 import { useLoginDataContext } from "../../contexts/LoginDataContext";
 
-import icoLogout from "../../assets/icons/logout.svg"
+import icoLogout from "../../assets/icons/logout.svg";
+import settings from "../../assets/icons/settings.svg";
 import { UserImage } from "../UserImage/UserImage";
 
-function Header({ nameEvent,children, back }) {
+function Header({ nameEvent, children, back }) {
   const userInfo = useLoginDataContext();
-  const { logoutContext, nombre, fotoPerfil, isLoggedIn } = userInfo
+  const { logoutContext, nombre, fotoPerfil, isLoggedIn } = userInfo;
   const navigate = useNavigate();
   const navbarRef = useRef();
 
@@ -54,6 +55,11 @@ function Header({ nameEvent,children, back }) {
     navigate("/");
   }
 
+  function handleSettings(e) {
+    e.preventDefault();
+    navigate("/settings");
+  }
+
   function handleClickNav() {
     setIsNavbarOpen(false);
   }
@@ -62,19 +68,16 @@ function Header({ nameEvent,children, back }) {
     <>
       <header className="header">
         <div className="left">
-          {
-            !isLoggedIn &&
+          {!isLoggedIn && (
             <button onClick={handleOpenNavbar} className="buttonActionIco">
               <img src={ico_burger} alt="Menu icon" />
             </button>
-          }
-          
-          {
-            back &&
+          )}
+          {back && (
             <Link to={back} className="back">
-              <img src={ico_back}/>
+              <img src={ico_back} />
             </Link>
-          }
+          )}
         </div>
 
         <div className="header_logo">
@@ -86,13 +89,7 @@ function Header({ nameEvent,children, back }) {
           )}
         </div>
 
-
-        <div className="header__nav">
-
-            {
-              children
-            }
-        </div>
+        <div className="header__nav">{children}</div>
 
         <div className="right">
           {isLoggedIn && (
@@ -101,6 +98,12 @@ function Header({ nameEvent,children, back }) {
               <UserImage test userInfo={userInfo} />
               <nav className="header__userMenu">
                 <ul>
+                  <li>
+                    <a href="#" onClick={handleSettings}>
+                      <img src={settings} alt="" />
+                      Settings
+                    </a>
+                  </li>
                   <li>
                     <a href="#" onClick={handleLogout}>
                       <img src={icoLogout} alt="" />
@@ -116,7 +119,7 @@ function Header({ nameEvent,children, back }) {
         </div>
       </header>
 
-      {(isNavbarOpen && !isLoggedIn) && (
+      {isNavbarOpen && !isLoggedIn && (
         <>
           <aside className="Navbar" ref={navbarRef}>
             <button
