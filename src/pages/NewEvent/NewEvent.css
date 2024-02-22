@@ -42,12 +42,13 @@
 }
 
 .newevent__title {
-  margin-top: 7%;
   font-weight: 400;
   font-size: 50px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
+  text-align: center;
+  margin: 7% 10px 0 10px;
 }
 
 .event_form {
@@ -147,6 +148,7 @@
 
 .add_name {
   width: 100%;
+  max-width: 250px;
   display: flex;
   flex-direction: column;
   gap: 5px;
